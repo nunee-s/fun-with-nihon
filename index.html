@@ -1,0 +1,4196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#F5F1E8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="JLPT N3">
+<title>JLPT N3 Beta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Reset + base */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #F5F1E8;
+  color: #1A1A1A;
+  font-family: 'Fraunces', Georgia, serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+body { overscroll-behavior-y: contain; min-height: 100vh; }
+button { touch-action: manipulation; cursor: pointer; font-family: inherit; }
+input { font-family: inherit; }
+
+.jp { font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif; }
+.mono { font-family: 'JetBrains Mono', Menlo, Consolas, monospace; }
+.muted { color: #8B8178; }
+.italic { font-style: italic; }
+.center { text-align: center; }
+.full { width: 100%; }
+
+/* Loading */
+.loading {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: #8B8178;
+  padding-top: 128px;
+}
+
+/* Layout shells */
+.shell { min-height: 100vh; padding: 32px 0; }
+.container { max-width: 672px; margin: 0 auto; padding: 0 24px; }
+
+/* Headers */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #D9D0BC;
+}
+.header-subtitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: #8B8178;
+  margin-bottom: 4px;
+}
+.header-title {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1.2;
+}
+.header-right {
+  text-align: right;
+}
+.header-right .status-good { font-size: 11px; color: #4A7C3A; letter-spacing: 0.2em; font-weight: 500; }
+.header-right .status-warn { font-size: 11px; color: #C47E1F; letter-spacing: 0.2em; font-weight: 500; }
+.header-right .status-bad  { font-size: 11px; color: #B33A3A; letter-spacing: 0.2em; font-weight: 500; }
+.header-projlabel {
+  font-size: 11px;
+  color: #8B8178;
+  margin-top: 4px;
+}
+.header-en { font-size: 11px; color: #8B8178; font-style: italic; }
+
+/* Cards */
+.card {
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card.small { padding: 16px; }
+.surface { background: #EDE7D8; }
+.border { border: 1px solid #D9D0BC; }
+
+.card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #8B8178;
+  margin-bottom: 16px;
+}
+.card-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.card-label-row .card-label { margin-bottom: 0; }
+.card-counter { font-size: 11px; color: #8B8178; }
+
+/* Stat rows */
+.stat-row {
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.stat-num {
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 10px;
+  color: #8B8178;
+  margin-top: 4px;
+  letter-spacing: 0.1em;
+}
+.big-num {
+  font-size: 56px;
+  font-weight: 300;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.stat-big { font-size: 36px; font-weight: 300; margin-top: 8px; line-height: 1; }
+.type-num { font-size: 24px; font-weight: 300; margin-top: 4px; line-height: 1; }
+.type-num .small { font-size: 14px; }
+
+/* Buttons */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 16px 24px;
+  background: #B33A3A;
+  color: white;
+  border: none;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:active { opacity: 0.8; }
+.btn-primary.disabled { opacity: 0.4; pointer-events: none; }
+
+.btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  background: #EDE7D8;
+  color: #1A1A1A;
+  border: 1px solid #D9D0BC;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: border-color 0.15s;
+}
+.btn-secondary:hover { border-color: #B33A3A; }
+.btn-secondary.reveal { padding: 16px 24px; }
+
+.btn-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+.btn-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.btn-rate {
+  padding: 16px 8px;
+  background: transparent;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border: 1px solid;
+  transition: all 0.15s;
+}
+.btn-rate.again { color: #B33A3A; border-color: #B33A3A; }
+.btn-rate.again:hover { background: #B33A3A; color: white; }
+.btn-rate.hard { color: #C47E1F; border-color: #C47E1F; }
+.btn-rate.hard:hover { background: #C47E1F; color: white; }
+.btn-rate.good { color: #4A7C3A; border-color: #4A7C3A; }
+.btn-rate.good:hover { background: #4A7C3A; color: white; }
+.btn-rate.easy { color: #3A5A7C; border-color: #3A5A7C; }
+.btn-rate.easy:hover { background: #3A5A7C; color: white; }
+
+/* Onboarding */
+.onb-hero { padding-top: 64px; }
+.tag-accent {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #B33A3A;
+  margin-bottom: 16px;
+}
+.onb-title {
+  font-size: 48px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 8px 0;
+}
+.onb-subtitle {
+  font-size: 24px;
+  font-weight: 300;
+  margin: 0 0 48px 0;
+}
+.onb-lead {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #8B8178;
+  margin: 0 0 8px 0;
+  max-width: 28em;
+}
+.onb-note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #8B8178;
+  margin: 0 0 48px 0;
+  max-width: 28em;
+}
+
+/* Form fields */
+.label {
+  display: block;
+  font-size: 12px;
+  color: #8B8178;
+  margin-bottom: 8px;
+}
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  font-size: 16px;
+  font-family: 'Fraunces', serif;
+  color: #1A1A1A;
+  outline: none;
+}
+.input:focus { border-color: #B33A3A; }
+.field-help {
+  font-size: 11px;
+  color: #8B8178;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.minute-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.minute-btn {
+  padding: 12px 8px;
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  font-size: 12px;
+  transition: all 0.15s;
+  color: #1A1A1A;
+}
+.minute-btn:hover { border-color: #B33A3A; }
+.minute-btn.selected {
+  background: #B33A3A;
+  color: white;
+  border-color: #B33A3A;
+}
+
+/* Diagnostic */
+.diag-card {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card-type {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8B8178;
+  margin-bottom: 16px;
+}
+.diag-vocab { font-size: 48px; margin-bottom: 12px; text-align: center; }
+.diag-reading { font-size: 14px; color: #8B8178; text-align: center; }
+.diag-kanji { font-size: 96px; text-align: center; }
+.diag-grammar { font-size: 28px; text-align: center; }
+.diag-answer-section {
+  border-top: 1px solid #D9D0BC;
+  padding-top: 16px;
+  margin-top: 20px;
+  width: 100%;
+}
+.diag-meaning {
+  text-align: center;
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+.diag-onkun {
+  text-align: center;
+  font-size: 13px;
+  color: #8B8178;
+  margin-bottom: 12px;
+}
+.diag-example {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 8px;
+}
+.diag-explanation {
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 8px;
+  color: #1A1A1A;
+}
+.diag-rated-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.15em;
+  padding: 4px 10px;
+  border: 1px solid;
+  margin-top: 8px;
+}
+.diag-rated-tag.unknown { color: #B33A3A; border-color: #B33A3A; }
+.diag-rated-tag.partial { color: #C47E1F; border-color: #C47E1F; }
+.diag-rated-tag.known   { color: #4A7C3A; border-color: #4A7C3A; }
+.diag-exit-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #D9D0BC;
+}
+.diag-results {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+.diag-num { font-size: 36px; font-weight: 300; line-height: 1; }
+.diag-label {
+  font-size: 11px;
+  color: #8B8178;
+  margin-top: 4px;
+  letter-spacing: 0.1em;
+}
+.diag-note {
+  color: #8B8178;
+  font-size: 13px;
+  font-style: italic;
+  margin-top: 24px;
+  text-align: center;
+  line-height: 1.6;
+}
+.diag-help {
+  font-size: 11px;
+  color: #8B8178;
+  text-align: center;
+  letter-spacing: 0.1em;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.diag-score-big {
+  text-align: center;
+  font-size: 56px;
+  font-weight: 300;
+  line-height: 1;
+  color: #B33A3A;
+}
+.diag-score-sub {
+  text-align: center;
+  font-size: 11px;
+  color: #8B8178;
+  letter-spacing: 0.2em;
+  margin-top: 8px;
+}
+
+/* MCQ — multiple choice options on diagnostic */
+.diag-prompt-card {
+  padding: 28px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.diag-prompt-card .card-type {
+  font-size: 10px;
+  margin-bottom: 16px;
+  letter-spacing: 0.15em;
+}
+.mcq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.mcq-option {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  padding: 14px 16px;
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  font-size: 15px;
+  font-family: 'Fraunces', serif;
+  color: #1A1A1A;
+  transition: all 0.15s;
+  line-height: 1.4;
+}
+.mcq-option:hover { border-color: #B33A3A; background: #F5F1E8; }
+.mcq-option.correct {
+  background: #E8F4E0;
+  border-color: #4A7C3A;
+  color: #1A1A1A;
+}
+.mcq-option.wrong {
+  background: #FBE8E5;
+  border-color: #B33A3A;
+  color: #1A1A1A;
+}
+.mcq-option.other {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.mcq-letter {
+  display: inline-block;
+  font-size: 11px;
+  margin-right: 14px;
+  color: #8B8178;
+  letter-spacing: 0.1em;
+  min-width: 16px;
+  flex-shrink: 0;
+}
+.mcq-text {
+  flex: 1;
+}
+.mcq-mark {
+  margin-left: 12px;
+  font-size: 16px;
+  color: #4A7C3A;
+  font-weight: bold;
+}
+.mcq-mark.wrong { color: #B33A3A; }
+
+/* Feedback box after picking */
+.diag-feedback {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  border: 1px solid;
+}
+.diag-feedback.good {
+  background: #E8F4E0;
+  border-color: #4A7C3A;
+  color: #2D5A1F;
+}
+.diag-feedback.bad {
+  background: #FBE8E5;
+  border-color: #B33A3A;
+  color: #7A1F1F;
+}
+.feedback-icon {
+  font-size: 22px;
+  margin-right: 12px;
+  font-weight: bold;
+}
+.feedback-text {
+  flex: 1;
+}
+
+/* Detail card shown after revealing */
+.diag-detail-card {
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Progress bar */
+.progress-section { margin-bottom: 24px; }
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.progress-bg {
+  height: 8px;
+  background: #EDE7D8;
+  position: relative;
+}
+.progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #B33A3A;
+  transition: width 0.3s;
+}
+
+/* Breakdown grid */
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* Footer */
+.footer-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid #D9D0BC;
+}
+.spacer { flex: 1; }
+.footer-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #8B8178;
+  transition: color 0.15s;
+}
+.footer-link:hover { color: #1A1A1A; }
+.footer-link.danger:hover { color: #B33A3A; }
+
+/* Study session */
+.study-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.study-kind {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #8B8178;
+}
+.study-counter { font-size: 11px; color: #8B8178; }
+.study-progress {
+  height: 2px;
+  background: #EDE7D8;
+  position: relative;
+  margin-bottom: 32px;
+}
+.study-progress-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: #B33A3A;
+  transition: width 0.3s;
+}
+.study-card {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.card-jp-large { font-size: 56px; text-align: center; margin-bottom: 16px; font-weight: 500; }
+.card-jp-huge { font-size: 96px; text-align: center; margin-bottom: 16px; font-weight: 500; line-height: 1; }
+.card-jp-medium { font-size: 36px; text-align: center; margin-bottom: 16px; font-weight: 500; }
+.card-reading { font-size: 18px; color: #8B8178; text-align: center; margin-bottom: 8px; }
+.card-meaning {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+.card-onkun {
+  font-size: 13px;
+  color: #8B8178;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.card-section {
+  border-top: 1px solid #D9D0BC;
+  padding-top: 16px;
+  margin-top: 8px;
+}
+.section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8B8178;
+  margin-bottom: 6px;
+}
+.section-text {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.card-example { font-size: 16px; }
+
+.exit-row { margin-top: 32px; display: flex; justify-content: flex-end; }
+.muted-italic {
+  color: #8B8178;
+  font-style: italic;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+/* Reading */
+.passage { padding: 32px; }
+.passage-text { font-size: 16px; line-height: 2.2; }
+.questions-list { display: flex; flex-direction: column; gap: 24px; }
+.question { padding: 20px; }
+.question-text { font-size: 16px; margin-bottom: 16px; font-weight: 500; }
+.options { display: flex; flex-direction: column; gap: 8px; }
+.option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  background: #F5F1E8;
+  border: 1px solid #D9D0BC;
+  font-size: 14px;
+  transition: all 0.15s;
+  color: #1A1A1A;
+}
+.option-btn:hover { border-color: #B33A3A; }
+.option-btn.selected {
+  background: #B33A3A;
+  color: white;
+  border-color: #B33A3A;
+}
+.opt-letter { font-size: 11px; margin-right: 12px; }
+.check-btn { margin-top: 24px; }
+.results-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.result-card {
+  border: 1px solid;
+  padding: 16px;
+}
+.result-card.right { border-color: #4A7C3A; }
+.result-card.wrong { border-color: #B33A3A; }
+.result-q { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.result-you { font-size: 11px; color: #8B8178; }
+.result-correct { font-size: 11px; color: #4A7C3A; margin-top: 4px; }
+
+/* Progress page */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.section-block { margin-bottom: 32px; }
+.section-heading {
+  font-size: 11px;
+  color: #8B8178;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+}
+.breakdown-row { padding: 16px; margin-bottom: 8px; }
+.breakdown-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.breakdown-type {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+.stack-bar {
+  height: 6px;
+  background: #F5F1E8;
+  position: relative;
+  margin-bottom: 8px;
+}
+.stack-mastered {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: #4A7C3A;
+}
+.stack-review {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: #C47E1F;
+}
+.stack-learning {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: #B33A3A;
+}
+.breakdown-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  color: #8B8178;
+}
+.reading-summary { margin-bottom: 24px; }
+.reading-summary > div:last-child { font-size: 14px; }
+.beta-notes {
+  border-top: 1px solid #D9D0BC;
+  padding-top: 24px;
+}
+.beta-notes p {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Top banner: JLPT badge + streak */
+.top-banner {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.jlpt-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #1A1A1A;
+  color: #F5F1E8;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+.streak-pill {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #FFF3E0;
+  color: #C47E1F;
+  border: 1px solid #C47E1F;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+}
+
+/* Section selector */
+.section-selector {
+  margin-bottom: 24px;
+}
+.section-label-mini {
+  font-size: 10px;
+  color: #8B8178;
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.section-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.section-btn {
+  padding: 10px 4px;
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #1A1A1A;
+  transition: all 0.15s;
+}
+.section-btn:hover { border-color: #B33A3A; }
+.section-btn.active {
+  background: #B33A3A;
+  color: white;
+  border-color: #B33A3A;
+}
+/* Category colors override the active state for each section */
+.section-btn.active.section-vocab   { background: #B85C3C; border-color: #B85C3C; }
+.section-btn.active.section-kanji   { background: #2E4A7C; border-color: #2E4A7C; }
+.section-btn.active.section-grammar { background: #2D6B5A; border-color: #2D6B5A; }
+.section-btn.section-vocab:hover   { border-color: #B85C3C; }
+.section-btn.section-kanji:hover   { border-color: #2E4A7C; }
+.section-btn.section-grammar:hover { border-color: #2D6B5A; }
+
+/* ============================================================
+   COLOR PSYCHOLOGY: each study mode has a consistent hue.
+   Research (Wichmann 2002, Lewandowsky 1989) shows color-coded
+   categories aid recall. Hues chosen for distinguishability on
+   the warm cream background:
+     vocab   → rust / terracotta (warm, social, practical)
+     kanji   → deep indigo (reflective, structural)
+     grammar → forest teal (calm, pattern-recognition)
+     reading → muted plum (narrative, comprehension)
+   Vermillion stays as the universal error color.
+   ============================================================ */
+
+.type-vocab-text   { color: #B85C3C !important; }
+.type-kanji-text   { color: #2E4A7C !important; }
+.type-grammar-text { color: #2D6B5A !important; }
+.type-reading-text { color: #6B3A6B !important; }
+
+/* Top accent strip on study cards — subtle but consistent */
+.study-card.type-vocab   { border-top: 3px solid #B85C3C; }
+.study-card.type-kanji   { border-top: 3px solid #2E4A7C; }
+.study-card.type-grammar { border-top: 3px solid #2D6B5A; }
+.diag-prompt-card.type-vocab   { border-top: 3px solid #B85C3C; }
+.diag-prompt-card.type-kanji   { border-top: 3px solid #2E4A7C; }
+.diag-prompt-card.type-grammar { border-top: 3px solid #2D6B5A; }
+
+/* Reading card gets plum accent on dashboard */
+.reading-card-accent {
+  border-left: 3px solid #6B3A6B;
+}
+
+/* Color note hint shown subtly under section selector */
+.color-tip {
+  font-size: 10px;
+  color: #8B8178;
+  font-style: italic;
+  margin-top: 8px;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+}
+
+/* JLPT N3 badge on study cards */
+.card-n3-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  padding: 3px 8px;
+  background: #1A1A1A;
+  color: #F5F1E8;
+}
+.study-card { position: relative; }
+
+/* Memory aid styling */
+.mnem-text {
+  font-style: italic;
+  color: #1A1A1A;
+  background: rgba(179, 58, 58, 0.05);
+  padding: 8px 10px;
+  border-left: 2px solid #B33A3A;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* English translation of example sentences */
+.section-text-en {
+  font-size: 12px;
+  color: #8B8178;
+  font-style: italic;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.card-example-en {
+  font-size: 12px;
+  color: #8B8178;
+  font-style: italic;
+  text-align: center;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.diag-example-en {
+  font-size: 12px;
+  color: #8B8178;
+  font-style: italic;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* Weak items round prompt */
+.weak-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+.weak-h {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 12px 0;
+}
+.weak-p {
+  color: #8B8178;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 auto 24px;
+  max-width: 32em;
+}
+.weak-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.skip-btn { font-weight: normal; }
+
+/* Milestone celebration card */
+.milestone-card {
+  background: linear-gradient(135deg, #FFF3E0, #F5F1E8);
+  border: 2px solid #C47E1F;
+  text-align: center;
+  padding: 28px 24px;
+}
+.milestone-jp {
+  font-size: 56px;
+  color: #C47E1F;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.milestone-label {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: #C47E1F;
+  margin-bottom: 8px;
+}
+.milestone-note {
+  font-size: 14px;
+  color: #1A1A1A;
+  font-style: italic;
+}
+
+/* Encouragement message */
+.encouragement {
+  font-size: 14px;
+  color: #4A7C3A;
+  font-style: italic;
+  margin: 16px 0 24px;
+  font-weight: 500;
+}
+
+/* Match game dashboard card */
+.match-card-accent { border-left: 3px solid #C47E1F; }
+.type-match-text { color: #C47E1F !important; }
+.match-blurb {
+  font-size: 13px;
+  color: #8B8178;
+  font-style: italic;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* Match game screen */
+.match-blurb-row {
+  font-size: 13px;
+  color: #8B8178;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.match-stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 16px;
+}
+.match-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.match-stat-num {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+}
+.match-stat-label {
+  font-size: 10px;
+  color: #8B8178;
+  letter-spacing: 0.15em;
+  margin-top: 4px;
+}
+
+.match-difficulty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.match-diff-label {
+  font-size: 11px;
+  color: #8B8178;
+  letter-spacing: 0.15em;
+}
+.match-diff-btn {
+  padding: 6px 12px;
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  font-size: 12px;
+  color: #1A1A1A;
+  transition: all 0.15s;
+}
+.match-diff-btn:hover { border-color: #C47E1F; }
+.match-diff-btn.active {
+  background: #C47E1F;
+  color: white;
+  border-color: #C47E1F;
+}
+
+/* ====== PAIR MATCH GRID (4-column, mixed JP+EN, square tiles) ====== */
+.pair-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.pair-tile {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6px 4px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-family: inherit;
+  color: #1A1A1A;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s, border-color 0.1s, background-color 0.1s;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(26, 26, 26, 0.06);
+  overflow: hidden;
+}
+
+/* Warm peach for Japanese tiles, cool sage for English. Maintains scannability even when mixed. */
+.pair-tile-jp {
+  background: #F2E4D2;
+  border-color: #DDC9AC;
+}
+.pair-tile-en {
+  background: #E4EEE2;
+  border-color: #C1D4BD;
+}
+
+.pair-tile:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(26, 26, 26, 0.12);
+}
+.pair-tile-jp:hover { border-color: #B85C3C; }
+.pair-tile-en:hover { border-color: #2D6B5A; }
+
+.pair-tile.selected {
+  border-color: #1A1A1A;
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.18), 0 4px 10px rgba(26, 26, 26, 0.15);
+  transform: translateY(-2px) scale(1.03);
+  z-index: 2;
+}
+.pair-tile-jp.selected { background: #F8EBD9; }
+.pair-tile-en.selected { background: #EAF4E7; }
+
+.pair-tile.matched {
+  cursor: default;
+  pointer-events: none;
+  border-color: hsl(var(--pair-hue), 35%, 45%) !important;
+  /* Subtle hue ribbon at bottom + soft tint */
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--pair-hue), 30%, 95%) 0%,
+    hsl(var(--pair-hue), 35%, 88%) 100%
+  ) !important;
+  box-shadow: inset 0 -4px 0 hsl(var(--pair-hue), 50%, 50%);
+  opacity: 0.92;
+}
+
+.pair-tile.match-flash {
+  animation: tile-match-pulse 0.55s ease;
+}
+.pair-tile.miss-flash {
+  animation: tile-miss-shake 0.5s ease;
+  background: #FBE8E5 !important;
+  border-color: #B33A3A !important;
+}
+@keyframes tile-match-pulse {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(74, 124, 58, 0.25); }
+  60%  { transform: scale(1.03); box-shadow: 0 0 0 14px rgba(74, 124, 58, 0); }
+  100% { transform: scale(1); }
+}
+@keyframes tile-miss-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* Tile content */
+.tile-jp-main {
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.15;
+  max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+}
+/* Shrink longer Japanese strings (most often grammar patterns like 〜なければならない) */
+.tile-jp-main.long {
+  font-size: 14px;
+  line-height: 1.2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+.tile-jp-main.very-long {
+  font-size: 12px;
+  line-height: 1.2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+.tile-jp-sub {
+  font-size: 10px;
+  color: #6B5F4F;
+  margin-top: 3px;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.tile-en-main {
+  font-size: 12px;
+  line-height: 1.25;
+  font-style: italic;
+  color: #2A3A2A;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Numbered pair badge on matched tiles */
+.tile-pair-num {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: hsl(var(--pair-hue), 50%, 30%);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Awaiting glow on opposite-face tiles when one side selected */
+.pair-grid-4.awaiting-en .pair-tile-en:not(.matched) {
+  animation: tile-awaiting-en 1.4s ease-in-out infinite;
+}
+.pair-grid-4.awaiting-jp .pair-tile-jp:not(.matched) {
+  animation: tile-awaiting-jp 1.4s ease-in-out infinite;
+}
+@keyframes tile-awaiting-en {
+  0%, 100% { border-color: #C1D4BD; }
+  50%      { border-color: #6B9F5A; }
+}
+@keyframes tile-awaiting-jp {
+  0%, 100% { border-color: #DDC9AC; }
+  50%      { border-color: #B85C3C; }
+}
+
+/* Combo streak badge */
+.combo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: #FFF3E0;
+  border: 1.5px solid #C47E1F;
+  color: #C47E1F;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  border-radius: 2px;
+  animation: combo-pop 0.4s ease;
+}
+@keyframes combo-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.match-footer-row {
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #D9D0BC;
+}
+
+/* Win screen */
+.match-win {
+  text-align: center;
+  padding: 28px 24px;
+}
+.match-new-record {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #C47E1F;
+  color: white;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  margin-bottom: 12px;
+}
+.match-trophy {
+  font-size: 56px;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.match-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.match-score-big {
+  font-size: 48px;
+  font-weight: 500;
+  color: #C47E1F;
+  line-height: 1;
+}
+.match-score-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #8B8178;
+  margin-top: 8px;
+}
+.win-combo-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFF3E0;
+  border: 1.5px solid #C47E1F;
+  padding: 8px 14px;
+  margin-bottom: 16px;
+  border-radius: 2px;
+}
+.win-combo-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #C47E1F;
+  letter-spacing: 0.1em;
+}
+.win-combo-num {
+  font-size: 22px;
+  font-weight: 500;
+  color: #1A1A1A;
+  line-height: 1;
+}
+.win-combo-bonus {
+  font-size: 11px;
+  color: #4A7C3A;
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .shell { padding: 20px 0; }
+  .header-title { font-size: 24px; }
+  .onb-title { font-size: 36px; }
+  .onb-subtitle { font-size: 20px; }
+  .card-jp-huge { font-size: 80px; }
+  .card-jp-large { font-size: 44px; }
+  .card-jp-medium { font-size: 28px; }
+  .stat-row { gap: 16px; }
+  .stat-num { font-size: 28px; }
+  .big-num { font-size: 44px; }
+  .breakdown-legend { flex-direction: column; gap: 4px; }
+  .btn-row-4 .btn-rate { font-size: 9px; padding: 14px 4px; }
+  .stats-grid { gap: 8px; }
+  .card { padding: 16px; }
+  .breakdown-grid { gap: 8px; }
+  .pair-grid-4 { gap: 5px; }
+  .pair-tile { padding: 4px 2px; border-radius: 7px; }
+  .tile-jp-main { font-size: 17px; }
+  .tile-jp-sub { font-size: 9px; margin-top: 2px; }
+  .tile-en-main { font-size: 11px; line-height: 1.22; }
+  .tile-pair-num { width: 18px; height: 18px; font-size: 10px; top: 3px; right: 3px; }
+  .match-stats-bar { gap: 24px; }
+  .match-trophy { font-size: 44px; }
+}
+
+/* Error display (shown if app crashes) */
+#error-display {
+  position: fixed;
+  inset: 0;
+  padding: 24px;
+  background: #F5F1E8;
+  color: #B33A3A;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow: auto;
+  display: none;
+  z-index: 10000;
+}
+
+/* Back row (above-content back button) */
+.back-row {
+  margin-bottom: 16px;
+}
+
+/* Study session improvements */
+.study-kind-row {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #8B8178;
+  margin-bottom: 12px;
+}
+.undo-row {
+  margin-top: 16px;
+  text-align: center;
+}
+
+/* Browse view */
+.tab-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-bottom: 16px;
+}
+.tab-btn {
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  padding: 10px 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #1A1A1A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: all 0.15s;
+}
+.tab-btn:hover { border-color: #B33A3A; }
+.tab-btn.active {
+  background: #B33A3A;
+  color: white;
+  border-color: #B33A3A;
+}
+.tab-label { font-size: 11px; }
+.tab-count { font-size: 9px; opacity: 0.7; }
+
+.search-input {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.browse-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.browse-item {
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+}
+.browse-item.expanded {
+  background: #F5F1E8;
+  border-color: #B33A3A;
+}
+.browse-row {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  color: #1A1A1A;
+  min-height: 44px;
+}
+.browse-row-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.badge {
+  font-size: 10px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.badge.new { background: #D9D0BC; color: #8B8178; }
+.badge.learning { background: #B33A3A; color: white; }
+.badge.review { background: #C47E1F; color: white; }
+.badge.mastered { background: #4A7C3A; color: white; }
+.browse-jp {
+  font-size: 18px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.browse-jp.kanji { font-size: 24px; }
+.browse-reading {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.browse-onkun {
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.browse-en {
+  font-size: 13px;
+  color: #1A1A1A;
+  text-align: right;
+  flex-shrink: 0;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.browse-detail {
+  padding: 0 14px 14px 14px;
+  border-top: 1px solid #D9D0BC;
+  margin-top: 0;
+  padding-top: 12px;
+}
+.browse-detail .section-label { margin-top: 8px; }
+.browse-detail .section-label:first-child { margin-top: 0; }
+.browse-detail-text {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.browse-example {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Reading tab in browse */
+.reading-item .browse-row { padding: 14px; }
+.reading-item .browse-jp { font-size: 16px; }
+.qa-block {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #EDE7D8;
+}
+.qa-q {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.qa-opt {
+  font-size: 13px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  border-radius: 2px;
+}
+.qa-opt.correct {
+  background: rgba(74, 124, 58, 0.15);
+  color: #4A7C3A;
+  font-weight: 500;
+}
+.qa-mark { color: #4A7C3A; font-weight: 700; }
+
+/* Mobile: tighten browse rows */
+@media (max-width: 480px) {
+  .browse-row { padding: 10px 12px; gap: 8px; }
+  .browse-jp { font-size: 16px; }
+  .browse-jp.kanji { font-size: 22px; }
+  .browse-en { font-size: 12px; }
+  .browse-reading, .browse-onkun { font-size: 10px; }
+  .tab-btn { padding: 8px 4px; }
+  .tab-label { font-size: 10px; }
+  .footer-row { gap: 12px; }
+  .footer-link { font-size: 10px; }
+}
+
+</style>
+</head>
+<body>
+<div id="root"><div class="loading">LOADING…</div></div>
+<div id="error-display"></div>
+
+<script>
+window.addEventListener("error", function (e) {
+  var d = document.getElementById("error-display");
+  d.style.display = "block";
+  d.textContent = "ERROR\n\n" + (e.message || "Unknown error") +
+    "\nFile: " + (e.filename || "?") + "\nLine: " + (e.lineno || "?") +
+    "\n\nReload to retry.";
+});
+window.addEventListener("unhandledrejection", function (e) {
+  var d = document.getElementById("error-display");
+  d.style.display = "block";
+  var reason = e.reason && e.reason.message ? e.reason.message : String(e.reason);
+  d.textContent = "PROMISE ERROR\n\n" + reason + "\n\nReload to retry.";
+});
+</script>
+
+<script>
+const VOCAB = [
+  { id: "v1", jp: "経験", r: "けいけん", en: "experience", ex: "多くの経験を積む。", ex_en: "Gain much experience.", efreq: 9, gfreq: 8, pre: 5 },
+  { id: "v2", jp: "説明", r: "せつめい", en: "explanation", ex: "詳しく説明してください。", ex_en: "Please explain in detail.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v3", jp: "意見", r: "いけん", en: "opinion", ex: "あなたの意見を聞かせて。", ex_en: "Let me hear your opinion.", efreq: 9, gfreq: 8, pre: 5 },
+  { id: "v4", jp: "普通", r: "ふつう", en: "ordinary, usual", ex: "普通の日と同じだ。", ex_en: "It's the same as an ordinary day.", efreq: 8, gfreq: 9, pre: 4 },
+  { id: "v5", jp: "連絡", r: "れんらく", en: "contact", ex: "後で連絡します。", ex_en: "I'll contact you later.", efreq: 9, gfreq: 9, pre: 5 },
+  { id: "v6", jp: "準備", r: "じゅんび", en: "preparation", ex: "会議の準備をする。", ex_en: "Prepare for the meeting.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v7", jp: "利用", r: "りよう", en: "use, utilization", ex: "電車を利用する。", ex_en: "Use the train.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v8", jp: "比べる", r: "くらべる", en: "to compare", ex: "去年と比べて暖かい。", ex_en: "It's warm compared to last year.", efreq: 8, gfreq: 7, pre: 4 },
+  { id: "v9", jp: "変わる", r: "かわる", en: "to change (intr.)", ex: "季節が変わる。", ex_en: "The seasons change.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v10", jp: "似る", r: "にる", en: "to resemble", ex: "母に似ている。", ex_en: "I look like my mother.", efreq: 7, gfreq: 7, pre: 3 },
+  { id: "v11", jp: "貸す", r: "かす", en: "to lend", ex: "本を貸してあげる。", ex_en: "I'll lend you a book.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v12", jp: "借りる", r: "かりる", en: "to borrow", ex: "図書館で本を借りる。", ex_en: "Borrow a book from the library.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v13", jp: "集める", r: "あつめる", en: "to gather, collect", ex: "情報を集める。", ex_en: "Gather information.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v14", jp: "選ぶ", r: "えらぶ", en: "to choose", ex: "好きな色を選ぶ。", ex_en: "Choose your favorite color.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v15", jp: "伝える", r: "つたえる", en: "to convey, tell", ex: "気持ちを伝える。", ex_en: "Convey your feelings.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v16", jp: "受ける", r: "うける", en: "to receive, take (exam)", ex: "試験を受ける。", ex_en: "Take an exam.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v17", jp: "守る", r: "まもる", en: "to protect, keep", ex: "約束を守る。", ex_en: "Keep a promise.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v18", jp: "増える", r: "ふえる", en: "to increase", ex: "人口が増える。", ex_en: "The population increases.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v19", jp: "減る", r: "へる", en: "to decrease", ex: "体重が減った。", ex_en: "I lost weight.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v20", jp: "続ける", r: "つづける", en: "to continue", ex: "勉強を続ける。", ex_en: "Continue studying.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v21", jp: "始める", r: "はじめる", en: "to start (tr.)", ex: "新しい仕事を始める。", ex_en: "Start a new job.", efreq: 8, gfreq: 10, pre: 6 },
+  { id: "v22", jp: "苦しい", r: "くるしい", en: "painful", ex: "息が苦しい。", ex_en: "I can't breathe well.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v23", jp: "嬉しい", r: "うれしい", en: "happy, glad", ex: "会えて嬉しい。", ex_en: "I'm glad to meet you.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v24", jp: "悲しい", r: "かなしい", en: "sad", ex: "悲しいニュースだ。", ex_en: "It's sad news.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v25", jp: "優しい", r: "やさしい", en: "kind, gentle", ex: "優しい人だ。", ex_en: "He's a kind person.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v26", jp: "厳しい", r: "きびしい", en: "strict", ex: "厳しい先生だ。", ex_en: "He's a strict teacher.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v27", jp: "静か", r: "しずか", en: "quiet", ex: "静かな部屋。", ex_en: "A quiet room.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "v28", jp: "便利", r: "べんり", en: "convenient", ex: "便利な道具。", ex_en: "A convenient tool.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v29", jp: "不便", r: "ふべん", en: "inconvenient", ex: "駅から遠くて不便だ。", ex_en: "It's inconvenient because it's far from the station.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v30", jp: "簡単", r: "かんたん", en: "easy, simple", ex: "簡単な問題。", ex_en: "An easy problem.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v31", jp: "複雑", r: "ふくざつ", en: "complicated", ex: "複雑な気持ち。", ex_en: "Mixed feelings.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v32", jp: "自由", r: "じゆう", en: "freedom", ex: "自由に使える。", ex_en: "Can be used freely.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v33", jp: "危険", r: "きけん", en: "dangerous", ex: "危険な場所。", ex_en: "A dangerous place.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v34", jp: "安全", r: "あんぜん", en: "safe", ex: "安全に気をつけて。", ex_en: "Be careful for safety.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v35", jp: "特別", r: "とくべつ", en: "special", ex: "特別な日。", ex_en: "A special day.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v36", jp: "必要", r: "ひつよう", en: "necessary", ex: "準備が必要だ。", ex_en: "Preparation is necessary.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v37", jp: "十分", r: "じゅうぶん", en: "enough", ex: "時間は十分ある。", ex_en: "There's plenty of time.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v38", jp: "大切", r: "たいせつ", en: "important, precious", ex: "大切な友達。", ex_en: "An important friend.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "v39", jp: "重要", r: "じゅうよう", en: "important (formal)", ex: "重要な問題。", ex_en: "An important issue.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v40", jp: "可能", r: "かのう", en: "possible", ex: "変更は可能です。", ex_en: "Changes are possible.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v41", jp: "確か", r: "たしか", en: "certain", ex: "確か昨日だった。", ex_en: "I'm pretty sure it was yesterday.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v42", jp: "実は", r: "じつは", en: "actually", ex: "実は知らなかった。", ex_en: "Actually, I didn't know.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v43", jp: "特に", r: "とくに", en: "especially", ex: "特に問題はない。", ex_en: "There's no particular problem.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v44", jp: "結局", r: "けっきょく", en: "in the end", ex: "結局来なかった。", ex_en: "In the end, they didn't come.", efreq: 8, gfreq: 8, pre: 4 },
+  { id: "v45", jp: "例えば", r: "たとえば", en: "for example", ex: "例えばこれです。", ex_en: "For example, this one.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v46", jp: "もちろん", r: "もちろん", en: "of course", ex: "もちろん行きます。", ex_en: "Of course I'll go.", efreq: 7, gfreq: 9, pre: 4 },
+  { id: "v47", jp: "そろそろ", r: "そろそろ", en: "soon, about time", ex: "そろそろ帰ろう。", ex_en: "It's about time to head home.", efreq: 7, gfreq: 7, pre: 3 },
+  { id: "v48", jp: "まるで", r: "まるで", en: "as if", ex: "まるで夢のようだ。", ex_en: "It's just like a dream.", efreq: 7, gfreq: 6, pre: 3 },
+  { id: "v49", jp: "しっかり", r: "しっかり", en: "firmly, properly", ex: "しっかり勉強する。", ex_en: "Study properly.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v50", jp: "なるべく", r: "なるべく", en: "as much as possible", ex: "なるべく早く来て。", ex_en: "Come as early as possible.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v51", jp: "最近", r: "さいきん", en: "recently", ex: "最近忙しい。", ex_en: "I've been busy lately.", efreq: 8, gfreq: 10, pre: 5 },
+  { id: "v52", jp: "将来", r: "しょうらい", en: "future", ex: "将来の夢。", ex_en: "A future dream.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v53", jp: "昔", r: "むかし", en: "long ago", ex: "昔の話だ。", ex_en: "It's an old story.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v54", jp: "今度", r: "こんど", en: "next time", ex: "今度一緒に行こう。", ex_en: "Let's go together next time.", efreq: 7, gfreq: 9, pre: 4 },
+  { id: "v55", jp: "途中", r: "とちゅう", en: "midway", ex: "帰る途中で会った。", ex_en: "I met them on the way home.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v56", jp: "間", r: "あいだ", en: "between, during", ex: "夏休みの間。", ex_en: "During summer vacation.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v57", jp: "理由", r: "りゆう", en: "reason", ex: "遅れた理由は?", ex_en: "What's the reason you're late?", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v58", jp: "原因", r: "げんいん", en: "cause", ex: "事故の原因。", ex_en: "The cause of the accident.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v59", jp: "結果", r: "けっか", en: "result", ex: "テストの結果。", ex_en: "Test results.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v60", jp: "影響", r: "えいきょう", en: "influence", ex: "天気に影響される。", ex_en: "Affected by the weather.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v61", jp: "関係", r: "かんけい", en: "relation", ex: "家族の関係。", ex_en: "Family relationships.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v62", jp: "場合", r: "ばあい", en: "case, situation", ex: "その場合はどうする?", ex_en: "What do you do in that case?", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v63", jp: "方法", r: "ほうほう", en: "method", ex: "新しい方法を試す。", ex_en: "Try a new method.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v64", jp: "目的", r: "もくてき", en: "purpose", ex: "留学の目的。", ex_en: "The purpose of studying abroad.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v65", jp: "内容", r: "ないよう", en: "content", ex: "本の内容を説明する。", ex_en: "Explain the content of the book.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v66", jp: "気持ち", r: "きもち", en: "feeling", ex: "気持ちを伝える。", ex_en: "Convey your feelings.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v67", jp: "気分", r: "きぶん", en: "mood", ex: "今日は気分がいい。", ex_en: "I'm in a good mood today.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v68", jp: "調子", r: "ちょうし", en: "condition", ex: "体の調子はどう?", ex_en: "How is your physical condition?", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v69", jp: "性格", r: "せいかく", en: "personality", ex: "優しい性格だ。", ex_en: "Has a kind personality.", efreq: 7, gfreq: 7, pre: 3 },
+  { id: "v70", jp: "生活", r: "せいかつ", en: "life, living", ex: "一人暮らしの生活。", ex_en: "Life living alone.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v71", jp: "趣味", r: "しゅみ", en: "hobby", ex: "趣味は読書です。", ex_en: "My hobby is reading.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v72", jp: "文化", r: "ぶんか", en: "culture", ex: "日本の文化。", ex_en: "Japanese culture.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v73", jp: "社会", r: "しゃかい", en: "society", ex: "社会問題。", ex_en: "Social issues.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v74", jp: "政治", r: "せいじ", en: "politics", ex: "政治に興味がある。", ex_en: "I'm interested in politics.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v75", jp: "経済", r: "けいざい", en: "economy", ex: "経済のニュース。", ex_en: "Economic news.", efreq: 7, gfreq: 9, pre: 4 },
+  { id: "v76", jp: "環境", r: "かんきょう", en: "environment", ex: "環境を守る。", ex_en: "Protect the environment.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v77", jp: "自然", r: "しぜん", en: "nature", ex: "自然が豊かだ。", ex_en: "Nature is abundant.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v78", jp: "情報", r: "じょうほう", en: "information", ex: "正しい情報を集める。", ex_en: "Gather correct information.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v79", jp: "新聞", r: "しんぶん", en: "newspaper", ex: "朝、新聞を読む。", ex_en: "Read the newspaper in the morning.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v80", jp: "記事", r: "きじ", en: "article", ex: "面白い記事を見つけた。", ex_en: "I found an interesting article.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v81", jp: "番組", r: "ばんぐみ", en: "program (TV)", ex: "好きな番組。", ex_en: "A program I like.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v82", jp: "機会", r: "きかい", en: "opportunity", ex: "いい機会だ。", ex_en: "It's a good opportunity.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v83", jp: "都合", r: "つごう", en: "convenience", ex: "都合が悪い。", ex_en: "It's inconvenient.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v84", jp: "予定", r: "よてい", en: "schedule", ex: "明日の予定。", ex_en: "Tomorrow's schedule.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v85", jp: "予約", r: "よやく", en: "reservation", ex: "レストランを予約する。", ex_en: "Make a restaurant reservation.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v86", jp: "約束", r: "やくそく", en: "promise", ex: "友達との約束。", ex_en: "A promise with a friend.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v87", jp: "相談", r: "そうだん", en: "consultation", ex: "先生に相談する。", ex_en: "Consult with the teacher.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v88", jp: "注意", r: "ちゅうい", en: "attention, caution", ex: "注意してください。", ex_en: "Please be careful.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v89", jp: "確認", r: "かくにん", en: "confirmation", ex: "もう一度確認する。", ex_en: "Confirm once more.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v90", jp: "紹介", r: "しょうかい", en: "introduction", ex: "友達を紹介する。", ex_en: "Introduce a friend.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v91", jp: "案内", r: "あんない", en: "guidance", ex: "駅まで案内する。", ex_en: "Guide them to the station.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v92", jp: "招待", r: "しょうたい", en: "invitation", ex: "パーティーに招待する。", ex_en: "Invite to a party.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v93", jp: "失敗", r: "しっぱい", en: "failure", ex: "失敗を恐れない。", ex_en: "Don't fear failure.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v94", jp: "成功", r: "せいこう", en: "success", ex: "計画が成功した。", ex_en: "The plan succeeded.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v95", jp: "努力", r: "どりょく", en: "effort", ex: "努力の結果だ。", ex_en: "It's the result of effort.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v96", jp: "成長", r: "せいちょう", en: "growth", ex: "子供の成長。", ex_en: "A child's growth.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v97", jp: "変化", r: "へんか", en: "change", ex: "社会の変化。", ex_en: "Social change.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v98", jp: "発見", r: "はっけん", en: "discovery", ex: "新しい発見。", ex_en: "A new discovery.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v99", jp: "発達", r: "はったつ", en: "development", ex: "技術の発達。", ex_en: "Technological development.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v100", jp: "発表", r: "はっぴょう", en: "announcement", ex: "結果の発表。", ex_en: "Announcement of the results.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v101", jp: "調べる", r: "しらべる", en: "to investigate, look up", ex: "辞書で調べる。", ex_en: "Look it up in a dictionary.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v102", jp: "探す", r: "さがす", en: "to search for", ex: "鍵を探している。", ex_en: "I'm looking for my keys.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v103", jp: "諦める", r: "あきらめる", en: "to give up", ex: "夢を諦めない。", ex_en: "Don't give up on your dreams.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v104", jp: "断る", r: "ことわる", en: "to refuse", ex: "誘いを断る。", ex_en: "Refuse an invitation.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v105", jp: "許す", r: "ゆるす", en: "to forgive, allow", ex: "間違いを許す。", ex_en: "Forgive a mistake.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v106", jp: "残す", r: "のこす", en: "to leave behind", ex: "メッセージを残す。", ex_en: "Leave a message.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v107", jp: "進む", r: "すすむ", en: "to advance", ex: "工事が進む。", ex_en: "Construction progresses.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v108", jp: "戻る", r: "もどる", en: "to return", ex: "家に戻る。", ex_en: "Return home.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v109", jp: "運ぶ", r: "はこぶ", en: "to carry", ex: "荷物を運ぶ。", ex_en: "Carry the luggage.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v110", jp: "届ける", r: "とどける", en: "to deliver", ex: "手紙を届ける。", ex_en: "Deliver a letter.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v111", jp: "渡す", r: "わたす", en: "to hand over", ex: "鍵を渡す。", ex_en: "Hand over the key.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v112", jp: "並ぶ", r: "ならぶ", en: "to line up", ex: "レジに並ぶ。", ex_en: "Line up at the register.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "v113", jp: "包む", r: "つつむ", en: "to wrap", ex: "プレゼントを包む。", ex_en: "Wrap the present.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v114", jp: "消える", r: "きえる", en: "to disappear", ex: "光が消える。", ex_en: "The light disappears.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v115", jp: "驚く", r: "おどろく", en: "to be surprised", ex: "結果に驚いた。", ex_en: "I was surprised at the result.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v116", jp: "喜ぶ", r: "よろこぶ", en: "to be glad", ex: "合格を喜ぶ。", ex_en: "Celebrate passing the exam.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v117", jp: "泣く", r: "なく", en: "to cry", ex: "赤ちゃんが泣く。", ex_en: "The baby cries.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v118", jp: "笑う", r: "わらう", en: "to laugh", ex: "みんなで笑う。", ex_en: "Everyone laughs together.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v119", jp: "怒る", r: "おこる", en: "to get angry", ex: "父に怒られた。", ex_en: "I got scolded by my father.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "v120", jp: "倒れる", r: "たおれる", en: "to fall over", ex: "木が倒れる。", ex_en: "The tree falls over.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v121", jp: "壊れる", r: "こわれる", en: "to break (intr.)", ex: "時計が壊れた。", ex_en: "The clock broke.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v122", jp: "汚れる", r: "よごれる", en: "to get dirty", ex: "服が汚れた。", ex_en: "My clothes got dirty.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v123", jp: "乾く", r: "かわく", en: "to dry", ex: "洗濯物が乾く。", ex_en: "The laundry dries.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v124", jp: "濡れる", r: "ぬれる", en: "to get wet", ex: "雨で濡れた。", ex_en: "I got wet from the rain.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v125", jp: "冷える", r: "ひえる", en: "to get cold", ex: "体が冷える。", ex_en: "My body feels cold.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v126", jp: "足りる", r: "たりる", en: "to be enough", ex: "お金が足りない。", ex_en: "I don't have enough money.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v127", jp: "済む", r: "すむ", en: "to finish, end", ex: "仕事が済んだ。", ex_en: "Work is finished.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v128", jp: "届く", r: "とどく", en: "to arrive, reach", ex: "手紙が届いた。", ex_en: "The letter arrived.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v129", jp: "向かう", r: "むかう", en: "to head toward", ex: "駅に向かう。", ex_en: "Head toward the station.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v130", jp: "到着", r: "とうちゃく", en: "arrival", ex: "東京に到着する。", ex_en: "Arrive in Tokyo.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v131", jp: "出発", r: "しゅっぱつ", en: "departure", ex: "朝8時に出発する。", ex_en: "Depart at 8 AM.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v132", jp: "乗り換える", r: "のりかえる", en: "to transfer (train)", ex: "新宿で乗り換える。", ex_en: "Transfer at Shinjuku.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v133", jp: "片付ける", r: "かたづける", en: "to tidy up", ex: "部屋を片付ける。", ex_en: "Tidy up the room.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v134", jp: "並べる", r: "ならべる", en: "to line up (tr.)", ex: "本を並べる。", ex_en: "Line up the books.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v135", jp: "習う", r: "ならう", en: "to learn (from)", ex: "ピアノを習う。", ex_en: "Learn piano.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v136", jp: "慣れる", r: "なれる", en: "to get used to", ex: "東京の生活に慣れる。", ex_en: "Get used to life in Tokyo.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v137", jp: "空気", r: "くうき", en: "air, atmosphere", ex: "新鮮な空気。", ex_en: "Fresh air.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v138", jp: "天気", r: "てんき", en: "weather", ex: "明日の天気。", ex_en: "Tomorrow's weather.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v139", jp: "景色", r: "けしき", en: "scenery", ex: "美しい景色。", ex_en: "Beautiful scenery.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v140", jp: "太陽", r: "たいよう", en: "sun", ex: "太陽が昇る。", ex_en: "The sun rises.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v141", jp: "地球", r: "ちきゅう", en: "earth", ex: "地球を守る。", ex_en: "Protect the earth.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v142", jp: "世界", r: "せかい", en: "world", ex: "世界中を旅する。", ex_en: "Travel around the world.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v143", jp: "国", r: "くに", en: "country", ex: "自分の国が恋しい。", ex_en: "I miss my country.", efreq: 7, gfreq: 10, pre: 6 },
+  { id: "v144", jp: "町", r: "まち", en: "town", ex: "静かな町。", ex_en: "A quiet town.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v145", jp: "道", r: "みち", en: "road, way", ex: "駅までの道。", ex_en: "The road to the station.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v146", jp: "駅", r: "えき", en: "station", ex: "東京駅で会おう。", ex_en: "Let's meet at Tokyo Station.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v147", jp: "交通", r: "こうつう", en: "traffic", ex: "交通が便利だ。", ex_en: "Transportation is convenient.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v148", jp: "切符", r: "きっぷ", en: "ticket", ex: "切符を買う。", ex_en: "Buy a ticket.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v149", jp: "荷物", r: "にもつ", en: "luggage", ex: "重い荷物を持つ。", ex_en: "Carry heavy luggage.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v150", jp: "財布", r: "さいふ", en: "wallet", ex: "財布を忘れた。", ex_en: "I forgot my wallet.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v151", jp: "家族", r: "かぞく", en: "family", ex: "家族と旅行する。", ex_en: "Travel with family.", efreq: 7, gfreq: 10, pre: 5 },
+  { id: "v152", jp: "夫婦", r: "ふうふ", en: "married couple", ex: "若い夫婦。", ex_en: "A young couple.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v153", jp: "両親", r: "りょうしん", en: "parents", ex: "両親に相談する。", ex_en: "Consult with parents.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v154", jp: "兄弟", r: "きょうだい", en: "siblings", ex: "兄弟は三人いる。", ex_en: "I have three siblings.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v155", jp: "親戚", r: "しんせき", en: "relatives", ex: "親戚が集まる。", ex_en: "Relatives gather.", efreq: 5, gfreq: 6, pre: 2 },
+  { id: "v156", jp: "友人", r: "ゆうじん", en: "friend (formal)", ex: "大切な友人。", ex_en: "An important friend.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v157", jp: "知り合い", r: "しりあい", en: "acquaintance", ex: "知り合いに会う。", ex_en: "Meet an acquaintance.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v158", jp: "仲間", r: "なかま", en: "peers, comrades", ex: "会社の仲間。", ex_en: "Coworkers / peers.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v159", jp: "同僚", r: "どうりょう", en: "coworker", ex: "同僚とランチ。", ex_en: "Lunch with a coworker.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v160", jp: "上司", r: "じょうし", en: "boss", ex: "上司に報告する。", ex_en: "Report to my boss.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v161", jp: "部下", r: "ぶか", en: "subordinate", ex: "部下を指導する。", ex_en: "Guide my subordinates.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v162", jp: "先輩", r: "せんぱい", en: "senior", ex: "先輩に聞く。", ex_en: "Ask a senior colleague.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v163", jp: "後輩", r: "こうはい", en: "junior", ex: "後輩を助ける。", ex_en: "Help a junior.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v164", jp: "客", r: "きゃく", en: "customer, guest", ex: "お客様が来た。", ex_en: "A customer has come.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v165", jp: "店員", r: "てんいん", en: "shop clerk", ex: "店員に聞く。", ex_en: "Ask the shop clerk.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v166", jp: "会社", r: "かいしゃ", en: "company", ex: "大きな会社で働く。", ex_en: "Work at a big company.", efreq: 7, gfreq: 10, pre: 6 },
+  { id: "v167", jp: "仕事", r: "しごと", en: "work, job", ex: "新しい仕事を探す。", ex_en: "Look for a new job.", efreq: 8, gfreq: 10, pre: 7 },
+  { id: "v168", jp: "工場", r: "こうじょう", en: "factory", ex: "自動車工場。", ex_en: "Car factory.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v169", jp: "事務所", r: "じむしょ", en: "office", ex: "事務所に電話する。", ex_en: "Call the office.", efreq: 5, gfreq: 6, pre: 2 },
+  { id: "v170", jp: "会議", r: "かいぎ", en: "meeting", ex: "会議に出る。", ex_en: "Attend a meeting.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v171", jp: "書類", r: "しょるい", en: "documents", ex: "書類を準備する。", ex_en: "Prepare the documents.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v172", jp: "報告", r: "ほうこく", en: "report", ex: "結果を報告する。", ex_en: "Report the results.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v173", jp: "提出", r: "ていしゅつ", en: "submission", ex: "宿題を提出する。", ex_en: "Submit homework.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v174", jp: "締め切り", r: "しめきり", en: "deadline", ex: "締め切りは明日だ。", ex_en: "The deadline is tomorrow.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v175", jp: "締め切る", r: "しめきる", en: "to close (deadline)", ex: "受付を締め切る。", ex_en: "Close registration.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v176", jp: "計画", r: "けいかく", en: "plan", ex: "旅行の計画を立てる。", ex_en: "Make a travel plan.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v177", jp: "目標", r: "もくひょう", en: "goal, target", ex: "目標を達成する。", ex_en: "Achieve a goal.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v178", jp: "実現", r: "じつげん", en: "realization", ex: "夢を実現する。", ex_en: "Realize a dream.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v179", jp: "達成", r: "たっせい", en: "achievement", ex: "目標を達成する。", ex_en: "Achieve a target.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v180", jp: "解決", r: "かいけつ", en: "solution", ex: "問題を解決する。", ex_en: "Solve a problem.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v181", jp: "問題", r: "もんだい", en: "problem, question", ex: "難しい問題だ。", ex_en: "It's a difficult problem.", efreq: 8, gfreq: 10, pre: 6 },
+  { id: "v182", jp: "答え", r: "こたえ", en: "answer", ex: "正しい答え。", ex_en: "The correct answer.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v183", jp: "試験", r: "しけん", en: "exam", ex: "大切な試験。", ex_en: "An important exam.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "v184", jp: "成績", r: "せいせき", en: "grades, results", ex: "成績が上がる。", ex_en: "Grades improve.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v185", jp: "合格", r: "ごうかく", en: "passing (exam)", ex: "試験に合格する。", ex_en: "Pass an exam.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v186", jp: "不合格", r: "ふごうかく", en: "failure (exam)", ex: "不合格だった。", ex_en: "I failed.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v187", jp: "卒業", r: "そつぎょう", en: "graduation", ex: "大学を卒業する。", ex_en: "Graduate from university.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v188", jp: "入学", r: "にゅうがく", en: "school entrance", ex: "4月に入学する。", ex_en: "Enroll in April.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v189", jp: "授業", r: "じゅぎょう", en: "class (lesson)", ex: "授業が始まる。", ex_en: "Class begins.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v190", jp: "宿題", r: "しゅくだい", en: "homework", ex: "宿題をする。", ex_en: "Do homework.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v191", jp: "辞書", r: "じしょ", en: "dictionary", ex: "辞書で調べる。", ex_en: "Look it up in the dictionary.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v192", jp: "教科書", r: "きょうかしょ", en: "textbook", ex: "教科書を開く。", ex_en: "Open the textbook.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v193", jp: "鉛筆", r: "えんぴつ", en: "pencil", ex: "鉛筆で書く。", ex_en: "Write with a pencil.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v194", jp: "消しゴム", r: "けしごむ", en: "eraser", ex: "消しゴムを貸して。", ex_en: "Lend me your eraser.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v195", jp: "料理", r: "りょうり", en: "cooking, dish", ex: "日本料理が好き。", ex_en: "I like Japanese food.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v196", jp: "材料", r: "ざいりょう", en: "ingredient", ex: "材料を買う。", ex_en: "Buy ingredients.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v197", jp: "味", r: "あじ", en: "taste, flavor", ex: "この味が好き。", ex_en: "I like this flavor.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v198", jp: "甘い", r: "あまい", en: "sweet", ex: "甘いお菓子。", ex_en: "Sweet candy.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v199", jp: "辛い", r: "からい", en: "spicy", ex: "辛いカレー。", ex_en: "Spicy curry.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v200", jp: "温かい", r: "あたたかい", en: "warm", ex: "温かいスープ。", ex_en: "Warm soup.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v201", jp: "冷たい", r: "つめたい", en: "cold (to touch)", ex: "冷たい水。", ex_en: "Cold water.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v202", jp: "新鮮", r: "しんせん", en: "fresh", ex: "新鮮な野菜。", ex_en: "Fresh vegetables.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v203", jp: "健康", r: "けんこう", en: "health", ex: "健康が大切だ。", ex_en: "Health is important.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v204", jp: "病気", r: "びょうき", en: "illness", ex: "病気になる。", ex_en: "Get sick.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v205", jp: "怪我", r: "けが", en: "injury", ex: "怪我をした。", ex_en: "I got injured.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v206", jp: "薬", r: "くすり", en: "medicine", ex: "薬を飲む。", ex_en: "Take medicine.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v207", jp: "治る", r: "なおる", en: "to heal", ex: "風邪が治る。", ex_en: "Recover from a cold.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v208", jp: "治す", r: "なおす", en: "to cure, fix", ex: "病気を治す。", ex_en: "Cure an illness.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v209", jp: "痛い", r: "いたい", en: "painful", ex: "頭が痛い。", ex_en: "I have a headache.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v210", jp: "眠い", r: "ねむい", en: "sleepy", ex: "今日は眠い。", ex_en: "I'm sleepy today.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v211", jp: "疲れる", r: "つかれる", en: "to get tired", ex: "仕事で疲れた。", ex_en: "I got tired from work.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v212", jp: "休む", r: "やすむ", en: "to rest", ex: "少し休もう。", ex_en: "Let's rest a bit.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v213", jp: "寝る", r: "ねる", en: "to sleep", ex: "早く寝る。", ex_en: "Go to bed early.", efreq: 5, gfreq: 10, pre: 4 },
+  { id: "v214", jp: "起きる", r: "おきる", en: "to wake, happen", ex: "6時に起きる。", ex_en: "Wake up at 6.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v215", jp: "洗う", r: "あらう", en: "to wash", ex: "手を洗う。", ex_en: "Wash hands.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v216", jp: "着る", r: "きる", en: "to wear (upper)", ex: "セーターを着る。", ex_en: "Wear a sweater.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v217", jp: "脱ぐ", r: "ぬぐ", en: "to take off", ex: "靴を脱ぐ。", ex_en: "Take off shoes.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v218", jp: "掃除", r: "そうじ", en: "cleaning", ex: "部屋を掃除する。", ex_en: "Clean the room.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v219", jp: "洗濯", r: "せんたく", en: "laundry", ex: "洗濯をする。", ex_en: "Do laundry.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v220", jp: "買い物", r: "かいもの", en: "shopping", ex: "週末は買い物に行く。", ex_en: "Go shopping on weekends.", efreq: 5, gfreq: 9, pre: 3 },
+  { id: "v221", jp: "店", r: "みせ", en: "shop", ex: "新しい店ができた。", ex_en: "A new shop opened.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v222", jp: "商品", r: "しょうひん", en: "product", ex: "新しい商品。", ex_en: "A new product.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v223", jp: "値段", r: "ねだん", en: "price", ex: "値段が高い。", ex_en: "The price is high.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v224", jp: "安い", r: "やすい", en: "cheap", ex: "安いレストラン。", ex_en: "A cheap restaurant.", efreq: 5, gfreq: 10, pre: 4 },
+  { id: "v225", jp: "高い", r: "たかい", en: "expensive, tall", ex: "高いビル。", ex_en: "A tall building.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v226", jp: "お金", r: "おかね", en: "money", ex: "お金が必要だ。", ex_en: "I need money.", efreq: 7, gfreq: 10, pre: 6 },
+  { id: "v227", jp: "現金", r: "げんきん", en: "cash", ex: "現金で払う。", ex_en: "Pay in cash.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v228", jp: "支払い", r: "しはらい", en: "payment", ex: "支払いをする。", ex_en: "Make a payment.", efreq: 5, gfreq: 6, pre: 2 },
+  { id: "v229", jp: "払う", r: "はらう", en: "to pay", ex: "お金を払う。", ex_en: "Pay money.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "v230", jp: "貯金", r: "ちょきん", en: "savings", ex: "毎月貯金する。", ex_en: "Save money each month.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v231", jp: "銀行", r: "ぎんこう", en: "bank", ex: "銀行でお金をおろす。", ex_en: "Withdraw money at the bank.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v232", jp: "電気", r: "でんき", en: "electricity, light", ex: "電気をつける。", ex_en: "Turn on the lights.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v233", jp: "水道", r: "すいどう", en: "water supply", ex: "水道の水。", ex_en: "Tap water.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v234", jp: "ガス", r: "がす", en: "gas", ex: "ガスを止める。", ex_en: "Turn off the gas.", efreq: 3, gfreq: 6, pre: 2 },
+  { id: "v235", jp: "機械", r: "きかい", en: "machine", ex: "機械が故障した。", ex_en: "The machine broke down.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v236", jp: "道具", r: "どうぐ", en: "tool", ex: "便利な道具。", ex_en: "A useful tool.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v237", jp: "技術", r: "ぎじゅつ", en: "technology, skill", ex: "新しい技術。", ex_en: "New technology.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v238", jp: "研究", r: "けんきゅう", en: "research", ex: "大学で研究する。", ex_en: "Do research at university.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v239", jp: "実験", r: "じっけん", en: "experiment", ex: "実験を行う。", ex_en: "Conduct an experiment.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v240", jp: "開発", r: "かいはつ", en: "development (tech)", ex: "新製品の開発。", ex_en: "New product development.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v241", jp: "製品", r: "せいひん", en: "product", ex: "高品質の製品。", ex_en: "High-quality products.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v242", jp: "品質", r: "ひんしつ", en: "quality", ex: "品質が良い。", ex_en: "The quality is good.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v243", jp: "味方", r: "みかた", en: "ally", ex: "私の味方。", ex_en: "My ally.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v244", jp: "敵", r: "てき", en: "enemy", ex: "恐ろしい敵。", ex_en: "A terrifying enemy.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v245", jp: "戦争", r: "せんそう", en: "war", ex: "戦争が終わる。", ex_en: "The war ends.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v246", jp: "平和", r: "へいわ", en: "peace", ex: "世界の平和。", ex_en: "World peace.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v247", jp: "事故", r: "じこ", en: "accident", ex: "交通事故。", ex_en: "Traffic accident.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v248", jp: "災害", r: "さいがい", en: "disaster", ex: "自然災害。", ex_en: "Natural disaster.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v249", jp: "地震", r: "じしん", en: "earthquake", ex: "地震が起きた。", ex_en: "An earthquake occurred.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v250", jp: "津波", r: "つなみ", en: "tsunami", ex: "津波が心配だ。", ex_en: "I'm worried about tsunamis.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v251", jp: "台風", r: "たいふう", en: "typhoon", ex: "台風が来る。", ex_en: "A typhoon is coming.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v252", jp: "火事", r: "かじ", en: "fire (disaster)", ex: "火事に気をつける。", ex_en: "Be careful of fires.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v253", jp: "救急車", r: "きゅうきゅうしゃ", en: "ambulance", ex: "救急車を呼ぶ。", ex_en: "Call an ambulance.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v254", jp: "警察", r: "けいさつ", en: "police", ex: "警察に連絡する。", ex_en: "Contact the police.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v255", jp: "法律", r: "ほうりつ", en: "law", ex: "法律を守る。", ex_en: "Obey the law.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v256", jp: "選挙", r: "せんきょ", en: "election", ex: "選挙に行く。", ex_en: "Go to the election.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v257", jp: "政府", r: "せいふ", en: "government", ex: "政府の発表。", ex_en: "Government announcement.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v258", jp: "国民", r: "こくみん", en: "citizen", ex: "国民の声。", ex_en: "The voice of the people.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v259", jp: "人口", r: "じんこう", en: "population", ex: "人口が増える。", ex_en: "Population grows.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v260", jp: "歴史", r: "れきし", en: "history", ex: "日本の歴史。", ex_en: "Japanese history.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v261", jp: "伝統", r: "でんとう", en: "tradition", ex: "古い伝統。", ex_en: "An old tradition.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v262", jp: "習慣", r: "しゅうかん", en: "custom, habit", ex: "朝の習慣。", ex_en: "Morning habits.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v263", jp: "季節", r: "きせつ", en: "season", ex: "季節が変わる。", ex_en: "The seasons change.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v264", jp: "お祭り", r: "おまつり", en: "festival", ex: "夏のお祭り。", ex_en: "Summer festival.", efreq: 4, gfreq: 8, pre: 3 },
+  { id: "v265", jp: "行事", r: "ぎょうじ", en: "event (annual)", ex: "学校の行事。", ex_en: "School events.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v266", jp: "休日", r: "きゅうじつ", en: "holiday", ex: "休日を楽しむ。", ex_en: "Enjoy the holiday.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v267", jp: "旅行", r: "りょこう", en: "travel", ex: "家族で旅行する。", ex_en: "Travel with family.", efreq: 5, gfreq: 9, pre: 4 },
+  { id: "v268", jp: "観光", r: "かんこう", en: "sightseeing", ex: "京都で観光する。", ex_en: "Sightsee in Kyoto.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v269", jp: "ホテル", r: "ほてる", en: "hotel", ex: "ホテルを予約する。", ex_en: "Book a hotel.", efreq: 4, gfreq: 9, pre: 3 },
+  { id: "v270", jp: "空港", r: "くうこう", en: "airport", ex: "空港まで迎えに行く。", ex_en: "Pick up at the airport.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v271", jp: "飛行機", r: "ひこうき", en: "airplane", ex: "飛行機に乗る。", ex_en: "Board a plane.", efreq: 4, gfreq: 8, pre: 3 },
+  { id: "v272", jp: "列車", r: "れっしゃ", en: "train", ex: "特急列車。", ex_en: "Express train.", efreq: 3, gfreq: 6, pre: 1 },
+  { id: "v273", jp: "地下鉄", r: "ちかてつ", en: "subway", ex: "地下鉄で通勤する。", ex_en: "Commute by subway.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v274", jp: "自転車", r: "じてんしゃ", en: "bicycle", ex: "自転車で行く。", ex_en: "Go by bicycle.", efreq: 4, gfreq: 8, pre: 3 },
+  { id: "v275", jp: "公園", r: "こうえん", en: "park", ex: "公園で遊ぶ。", ex_en: "Play in the park.", efreq: 4, gfreq: 9, pre: 3 },
+  { id: "v276", jp: "図書館", r: "としょかん", en: "library", ex: "図書館で勉強する。", ex_en: "Study at the library.", efreq: 4, gfreq: 7, pre: 3 },
+  { id: "v277", jp: "美術館", r: "びじゅつかん", en: "art museum", ex: "美術館を訪れる。", ex_en: "Visit the art museum.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v278", jp: "博物館", r: "はくぶつかん", en: "museum", ex: "博物館で学ぶ。", ex_en: "Learn at the museum.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v279", jp: "病院", r: "びょういん", en: "hospital", ex: "病院に行く。", ex_en: "Go to the hospital.", efreq: 4, gfreq: 8, pre: 3 },
+  { id: "v280", jp: "郵便局", r: "ゆうびんきょく", en: "post office", ex: "郵便局で手紙を出す。", ex_en: "Send a letter at the post office.", efreq: 3, gfreq: 6, pre: 2 },
+  { id: "v281", jp: "警察署", r: "けいさつしょ", en: "police station", ex: "警察署に届ける。", ex_en: "Report at the police station.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v282", jp: "市役所", r: "しやくしょ", en: "city hall", ex: "市役所で手続きする。", ex_en: "Process paperwork at city hall.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v283", jp: "手続き", r: "てつづき", en: "procedure", ex: "手続きを進める。", ex_en: "Proceed with the procedure.", efreq: 5, gfreq: 6, pre: 2 },
+  { id: "v284", jp: "申し込み", r: "もうしこみ", en: "application", ex: "申し込みを受け付ける。", ex_en: "Accept applications.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v285", jp: "申し込む", r: "もうしこむ", en: "to apply", ex: "コースに申し込む。", ex_en: "Apply for a course.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v286", jp: "受付", r: "うけつけ", en: "reception", ex: "受付で名前を言う。", ex_en: "Give your name at reception.", efreq: 4, gfreq: 7, pre: 2 },
+  { id: "v287", jp: "番号", r: "ばんごう", en: "number", ex: "電話番号を教える。", ex_en: "Tell me your phone number.", efreq: 5, gfreq: 9, pre: 3 },
+  { id: "v288", jp: "住所", r: "じゅうしょ", en: "address", ex: "住所を書く。", ex_en: "Write your address.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v289", jp: "名前", r: "なまえ", en: "name", ex: "名前を教えてください。", ex_en: "Please tell me your name.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v290", jp: "誕生日", r: "たんじょうび", en: "birthday", ex: "誕生日おめでとう。", ex_en: "Happy birthday.", efreq: 3, gfreq: 8, pre: 3 },
+  { id: "v291", jp: "年齢", r: "ねんれい", en: "age", ex: "年齢を聞く。", ex_en: "Ask someone's age.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v292", jp: "年代", r: "ねんだい", en: "era, generation", ex: "80年代の音楽。", ex_en: "80s music.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v293", jp: "世代", r: "せだい", en: "generation", ex: "若い世代。", ex_en: "The younger generation.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v294", jp: "若い", r: "わかい", en: "young", ex: "若い頃の話。", ex_en: "Story from when I was young.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v295", jp: "年寄り", r: "としより", en: "elderly person", ex: "年寄りに親切に。", ex_en: "Be kind to the elderly.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v296", jp: "男性", r: "だんせい", en: "male", ex: "男性の声。", ex_en: "A male voice.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v297", jp: "女性", r: "じょせい", en: "female", ex: "女性の意見。", ex_en: "A female perspective.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v298", jp: "子供", r: "こども", en: "child", ex: "子供が三人いる。", ex_en: "I have three children.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v299", jp: "大人", r: "おとな", en: "adult", ex: "大人の責任。", ex_en: "Adult responsibility.", efreq: 5, gfreq: 9, pre: 4 },
+  { id: "v300", jp: "赤ちゃん", r: "あかちゃん", en: "baby", ex: "赤ちゃんが生まれた。", ex_en: "A baby was born.", efreq: 4, gfreq: 8, pre: 3 },
+  { id: "v301", jp: "生まれる", r: "うまれる", en: "to be born", ex: "日本で生まれた。", ex_en: "Born in Japan.", efreq: 5, gfreq: 9, pre: 4 },
+  { id: "v302", jp: "死ぬ", r: "しぬ", en: "to die", ex: "祖父が死んだ。", ex_en: "My grandfather died.", efreq: 4, gfreq: 8, pre: 3 },
+  { id: "v303", jp: "生きる", r: "いきる", en: "to live", ex: "幸せに生きる。", ex_en: "Live happily.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v304", jp: "育てる", r: "そだてる", en: "to raise", ex: "子供を育てる。", ex_en: "Raise children.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v305", jp: "育つ", r: "そだつ", en: "to grow up", ex: "田舎で育った。", ex_en: "I grew up in the countryside.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v306", jp: "嘘", r: "うそ", en: "lie", ex: "嘘をつく。", ex_en: "Tell a lie.", efreq: 4, gfreq: 8, pre: 3 },
+  { id: "v307", jp: "本当", r: "ほんとう", en: "true, real", ex: "本当の話。", ex_en: "A true story.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v308", jp: "実際", r: "じっさい", en: "actual, reality", ex: "実際に見てみる。", ex_en: "See it in person.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v309", jp: "事実", r: "じじつ", en: "fact", ex: "事実を知る。", ex_en: "Know the facts.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v310", jp: "考え", r: "かんがえ", en: "thought, idea", ex: "良い考えだ。", ex_en: "That's a good idea.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v311", jp: "考える", r: "かんがえる", en: "to think", ex: "よく考える。", ex_en: "Think carefully.", efreq: 8, gfreq: 10, pre: 6 },
+  { id: "v312", jp: "思い出す", r: "おもいだす", en: "to recall", ex: "昔を思い出す。", ex_en: "Remember the old days.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v313", jp: "忘れる", r: "わすれる", en: "to forget", ex: "名前を忘れた。", ex_en: "I forgot the name.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v314", jp: "覚える", r: "おぼえる", en: "to memorize, remember", ex: "単語を覚える。", ex_en: "Memorize words.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v315", jp: "意味", r: "いみ", en: "meaning", ex: "単語の意味。", ex_en: "The meaning of a word.", efreq: 7, gfreq: 10, pre: 5 },
+  { id: "v316", jp: "違う", r: "ちがう", en: "to differ, be wrong", ex: "意見が違う。", ex_en: "Opinions differ.", efreq: 7, gfreq: 10, pre: 5 },
+  { id: "v317", jp: "同じ", r: "おなじ", en: "same", ex: "同じ答え。", ex_en: "The same answer.", efreq: 7, gfreq: 10, pre: 5 },
+  { id: "v318", jp: "別", r: "べつ", en: "separate, different", ex: "別の方法。", ex_en: "A different method.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v319", jp: "以上", r: "いじょう", en: "more than, above", ex: "千円以上。", ex_en: "1000 yen or more.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "v320", jp: "以下", r: "いか", en: "less than, below", ex: "二十歳以下。", ex_en: "20 years old or younger.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "v321", jp: "以外", r: "いがい", en: "except for", ex: "日本以外の国。", ex_en: "Countries other than Japan.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v322", jp: "意外", r: "いがい", en: "unexpected", ex: "意外と美味しい。", ex_en: "Surprisingly delicious.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v323", jp: "当然", r: "とうぜん", en: "of course, natural", ex: "当然のことだ。", ex_en: "It's a matter of course.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v324", jp: "偶然", r: "ぐうぜん", en: "coincidence", ex: "偶然会った。", ex_en: "Met by coincidence.", efreq: 5, gfreq: 6, pre: 2 },
+  { id: "v325", jp: "絶対", r: "ぜったい", en: "absolutely", ex: "絶対に来る。", ex_en: "I'll definitely come.", efreq: 7, gfreq: 9, pre: 4 },
+  { id: "v326", jp: "必ず", r: "かならず", en: "without fail", ex: "必ず守る。", ex_en: "I'll keep it for sure.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v327", jp: "きっと", r: "きっと", en: "surely", ex: "きっと来る。", ex_en: "They'll surely come.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v328", jp: "たぶん", r: "たぶん", en: "probably", ex: "たぶん雨が降る。", ex_en: "It will probably rain.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v329", jp: "もし", r: "もし", en: "if", ex: "もし雨なら中止。", ex_en: "If it rains, it's canceled.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v330", jp: "なぜ", r: "なぜ", en: "why", ex: "なぜ遅れた?", ex_en: "Why are you late?", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v331", jp: "どうして", r: "どうして", en: "why", ex: "どうして来ないの?", ex_en: "Why aren't you coming?", efreq: 5, gfreq: 9, pre: 4 },
+  { id: "v332", jp: "どうやって", r: "どうやって", en: "how", ex: "どうやって作る?", ex_en: "How do you make it?", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v333", jp: "いくら", r: "いくら", en: "how much", ex: "これはいくらですか。", ex_en: "How much is this?", efreq: 5, gfreq: 9, pre: 3 },
+  { id: "v334", jp: "どのくらい", r: "どのくらい", en: "how much/long", ex: "どのくらいかかる?", ex_en: "How long does it take?", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v335", jp: "全然", r: "ぜんぜん", en: "not at all", ex: "全然分からない。", ex_en: "I don't understand at all.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v336", jp: "あまり", r: "あまり", en: "not very (neg.)", ex: "あまり好きじゃない。", ex_en: "I don't like it much.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v337", jp: "ほとんど", r: "ほとんど", en: "almost, hardly", ex: "ほとんど終わった。", ex_en: "Almost finished.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "v338", jp: "少し", r: "すこし", en: "a little", ex: "少し待って。", ex_en: "Wait a little.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v339", jp: "ちょっと", r: "ちょっと", en: "a bit", ex: "ちょっと待って。", ex_en: "Wait a moment.", efreq: 5, gfreq: 10, pre: 5 },
+  { id: "v340", jp: "もっと", r: "もっと", en: "more", ex: "もっと頑張ろう。", ex_en: "Let's try harder.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v341", jp: "やっと", r: "やっと", en: "finally", ex: "やっと終わった。", ex_en: "Finally finished.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "v342", jp: "ついに", r: "ついに", en: "at last", ex: "ついに勝った。", ex_en: "We finally won.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v343", jp: "急に", r: "きゅうに", en: "suddenly", ex: "急に雨が降った。", ex_en: "It suddenly started to rain.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v344", jp: "突然", r: "とつぜん", en: "suddenly", ex: "突然現れた。", ex_en: "Suddenly appeared.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v345", jp: "すぐ", r: "すぐ", en: "right away", ex: "すぐ行く。", ex_en: "I'll go right away.", efreq: 6, gfreq: 10, pre: 5 },
+  { id: "v346", jp: "やはり", r: "やはり", en: "as expected", ex: "やはり難しい。", ex_en: "As expected, it's difficult.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "v347", jp: "どうしても", r: "どうしても", en: "no matter what", ex: "どうしても行きたい。", ex_en: "I really want to go.", efreq: 5, gfreq: 7, pre: 2 },
+  { id: "v348", jp: "わざわざ", r: "わざわざ", en: "going out of one's way", ex: "わざわざありがとう。", ex_en: "Thanks for going out of your way.", efreq: 5, gfreq: 6, pre: 2 },
+  { id: "v349", jp: "せっかく", r: "せっかく", en: "with much effort/trouble", ex: "せっかく来たのに。", ex_en: "Even though I came all this way…", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v350", jp: "ちゃんと", r: "ちゃんと", en: "properly", ex: "ちゃんと食べる。", ex_en: "Eat properly.", efreq: 5, gfreq: 8, pre: 3 },
+];
+
+const KANJI = [
+  { id: "k1", jp: "経", on: "ケイ", kun: "へる", meaning: "pass through", comp: "糸 thread + 巠 stream", mnem: "A thread passing through time — experience accumulates.", efreq: 8, gfreq: 7, pre: 6 },
+  { id: "k2", jp: "験", on: "ケン", kun: "—", meaning: "test, examine", comp: "馬 horse + 僉 all together", mnem: "Testing all the horses together.", efreq: 8, gfreq: 7, pre: 5 },
+  { id: "k3", jp: "説", on: "セツ", kun: "とく", meaning: "explain", comp: "言 words + 兌 exchange", mnem: "Exchanging words to explain.", efreq: 9, gfreq: 8, pre: 6 },
+  { id: "k4", jp: "意", on: "イ", kun: "—", meaning: "idea, meaning", comp: "音 sound + 心 heart", mnem: "The sound of the heart — your intention.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k5", jp: "見", on: "ケン", kun: "みる", meaning: "see", comp: "目 eye + 儿 legs", mnem: "Eye on legs walking around, seeing.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k6", jp: "普", on: "フ", kun: "—", meaning: "general, common", comp: "並 line up + 日 sun", mnem: "The sun shines equally on all — common.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k7", jp: "通", on: "ツウ", kun: "とおる", meaning: "pass through", comp: "辶 road + 甬 sprout", mnem: "A sprout pushing through — passing through.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k8", jp: "連", on: "レン", kun: "つらなる", meaning: "link, take along", comp: "辶 road + 車 car", mnem: "A car on the road, linked.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k9", jp: "絡", on: "ラク", kun: "からむ", meaning: "entwine, contact", comp: "糸 thread + 各 each", mnem: "Each thread entwined — contact.", efreq: 7, gfreq: 6, pre: 4 },
+  { id: "k10", jp: "準", on: "ジュン", kun: "—", meaning: "standard", comp: "氵 water + 隹 bird", mnem: "A bird over water — the standard.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k11", jp: "備", on: "ビ", kun: "そなえる", meaning: "prepare, equip", comp: "亻 person + 備 self", mnem: "A person preparing equipment.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k12", jp: "利", on: "リ", kun: "きく", meaning: "profit, advantage", comp: "禾 rice + 刂 knife", mnem: "Cutting rice for profit.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k13", jp: "用", on: "ヨウ", kun: "もちいる", meaning: "use, business", comp: "stand-alone", mnem: "A useful container.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k14", jp: "比", on: "ヒ", kun: "くらべる", meaning: "compare", comp: "two people side by side", mnem: "Two figures comparing.", efreq: 7, gfreq: 6, pre: 4 },
+  { id: "k15", jp: "変", on: "ヘン", kun: "かわる", meaning: "change, strange", comp: "亦 also + 夂 slow walk", mnem: "Also slowly walking — things change.", efreq: 9, gfreq: 8, pre: 6 },
+  { id: "k16", jp: "化", on: "カ", kun: "ばける", meaning: "change into", comp: "亻 person + 匕 sitting", mnem: "Standing becoming sitting — transformation.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k17", jp: "貸", on: "タイ", kun: "かす", meaning: "lend", comp: "代 substitute + 貝 shell", mnem: "Substituting money — lending.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k18", jp: "借", on: "シャク", kun: "かりる", meaning: "borrow", comp: "亻 person + 昔 old", mnem: "A person from old times borrowing.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k19", jp: "集", on: "シュウ", kun: "あつめる", meaning: "gather", comp: "隹 bird + 木 tree", mnem: "Birds gathering in a tree.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k20", jp: "選", on: "セン", kun: "えらぶ", meaning: "choose", comp: "辶 road + 巽 figures", mnem: "Walking to choose.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k21", jp: "伝", on: "デン", kun: "つたえる", meaning: "convey", comp: "亻 person + 云 cloud", mnem: "A person passing words like clouds.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k22", jp: "受", on: "ジュ", kun: "うける", meaning: "receive", comp: "爫 hand + 又 hand", mnem: "Two hands exchanging — receiving.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k23", jp: "守", on: "シュ", kun: "まもる", meaning: "protect", comp: "宀 roof + 寸 hand", mnem: "A hand protecting under a roof.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k24", jp: "増", on: "ゾウ", kun: "ふえる", meaning: "increase", comp: "土 earth + 曽 layers", mnem: "Layers of earth piling up.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k25", jp: "減", on: "ゲン", kun: "へる", meaning: "decrease", comp: "氵 water + 咸 all", mnem: "Water draining — decreasing.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k26", jp: "続", on: "ゾク", kun: "つづく", meaning: "continue", comp: "糸 thread + 売 sell", mnem: "A thread of sales continuing.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k27", jp: "始", on: "シ", kun: "はじめる", meaning: "begin", comp: "女 woman + 台 platform", mnem: "A woman stepping up — beginning.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k28", jp: "苦", on: "ク", kun: "くるしい", meaning: "suffer, bitter", comp: "艹 grass + 古 old", mnem: "Old grass — bitter.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k29", jp: "悲", on: "ヒ", kun: "かなしい", meaning: "sad", comp: "非 not + 心 heart", mnem: "Heart not right — sad.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k30", jp: "優", on: "ユウ", kun: "やさしい", meaning: "gentle", comp: "亻 person + 憂 worry", mnem: "Person who worries for others — gentle.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k31", jp: "厳", on: "ゲン", kun: "きびしい", meaning: "strict", comp: "严 stern + 敢 daring", mnem: "Stern and daring — strict.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k32", jp: "静", on: "セイ", kun: "しずか", meaning: "quiet", comp: "青 blue + 争 contest", mnem: "Blue ending of contest — silence.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k33", jp: "便", on: "ベン", kun: "たより", meaning: "convenience", comp: "亻 person + 更 again", mnem: "Person doing it again easily.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "k34", jp: "簡", on: "カン", kun: "—", meaning: "simple", comp: "竹 bamboo + 間 space", mnem: "Simple space between bamboo.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k35", jp: "複", on: "フク", kun: "—", meaning: "compound", comp: "衤 clothes + 复 return", mnem: "Layers of clothes — doubled.", efreq: 7, gfreq: 7, pre: 3 },
+  { id: "k36", jp: "雑", on: "ザツ", kun: "—", meaning: "miscellaneous", comp: "九 + 木 + 隹", mnem: "Nine birds in a tree — mixed.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k37", jp: "由", on: "ユ", kun: "よし", meaning: "reason", comp: "stand-alone", mnem: "Sprouting — the origin.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k38", jp: "危", on: "キ", kun: "あぶない", meaning: "dangerous", comp: "厃 cliff + 卩 kneel", mnem: "Kneeling at a cliff — dangerous.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k39", jp: "険", on: "ケン", kun: "けわしい", meaning: "steep, risk", comp: "阝 hill + 僉 all", mnem: "A hill where everyone goes.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k40", jp: "全", on: "ゼン", kun: "すべて", meaning: "all, whole", comp: "入 enter + 王 king", mnem: "Entering as king — whole.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k41", jp: "特", on: "トク", kun: "—", meaning: "special", comp: "牛 cow + 寺 temple", mnem: "Cow at a temple — special.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k42", jp: "別", on: "ベツ", kun: "わかれる", meaning: "separate", comp: "另 separate + 刂 knife", mnem: "Knife separating things.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k43", jp: "必", on: "ヒツ", kun: "かならず", meaning: "necessary", comp: "心 heart + 丿 slash", mnem: "Slash through the heart — you must.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k44", jp: "要", on: "ヨウ", kun: "いる", meaning: "need", comp: "西 west + 女 woman", mnem: "Essential western woman.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k45", jp: "重", on: "ジュウ", kun: "おもい", meaning: "heavy, important", comp: "千 thousand + 里 village", mnem: "Thousand villages' weight.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k46", jp: "場", on: "ジョウ", kun: "ば", meaning: "place", comp: "土 earth + 昜 sun", mnem: "Sunny earth — a place.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k47", jp: "合", on: "ゴウ", kun: "あう", meaning: "fit, match", comp: "亼 cover + 口 mouth", mnem: "Cover fits mouth — matching.", efreq: 10, gfreq: 10, pre: 7 },
+  { id: "k48", jp: "原", on: "ゲン", kun: "はら", meaning: "origin, plain", comp: "厂 cliff + 白 + 小", mnem: "Small white spring at cliff — origin.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k49", jp: "因", on: "イン", kun: "よる", meaning: "cause", comp: "囗 box + 大 big", mnem: "Big cause contained.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k50", jp: "結", on: "ケツ", kun: "むすぶ", meaning: "tie, conclude", comp: "糸 thread + 吉 lucky", mnem: "Lucky thread tied.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k51", jp: "会", on: "カイ", kun: "あう", meaning: "meet, association", comp: "亼 cover + 云 cloud", mnem: "People gathering under a cover.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k52", jp: "社", on: "シャ", kun: "—", meaning: "society, company", comp: "礻 altar + 土 earth", mnem: "Earth altar — society.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k53", jp: "仕", on: "シ", kun: "つかえる", meaning: "serve, work", comp: "亻 person + 士 samurai", mnem: "A person serving as samurai.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k54", jp: "事", r: "", on: "ジ", kun: "こと", meaning: "thing, matter", comp: "stand-alone", mnem: "A hand writing — matters of business.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k55", jp: "働", on: "ドウ", kun: "はたらく", meaning: "work", comp: "亻 person + 動 move", mnem: "A person moving — working.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k56", jp: "勉", on: "ベン", kun: "—", meaning: "exertion, study", comp: "免 exemption + 力 power", mnem: "Power to exempt — effort.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k57", jp: "強", on: "キョウ", kun: "つよい", meaning: "strong", comp: "弓 bow + 虫 worm", mnem: "Bow and worm — insistent strength.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k58", jp: "部", on: "ブ", kun: "—", meaning: "part, section", comp: "咅 stand + 阝 village", mnem: "Standing village — a section.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k59", jp: "屋", on: "オク", kun: "や", meaning: "roof, shop", comp: "尸 corpse + 至 arrive", mnem: "Where one arrives to rest — house.", efreq: 6, gfreq: 9, pre: 4 },
+  { id: "k60", jp: "家", on: "カ", kun: "いえ", meaning: "house, family", comp: "宀 roof + 豕 pig", mnem: "Pig under roof — home.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k61", jp: "族", on: "ゾク", kun: "—", meaning: "tribe, family", comp: "方 direction + 矢 arrow", mnem: "An arrow pointing the way for the tribe.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k62", jp: "親", on: "シン", kun: "おや", meaning: "parent", comp: "立 stand + 木 tree + 見 see", mnem: "Standing by the tree, watching — a parent.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k63", jp: "考", on: "コウ", kun: "かんがえる", meaning: "think, consider", comp: "耂 old + 丂 breath", mnem: "An old person breathing — thinking.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k64", jp: "思", on: "シ", kun: "おもう", meaning: "think", comp: "田 field + 心 heart", mnem: "Heart on a field — pondering.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k65", jp: "知", on: "チ", kun: "しる", meaning: "know", comp: "矢 arrow + 口 mouth", mnem: "Arrow from mouth — knowledge shot out.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k66", jp: "答", on: "トウ", kun: "こたえる", meaning: "answer", comp: "竹 bamboo + 合 fit", mnem: "Bamboo that fits — the answer.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k67", jp: "問", on: "モン", kun: "とう", meaning: "question, ask", comp: "門 gate + 口 mouth", mnem: "Mouth at the gate — asking.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k68", jp: "題", on: "ダイ", kun: "—", meaning: "topic, problem", comp: "是 this + 頁 head/page", mnem: "This page — the topic.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k69", jp: "質", on: "シツ", kun: "—", meaning: "quality, substance", comp: "斦 axes + 貝 shell", mnem: "Axes over shell — testing quality.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k70", jp: "確", on: "カク", kun: "たしか", meaning: "certain", comp: "石 stone + 隺 crane", mnem: "Stone-solid crane — certainty.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k71", jp: "認", on: "ニン", kun: "みとめる", meaning: "recognize, approve", comp: "言 speak + 忍 endure", mnem: "Speaking after enduring — recognized.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k72", jp: "記", on: "キ", kun: "しるす", meaning: "record", comp: "言 words + 己 self", mnem: "Words of oneself — record.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k73", jp: "情", on: "ジョウ", kun: "なさけ", meaning: "emotion, info", comp: "忄 heart + 青 blue", mnem: "Blue heart — feeling.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k74", jp: "報", on: "ホウ", kun: "むくいる", meaning: "report, reward", comp: "幸 fortune + 卩 seal", mnem: "Fortune sealed — reward, report.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k75", jp: "新", on: "シン", kun: "あたらしい", meaning: "new", comp: "立 stand + 木 + 斤", mnem: "Fresh-cut wood — new.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k76", jp: "聞", on: "ブン", kun: "きく", meaning: "hear, ask", comp: "門 gate + 耳 ear", mnem: "Ear at the gate — listening.", efreq: 9, gfreq: 10, pre: 6 },
+  { id: "k77", jp: "都", on: "ト", kun: "みやこ", meaning: "metropolis", comp: "者 person + 阝 village", mnem: "Place of many people.", efreq: 7, gfreq: 9, pre: 4 },
+  { id: "k78", jp: "予", on: "ヨ", kun: "あらかじめ", meaning: "in advance", comp: "stand-alone", mnem: "A prior hand — preparation.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k79", jp: "定", on: "テイ", kun: "さだめる", meaning: "fix, decide", comp: "宀 roof + 疋 foot", mnem: "Feet set under roof — fixed.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k80", jp: "約", on: "ヤク", kun: "—", meaning: "promise, about", comp: "糸 thread + 勺 spoon", mnem: "Thread on a spoon — binding promise.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k81", jp: "束", on: "ソク", kun: "たば", meaning: "bundle, bind", comp: "stand-alone", mnem: "Bundled sticks.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k82", jp: "注", on: "チュウ", kun: "そそぐ", meaning: "pour, attention", comp: "氵 water + 主 main", mnem: "Pouring water mainly — attention.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k83", jp: "紹", on: "ショウ", kun: "—", meaning: "introduce", comp: "糸 thread + 召 summon", mnem: "Thread of summons — introduction.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k84", jp: "介", on: "カイ", kun: "—", meaning: "mediate", comp: "stand-alone", mnem: "A person between two sides.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k85", jp: "招", on: "ショウ", kun: "まねく", meaning: "invite", comp: "扌 hand + 召 summon", mnem: "Hand summoning — inviting.", efreq: 5, gfreq: 6, pre: 2 },
+  { id: "k86", jp: "待", on: "タイ", kun: "まつ", meaning: "wait", comp: "彳 step + 寺 temple", mnem: "Stepping to temple — waiting.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k87", jp: "失", on: "シツ", kun: "うしなう", meaning: "lose, fail", comp: "stand-alone", mnem: "A thing slipping away.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k88", jp: "成", on: "セイ", kun: "なる", meaning: "become, succeed", comp: "stand-alone", mnem: "A weapon becoming — achievement.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k89", jp: "功", on: "コウ", kun: "—", meaning: "achievement", comp: "工 work + 力 power", mnem: "Work and power — achievement.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k90", jp: "努", on: "ド", kun: "つとめる", meaning: "exert", comp: "奴 servant + 力 power", mnem: "Servant with power — effort.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k91", jp: "力", on: "リョク", kun: "ちから", meaning: "power", comp: "stand-alone", mnem: "A flexed arm.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k92", jp: "長", on: "チョウ", kun: "ながい", meaning: "long, chief", comp: "stand-alone", mnem: "A long-haired elder.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k93", jp: "発", on: "ハツ", kun: "—", meaning: "depart, emit", comp: "癶 + 殳", mnem: "Feet pushing — setting out.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k94", jp: "表", on: "ヒョウ", kun: "おもて", meaning: "surface, express", comp: "stand-alone", mnem: "Layers of robe — the surface.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k95", jp: "影", on: "エイ", kun: "かげ", meaning: "shadow", comp: "景 scenery + 彡 lines", mnem: "Lines of scenery — shadows.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k96", jp: "響", on: "キョウ", kun: "ひびく", meaning: "resound", comp: "郷 village + 音 sound", mnem: "Sound through the village — resounding.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k97", jp: "関", on: "カン", kun: "せき", meaning: "relation, barrier", comp: "門 gate + 关", mnem: "Gate that connects — relation.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k98", jp: "係", on: "ケイ", kun: "かかる", meaning: "relate, duty", comp: "亻 person + 系 lineage", mnem: "Person in a lineage — relation.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k99", jp: "方", on: "ホウ", kun: "かた", meaning: "direction, way", comp: "stand-alone", mnem: "A boat pointing a way.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k100", jp: "法", on: "ホウ", kun: "—", meaning: "law, method", comp: "氵 water + 去 leave", mnem: "Water that must leave — the law.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k101", jp: "目", on: "モク", kun: "め", meaning: "eye", comp: "stand-alone", mnem: "An eye.", efreq: 9, gfreq: 10, pre: 7 },
+  { id: "k102", jp: "的", on: "テキ", kun: "まと", meaning: "target, -ical", comp: "白 white + 勺 spoon", mnem: "White target.", efreq: 10, gfreq: 10, pre: 7 },
+  { id: "k103", jp: "理", on: "リ", kun: "—", meaning: "reason, logic", comp: "王 king + 里 village", mnem: "King of the village — rationality.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k104", jp: "実", on: "ジツ", kun: "み", meaning: "truth, fruit", comp: "宀 roof + 𠂉 + 大", mnem: "Under the roof, the real fruit.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k105", jp: "際", on: "サイ", kun: "きわ", meaning: "occasion, edge", comp: "阝 hill + 祭 festival", mnem: "Festival on a hill — the occasion.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k106", jp: "時", on: "ジ", kun: "とき", meaning: "time", comp: "日 sun + 寺 temple", mnem: "Sun at the temple — time.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k107", jp: "間", on: "カン", kun: "あいだ", meaning: "between", comp: "門 gate + 日 sun", mnem: "Sun through the gate — interval.", efreq: 10, gfreq: 10, pre: 7 },
+  { id: "k108", jp: "年", on: "ネン", kun: "とし", meaning: "year", comp: "stand-alone", mnem: "A grain harvest — one year.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k109", jp: "今", on: "コン", kun: "いま", meaning: "now", comp: "stand-alone", mnem: "A cover over now.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k110", jp: "昔", on: "セキ", kun: "むかし", meaning: "long ago", comp: "艹 grass + 日 sun", mnem: "Grass over many suns — long ago.", efreq: 6, gfreq: 8, pre: 3 },
+  { id: "k111", jp: "将", on: "ショウ", kun: "—", meaning: "general, leader", comp: "寸 + 爿", mnem: "Leading hand.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k112", jp: "来", on: "ライ", kun: "くる", meaning: "come", comp: "stand-alone", mnem: "Wheat coming to harvest.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k113", jp: "次", on: "ジ", kun: "つぎ", meaning: "next", comp: "冫 ice + 欠 lack", mnem: "The one lacking after — next.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k114", jp: "最", on: "サイ", kun: "もっとも", meaning: "most, utmost", comp: "曰 say + 取 take", mnem: "Taking the most.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k115", jp: "初", on: "ショ", kun: "はじめ", meaning: "first", comp: "衤 clothes + 刀 knife", mnem: "First cut of cloth.", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "k116", jp: "終", on: "シュウ", kun: "おわる", meaning: "end", comp: "糸 thread + 冬 winter", mnem: "Thread through winter — end.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "k117", jp: "先", on: "セン", kun: "さき", meaning: "before, ahead", comp: "stand-alone", mnem: "A foot ahead.", efreq: 9, gfreq: 10, pre: 6 },
+  { id: "k118", jp: "後", on: "ゴ", kun: "あと", meaning: "after", comp: "彳 + 幺 + 夂", mnem: "Steps trailing after.", efreq: 10, gfreq: 10, pre: 7 },
+  { id: "k119", jp: "前", on: "ゼン", kun: "まえ", meaning: "before", comp: "stand-alone", mnem: "A figure stepping forward.", efreq: 10, gfreq: 10, pre: 7 },
+  { id: "k120", jp: "中", on: "チュウ", kun: "なか", meaning: "middle", comp: "stand-alone", mnem: "A line through the middle.", efreq: 10, gfreq: 10, pre: 8 },
+];
+
+const GRAMMAR = [
+  { id: "g1", jp: "〜ばかり", meaning: "just did / only", explanation: "After た-form: just did. After noun/dict form: only.", ex: "食べたばかりだ。", ex_en: "I just ate.", mnem: "BA-KA-RI = bag-already-full → just did / only that", efreq: 9, gfreq: 8, pre: 6 },
+  { id: "g2", jp: "〜わけだ", meaning: "that's why / naturally", explanation: "Logical conclusion based on reason or evidence.", ex: "寒いわけだ、窓が開いている。", ex_en: "No wonder it's cold — the window is open.", mnem: "WAKE = wake-up-realize → that's why!", efreq: 9, gfreq: 7, pre: 6 },
+  { id: "g3", jp: "〜ことになる", meaning: "it is decided that", explanation: "External or passive decision — arranged.", ex: "転勤することになった。", ex_en: "It's been decided I'll transfer (jobs).", mnem: "事になる = matter just becomes (passive — someone else decided)", efreq: 9, gfreq: 8, pre: 6 },
+  { id: "g4", jp: "〜ことにする", meaning: "decide to (active)", explanation: "Speaker's own active decision.", ex: "毎日勉強することにした。", ex_en: "I've decided to study every day.", mnem: "事にする = make it a matter (active — I decided)", efreq: 9, gfreq: 8, pre: 6 },
+  { id: "g5", jp: "〜ようになる", meaning: "come to / start to", explanation: "Change of state — gradually becoming able.", ex: "刺身が食べられるようになった。", ex_en: "I've come to be able to eat sashimi.", mnem: "ようになる = the WAY becomes (gradual change)", efreq: 9, gfreq: 8, pre: 6 },
+  { id: "g6", jp: "〜ようにする", meaning: "try to / make sure", explanation: "Conscious effort to make something happen.", ex: "毎日運動するようにしている。", ex_en: "I try to exercise every day.", mnem: "ようにする = make it the way (active effort to habituate)", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g7", jp: "〜ために", meaning: "for / because of", explanation: "Purpose (verb dict) or cause (past/noun).", ex: "健康のために運動する。", ex_en: "Exercise for the sake of health.", mnem: "TAME = for the sake of (purpose) or because of (cause)", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "g8", jp: "〜はずだ", meaning: "should be / supposed to", explanation: "Expectation based on reason.", ex: "彼は今日来るはずだ。", ex_en: "He's supposed to come today.", mnem: "HAZU = expectation; 'he-hazu come' = should be coming", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "g9", jp: "〜かもしれない", meaning: "might / may", explanation: "Possibility.", ex: "雨が降るかもしれない。", ex_en: "It might rain.", mnem: "KAMO = duck appearing — maybe, maybe not", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "g10", jp: "〜らしい", meaning: "seems / I heard", explanation: "Hearsay or strong inference.", ex: "彼は結婚したらしい。", ex_en: "Apparently he got married.", mnem: "RASHII = sounds-like-it; secondhand or strong inference", efreq: 9, gfreq: 8, pre: 6 },
+  { id: "g11", jp: "〜まま", meaning: "as is / unchanged", explanation: "State continues without change.", ex: "エアコンをつけたまま寝た。", ex_en: "I slept with the AC on.", mnem: "MAMA = stays the SAME way", efreq: 8, gfreq: 7, pre: 5 },
+  { id: "g12", jp: "〜うちに", meaning: "while / before", explanation: "While condition lasts, or before it ends.", ex: "明るいうちに帰ろう。", ex_en: "Let's go home while it's still light.", mnem: "UCHI = inside the time-window (while it lasts)", efreq: 8, gfreq: 7, pre: 5 },
+  { id: "g13", jp: "〜ように", meaning: "so that / like", explanation: "Purpose or simile.", ex: "聞こえるように大きな声で話す。", ex_en: "Speak loudly so it can be heard.", mnem: "よう = aim for that WAY to happen", efreq: 9, gfreq: 8, pre: 6 },
+  { id: "g14", jp: "〜ながら", meaning: "while (doing)", explanation: "Simultaneous actions, same subject.", ex: "音楽を聞きながら勉強する。", ex_en: "Study while listening to music.", mnem: "NAGARA = nothing-stops, both at once", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "g15", jp: "〜てしまう", meaning: "completion / regret", explanation: "Completed with nuance of finality/regret.", ex: "全部食べてしまった。", ex_en: "I ate it all (oops).", mnem: "SHIMAU = put away (done & gone, often regret)", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "g16", jp: "〜ておく", meaning: "do in advance", explanation: "Preparing for future use.", ex: "ビールを冷やしておく。", ex_en: "Chill the beer in advance.", mnem: "OKU = place/leave it ready in advance", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g17", jp: "〜てみる", meaning: "try doing", explanation: "Attempt to see.", ex: "新しい店に行ってみた。", ex_en: "I tried going to the new shop.", mnem: "MIRU = see/try and see what happens", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "g18", jp: "〜ば〜ほど", meaning: "the more...the more", explanation: "Correlation.", ex: "考えれば考えるほど分からなくなる。", ex_en: "The more I think, the less I understand.", mnem: "if-then a HOARD more — proportional", efreq: 8, gfreq: 7, pre: 5 },
+  { id: "g19", jp: "〜代わりに", meaning: "instead of", explanation: "Substitution or trade-off.", ex: "手紙の代わりにメールを送る。", ex_en: "Send an email instead of a letter.", mnem: "代 = substitute generation (instead of)", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g20", jp: "〜つもりだ", meaning: "intend to", explanation: "Speaker's intention.", ex: "来年留学するつもりだ。", ex_en: "I intend to study abroad next year.", mnem: "TSUMORI = my plan; I plan to…", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g21", jp: "〜たことがある", meaning: "have experienced", explanation: "Past experience.", ex: "富士山に登ったことがある。", ex_en: "I've climbed Mt. Fuji.", mnem: "事がある = there exists a matter of having done", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "g22", jp: "〜そうだ (hearsay)", meaning: "I hear that", explanation: "After plain form — what you heard.", ex: "明日は雨だそうだ。", ex_en: "They say it will rain tomorrow.", mnem: "そうだ-hearsay = SO they say it is", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g23", jp: "〜そうだ (appearance)", meaning: "looks like", explanation: "After stem — visual judgment.", ex: "このケーキ、おいしそうだ。", ex_en: "This cake looks tasty.", mnem: "そうだ-look = looks SO that-way", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g24", jp: "〜によって", meaning: "depending on / by", explanation: "Variation by, agent of.", ex: "国によって習慣が違う。", ex_en: "Customs differ depending on the country.", mnem: "より-って = depends on / by means of agent", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g25", jp: "〜について", meaning: "about / regarding", explanation: "Topic of discussion.", ex: "環境問題について話す。", ex_en: "Talk about environmental issues.", mnem: "ついて = stuck on / attached to topic", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "g26", jp: "〜なければならない", meaning: "must / have to", explanation: "Obligation. Also: 〜なくてはいけない.", ex: "明日までに終わらせなければならない。", ex_en: "I must finish it by tomorrow.", mnem: "must: 'if-not, won't-become' = mandatory", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "g27", jp: "〜なくてもいい", meaning: "don't have to", explanation: "Not required.", ex: "急がなくてもいい。", ex_en: "You don't have to hurry.", mnem: "even without doing, it's fine — optional", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "g28", jp: "〜てはいけない", meaning: "must not", explanation: "Prohibition.", ex: "ここで遊んではいけない。", ex_en: "You must not play here.", mnem: "doing-it doesn't go = forbidden", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g29", jp: "〜てもいい", meaning: "may / it's okay to", explanation: "Permission.", ex: "入ってもいいですか。", ex_en: "May I come in?", mnem: "even if you do, fine — permission", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "g30", jp: "〜ほうがいい", meaning: "had better / should", explanation: "Advice or recommendation.", ex: "早く寝たほうがいい。", ex_en: "You should go to bed early.", mnem: "ほう = the way; this way is good = recommended", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "g31", jp: "〜のに", meaning: "even though / in spite of", explanation: "Unexpected contrast.", ex: "勉強したのに、テストに落ちた。", ex_en: "Even though I studied, I failed the test.", mnem: "のに = even though! (frustration vibe)", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "g32", jp: "〜ので", meaning: "because (soft)", explanation: "Reason. Softer than から.", ex: "雨が降っているので、行けない。", ex_en: "Because it's raining, I can't go.", mnem: "ので = the soft because (factual)", efreq: 9, gfreq: 10, pre: 6 },
+  { id: "g33", jp: "〜ても", meaning: "even if", explanation: "Concession — action happens regardless.", ex: "雨が降っても行きます。", ex_en: "Even if it rains, I'll go.", mnem: "ても = even-if-do (regardless)", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "g34", jp: "〜すぎる", meaning: "too much", explanation: "Excess.", ex: "食べすぎた。", ex_en: "I ate too much.", mnem: "SUGI = excess; over-the-line", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "g35", jp: "〜やすい / 〜にくい", meaning: "easy/hard to", explanation: "Describes ease of doing.", ex: "この本は読みやすい。", ex_en: "This book is easy to read.", mnem: "YASUI = cheap-easy; NIKUI = hate-hard", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "g36", jp: "〜がる", meaning: "to show signs of", explanation: "Objective observation of third-person feelings.", ex: "妹が行きたがっている。", ex_en: "My sister is showing she wants to go.", mnem: "GARU = visible signs of (3rd-person feelings)", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g37", jp: "〜っぽい", meaning: "-ish / tendency", explanation: "Characteristic or tendency.", ex: "彼は怒りっぽい。", ex_en: "He's the type to get angry easily.", mnem: "POI = throws-the-feel-of (~ish)", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "g38", jp: "〜がち", meaning: "tends to (often negative)", explanation: "Frequent tendency, often undesirable.", ex: "最近、忘れがちだ。", ex_en: "Lately I've been forgetting things.", mnem: "GACHI = caught in habit (often unwanted)", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g39", jp: "〜気味", meaning: "feeling a bit", explanation: "Slight tendency or symptom.", ex: "風邪気味だ。", ex_en: "I'm coming down with a cold.", mnem: "KIMI = your slight feeling/symptom", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "g40", jp: "〜とおり / 〜どおり", meaning: "just as / exactly as", explanation: "Matches expectation or instruction.", ex: "言ったとおりにしなさい。", ex_en: "Do as I told you.", mnem: "通り = exactly the path/way told", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g41", jp: "〜に対して", meaning: "toward / against", explanation: "Attitude or action directed at.", ex: "先生に対して失礼だ。", ex_en: "It's rude toward the teacher.", mnem: "対 = against/toward (like 反対 oppose)", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g42", jp: "〜にとって", meaning: "for / from the viewpoint of", explanation: "From the perspective of.", ex: "私にとって大切な人。", ex_en: "An important person to me.", mnem: "TOTTE = grab from your viewpoint", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g43", jp: "〜に関して", meaning: "regarding / concerning", explanation: "Formal 'about'.", ex: "その件に関しては後で話します。", ex_en: "I'll talk about that matter later.", mnem: "関 = barrier/connection — regarding", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g44", jp: "〜に基づいて", meaning: "based on", explanation: "Foundation for action.", ex: "事実に基づいて判断する。", ex_en: "Judge based on the facts.", mnem: "MOTO = origin; based on this foundation", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g45", jp: "〜をもとに", meaning: "on the basis of", explanation: "Using as material or source.", ex: "実話をもとにした映画。", ex_en: "A movie based on a true story.", mnem: "MOTO = origin; using as raw material", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "g46", jp: "〜をきっかけに", meaning: "triggered by", explanation: "An event that started something.", ex: "事故をきっかけに転職した。", ex_en: "I changed jobs after the accident triggered it.", mnem: "KIKKAKE = the trigger spark", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "g47", jp: "〜たり〜たり", meaning: "do things like", explanation: "Listing non-exhaustive actions.", ex: "週末は読んだり、歩いたりする。", ex_en: "On weekends I read, walk, etc.", mnem: "TARI-TARI = listing things casually (like A, B, etc.)", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "g48", jp: "〜かどうか", meaning: "whether or not", explanation: "Embedded yes/no question.", ex: "行くかどうかまだ決めていない。", ex_en: "I haven't decided whether to go yet.", mnem: "KA-DOU-KA = is-it-or-isn't-it (whether)", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g49", jp: "〜ついでに", meaning: "while you're at it", explanation: "Doing something additional on the same occasion.", ex: "買い物のついでに郵便局に寄った。", ex_en: "While shopping, I stopped by the post office.", mnem: "ついで = follow-up errand (while you're at it)", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "g50", jp: "〜わりに", meaning: "considering / for", explanation: "Contrast with expectation.", ex: "値段のわりにおいしい。", ex_en: "It tastes good for the price.", mnem: "WARI = ratio — relative to what's expected", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g51", jp: "〜くせに", meaning: "despite (critical)", explanation: "Contrast with blame or disapproval.", ex: "知っているくせに教えてくれない。", ex_en: "You won't tell me even though you know.", mnem: "KUSE = bad habit; despite the nasty habit", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "g52", jp: "〜せいで", meaning: "because of (negative)", explanation: "Blaming — negative cause.", ex: "雨のせいで遅れた。", ex_en: "I'm late because of the rain.", mnem: "SEI = blame/fault (negative cause)", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g53", jp: "〜おかげで", meaning: "thanks to", explanation: "Positive cause.", ex: "先生のおかげで合格した。", ex_en: "Thanks to my teacher, I passed.", mnem: "OKAGE = honored shadow → thanks to", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "g54", jp: "〜としても", meaning: "even if (hypothetical)", explanation: "Hypothetical concession.", ex: "本当だとしても信じない。", ex_en: "Even if it's true, I don't believe it.", mnem: "として = even if hypothetically", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "g55", jp: "〜ところ", meaning: "about to / just did / in the middle of", explanation: "Tense marker for verb phase.", ex: "今、食べているところだ。", ex_en: "I'm in the middle of eating.", mnem: "TOKORO = the point/moment (about to / just / mid)", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g56", jp: "〜ばかりでなく", meaning: "not only ... but also", explanation: "Adding beyond what's stated.", ex: "彼女は頭がいいばかりでなく、優しい。", ex_en: "She's not only smart but also kind.", mnem: "not only-bag-full — even more besides", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g57", jp: "〜だけでなく", meaning: "not only ... but also", explanation: "Colloquial version of ばかりでなく.", ex: "日本語だけでなく英語も話せる。", ex_en: "She speaks not only Japanese but also English.", mnem: "DAKE = only; not-only that…", efreq: 8, gfreq: 9, pre: 5 },
+  { id: "g58", jp: "〜から〜にかけて", meaning: "from ... through", explanation: "Range in time or space.", ex: "春から夏にかけて花が咲く。", ex_en: "Flowers bloom from spring through summer.", mnem: "from-one-end hooked to other end", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "g59", jp: "〜ながらも", meaning: "although / while still", explanation: "Contrast — doing despite.", ex: "遅くなりながらも参加した。", ex_en: "Despite running late, I participated.", mnem: "while doing… BUT contrast", efreq: 5, gfreq: 5, pre: 2 },
+  { id: "g60", jp: "〜ものだ", meaning: "it's natural that / used to", explanation: "General truth or nostalgic past.", ex: "昔はよく海に行ったものだ。", ex_en: "We used to go to the sea often back then.", mnem: "MONO = the thing as a general truth / used to", efreq: 7, gfreq: 7, pre: 4 },
+];
+
+const READINGS = [
+  {
+    id: "r1",
+    title: "自動販売機",
+    title_en: "Vending Machines",
+    passage:
+      "日本には、どこにでも自動販売機がある。駅の近くはもちろん、公園や小さな町にも置いてある。飲み物だけでなく、お菓子やアイスクリーム、時にはおもちゃまで売っているものもある。便利だが、家の近くに置くと音がうるさいと感じる人もいるそうだ。それでも日本では、自動販売機は生活の一部になっている。",
+    questions: [
+      {
+        q: "この文章によると、自動販売機はどこにあると書いてありますか。",
+        options: ["駅の近くだけ", "大きな町にだけ", "公園や小さな町にもある", "家の中にもある"],
+        a: 2,
+      },
+      {
+        q: "自動販売機について、文章に合うものはどれですか。",
+        options: [
+          "飲み物しか売っていない",
+          "おもちゃを売っているものもある",
+          "音は全く問題にならない",
+          "最近、数が減っている",
+        ],
+        a: 1,
+      },
+    ],
+  },
+  {
+    id: "r2",
+    title: "新人研修",
+    title_en: "New Employee Training",
+    passage:
+      "4月になると、多くの会社で新人研修が始まる。研修では、仕事のやり方だけでなく、電話の出方やメールの書き方など、社会人として必要なマナーも教えられる。最近は、オンラインで研修を行う会社も増えてきた。自宅から参加できるので便利だが、他の新人と直接話す機会が少なくなり、仲間を作りにくいという問題もある。",
+    questions: [
+      {
+        q: "新人研修では、何を教えますか。",
+        options: ["仕事のやり方だけ", "マナーだけ", "仕事のやり方とマナー", "電話とメールだけ"],
+        a: 2,
+      },
+      {
+        q: "オンライン研修の問題として、文章で述べられていることは何ですか。",
+        options: [
+          "参加するのにお金がかかる",
+          "他の新人と話す機会が少ない",
+          "仕事のやり方を教えられない",
+          "自宅から参加できない",
+        ],
+        a: 1,
+      },
+    ],
+  },
+  {
+    id: "r3",
+    title: "ごみの分け方",
+    title_en: "Sorting Garbage",
+    passage:
+      "日本では、ごみを正しく分けて出すことが大切だ。町によってルールが違うが、多くの場所では「燃えるごみ」「燃えないごみ」「ペットボトル」「紙」などに分けて出さなければならない。もしルールを守らないと、ごみが集められなかったり、近所の人に迷惑をかけたりすることがある。外国から来た人にとっては、最初はとても難しく感じるかもしれない。",
+    questions: [
+      {
+        q: "ごみを正しく分けないと、どうなりますか。",
+        options: [
+          "お金を払わなければならない",
+          "警察に注意される",
+          "ごみが集められないことがある",
+          "市役所に行かなければならない",
+        ],
+        a: 2,
+      },
+      {
+        q: "文章の内容と合うものはどれですか。",
+        options: [
+          "ごみの分け方はどこでも同じだ",
+          "外国人にとっても簡単だ",
+          "町ごとにルールが違う",
+          "最近、ルールがなくなった",
+        ],
+        a: 2,
+      },
+    ],
+  },
+  {
+    id: "r4",
+    title: "スマートフォンと若者",
+    title_en: "Smartphones and Young People",
+    passage:
+      "今の若い人たちは、ほとんどがスマートフォンを持っている。情報を調べたり、友達と連絡を取ったり、電車の時間を確認したりするのに使っている。便利な一方で、使いすぎると目が悪くなったり、夜よく眠れなくなったりすることもあると言われている。特に寝る前に長く使うのはよくないそうだ。うまく使うことが大切だろう。",
+    questions: [
+      {
+        q: "スマートフォンを使いすぎると、どんな問題がありますか。",
+        options: [
+          "お金がかかりすぎる",
+          "目が悪くなったり、眠れなくなったりする",
+          "友達が減る",
+          "電車に乗れなくなる",
+        ],
+        a: 1,
+      },
+      {
+        q: "この文章の筆者は、スマートフォンについてどう考えていますか。",
+        options: [
+          "若者は使うべきではない",
+          "便利だが、使い方に気をつけたほうがいい",
+          "全然便利ではない",
+          "もっと長く使うべきだ",
+        ],
+        a: 1,
+      },
+    ],
+  },
+  {
+    id: "r5",
+    title: "お花見",
+    title_en: "Cherry Blossom Viewing",
+    passage:
+      "春になると、日本では桜の花が咲く。多くの人は公園や川の近くで、家族や友達と一緒にお花見を楽しむ。お弁当を持って行ったり、飲み物を買ってきたりして、桜の下でゆっくり過ごす。しかし、桜の花は一週間ほどで散ってしまう。だからこそ、日本人は桜を特別な花だと考えているのかもしれない。",
+    questions: [
+      {
+        q: "お花見では、人々は何をしますか。",
+        options: [
+          "桜の木を買う",
+          "桜の絵を描く",
+          "桜の下でお弁当や飲み物を楽しむ",
+          "桜の花を取って家に持って帰る",
+        ],
+        a: 2,
+      },
+      {
+        q: "なぜ日本人は桜を特別だと考えているかもしれませんか。",
+        options: [
+          "一年中咲いているから",
+          "食べられるから",
+          "すぐに散ってしまうから",
+          "外国にはないから",
+        ],
+        a: 2,
+      },
+    ],
+  },
+  {
+    id: "r6",
+    title: "テレワーク",
+    title_en: "Remote Work",
+    passage:
+      "数年前から、会社に行かずに家で仕事をする「テレワーク」をする人が増えた。通勤の時間がかからないので、自分の時間が増えたと喜ぶ人が多い。一方で、家族が家にいると集中できなかったり、仕事と休みの時間の区別がつきにくくなったりする人もいる。テレワークに合う人と合わない人がいるので、会社と相談して、自分に合った働き方を選ぶことが大切だ。",
+    questions: [
+      {
+        q: "テレワークのよい点として、文章で述べられていることは何ですか。",
+        options: [
+          "給料が上がる",
+          "通勤時間がなくなり、自分の時間が増える",
+          "同僚と仲良くなれる",
+          "家族と過ごす時間が減る",
+        ],
+        a: 1,
+      },
+      {
+        q: "筆者は、働き方についてどう考えていますか。",
+        options: [
+          "みんなテレワークにするべきだ",
+          "会社に行くほうが絶対にいい",
+          "人によって合う働き方が違うので、選ぶことが大切だ",
+          "テレワークはやめたほうがいい",
+        ],
+        a: 2,
+      },
+    ],
+  },
+];
+
+const DIAG_IDS = [
+  "v4", "v9", "v62", "v101", "v136", "v214", "v294", "v316", "v338",
+  "k5", "k47", "k63", "k75",
+  "g7", "g15",
+];
+
+
+</script>
+
+<script>
+/* ============================================================
+   APP LOGIC (vanilla JS, no framework)
+   ============================================================ */
+
+const RATING = { AGAIN: 1, HARD: 2, GOOD: 3, EASY: 4 };
+const SKEY = "jlpt_n3_beta_v4";
+const SKEY_LEGACY = "jlpt_n3_beta_v3"; // migrate from previous build
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+let state = null;
+let view = "loading";
+let viewState = {};
+
+function loadState() {
+  try {
+    let v = localStorage.getItem(SKEY);
+    if (!v) {
+      // Migrate from previous build
+      const legacy = localStorage.getItem(SKEY_LEGACY);
+      if (legacy) {
+        localStorage.setItem(SKEY, legacy);
+        v = legacy;
+      }
+    }
+    return v ? JSON.parse(v) : null;
+  } catch (e) {
+    console.error("load failed", e);
+    return null;
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(SKEY, JSON.stringify(state));
+  } catch (e) {
+    console.error("save failed", e);
+  }
+}
+
+function initCard(id, itemType, initialStability) {
+  if (initialStability === undefined) initialStability = 0.5;
+  return {
+    id: id,
+    itemType: itemType,
+    difficulty: 5.0,
+    stability: initialStability,
+    lastReview: null,
+    dueDate: Date.now(),
+    reviews: 0,
+    lapses: 0,
+    status: initialStability > 3 ? "review" : "new",
+  };
+}
+
+function schedule(card, rating) {
+  const now = Date.now();
+  const next = Object.assign({}, card, { lastReview: now, reviews: card.reviews + 1 });
+  if (rating === RATING.AGAIN) {
+    next.stability = Math.max(0.2, card.stability * 0.3);
+    next.difficulty = Math.min(10, card.difficulty + 1.0);
+    next.lapses = card.lapses + 1;
+    next.status = "learning";
+  } else if (rating === RATING.HARD) {
+    next.stability = card.stability * 1.3;
+    next.difficulty = Math.min(10, card.difficulty + 0.3);
+    next.status = card.status === "new" ? "learning" : "review";
+  } else if (rating === RATING.GOOD) {
+    const mult = card.status === "new" ? 2.0 : 2.5;
+    next.stability = card.stability * mult;
+    next.status = "review";
+  } else if (rating === RATING.EASY) {
+    next.stability = card.stability * 4.0;
+    next.difficulty = Math.max(1, card.difficulty - 0.5);
+    next.status = "review";
+  }
+  next.dueDate = now + next.stability * DAY_MS;
+  return next;
+}
+
+function getPriority(item) {
+  return item.efreq * 0.5 + item.gfreq * 0.3 + item.pre * 0.2;
+}
+
+function allItems() {
+  const out = [];
+  for (let i = 0; i < VOCAB.length; i++) out.push(Object.assign({}, VOCAB[i], { type: "vocab" }));
+  for (let i = 0; i < KANJI.length; i++) out.push(Object.assign({}, KANJI[i], { type: "kanji" }));
+  for (let i = 0; i < GRAMMAR.length; i++) out.push(Object.assign({}, GRAMMAR[i], { type: "grammar" }));
+  return out;
+}
+
+// Derive a memory aid for vocab from its kanji components (using KANJI bank we already have)
+function deriveVocabMnemonic(item) {
+  if (item.mnem) return item.mnem; // hand-written wins
+  if (!item.jp) return null;
+  const parts = [];
+  for (let i = 0; i < item.jp.length; i++) {
+    const ch = item.jp.charAt(i);
+    // skip kana and punctuation
+    const code = ch.charCodeAt(0);
+    if (code < 0x4e00 || code > 0x9fff) continue;
+    const k = KANJI.find(function (x) { return x.jp === ch; });
+    if (k) parts.push(ch + " (" + k.meaning + ")");
+    else parts.push(ch + " (?)");
+  }
+  if (parts.length < 2) return null;
+  return parts.join(" + ");
+}
+
+// Filter items by section preference
+function filterBySection(items, section) {
+  if (!section || section === "all") return items;
+  return items.filter(function (i) { return i.type === section; });
+}
+
+function buildTodayQueue(section) {
+  const now = Date.now();
+  const cards = state.cards || {};
+  const all = allItems();
+  const dueCardIds = Object.keys(cards).filter(function (id) {
+    return cards[id].status !== "new" && cards[id].dueDate <= now;
+  });
+  let due = dueCardIds
+    .map(function (id) {
+      const item = all.find(function (i) { return i.id === id; });
+      return item ? { card: cards[id], item: item } : null;
+    })
+    .filter(function (x) { return x !== null; });
+  due = filterBySection(due.map(function (d) { return d.item; }), section)
+    .map(function (i) { return { card: cards[i.id], item: i }; });
+
+  const seenIds = {};
+  Object.keys(cards).forEach(function (k) { seenIds[k] = true; });
+  const newTarget = Math.max(5, Math.round(state.dailyMinutes / 3));
+  const newCandidates = filterBySection(all.filter(function (i) { return !seenIds[i.id]; }), section)
+    .sort(function (a, b) { return getPriority(b) - getPriority(a); })
+    .slice(0, newTarget);
+  return {
+    due: due,
+    newItems: newCandidates,
+    total: filterBySection(all, section).length,
+    learned: filterBySection(all.filter(function (i) { return seenIds[i.id]; }), section).length,
+  };
+}
+
+function projectReadiness() {
+  const total = allItems().length;
+  const learned = Object.keys(state.cards || {}).length;
+  const cards = state.cards || {};
+  let mastered = 0;
+  Object.keys(cards).forEach(function (k) {
+    if (cards[k].stability > 7 && cards[k].status === "review") mastered++;
+  });
+  const now = Date.now();
+  const daysLeft = Math.max(0, Math.ceil((state.examDate - now) / DAY_MS));
+  const newPerDay = Math.max(5, Math.round(state.dailyMinutes / 3));
+  const projectedLearned = Math.min(total, learned + newPerDay * daysLeft);
+  const projectedMasteryPct = Math.round((projectedLearned / total) * 100);
+  return {
+    total: total,
+    learned: learned,
+    mastered: mastered,
+    daysLeft: daysLeft,
+    projectedLearned: projectedLearned,
+    projectedMasteryPct: projectedMasteryPct,
+  };
+}
+
+/* ============================================================
+   GAMIFICATION HELPERS
+   ============================================================ */
+
+function todayKey() {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function dayDiff(a, b) {
+  if (!a || !b) return 999;
+  const da = new Date(a + "T00:00:00");
+  const db = new Date(b + "T00:00:00");
+  return Math.round((db - da) / DAY_MS);
+}
+
+// Update streak after a session. Returns { streak, isNewDay, isLongerStreak }
+function updateStreak() {
+  const today = todayKey();
+  const last = state.lastSessionDate;
+  if (last === today) return { streak: state.streak || 1, isNewDay: false, isLongerStreak: false };
+  const diff = dayDiff(last, today);
+  let isLonger = false;
+  if (diff === 1) {
+    state.streak = (state.streak || 0) + 1;
+    isLonger = true;
+  } else {
+    state.streak = 1;
+  }
+  state.lastSessionDate = today;
+  return { streak: state.streak, isNewDay: true, isLongerStreak: isLonger };
+}
+
+const ENCOURAGEMENT = {
+  small: ["Small steps add up.", "Show up — that's the win.", "Consistency over volume."],
+  medium: ["Solid session.", "頑張った — well done.", "Real progress today.", "That's how mastery is built."],
+  big: ["Excellent focus.", "素晴らしい — outstanding.", "You're doing the work.", "This is how N3 gets passed."],
+  marathon: ["驚くべき — extraordinary effort.", "Marathon session.", "Future-you thanks present-you."],
+};
+
+function pickEncouragement(count) {
+  const tier = count <= 5 ? "small" : count <= 15 ? "medium" : count <= 30 ? "big" : "marathon";
+  const arr = ENCOURAGEMENT[tier];
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+const MILESTONES = [
+  { mastered: 10, label: "First Ten", jp: "十", note: "10 items mastered." },
+  { mastered: 25, label: "Quarter Hundred", jp: "二十五", note: "25 items mastered." },
+  { mastered: 50, label: "Half Century", jp: "五十", note: "50 items mastered." },
+  { mastered: 100, label: "Century", jp: "百", note: "100 items mastered — N3 within reach." },
+  { mastered: 200, label: "Double Century", jp: "二百", note: "200 mastered — exam-ready trajectory." },
+  { mastered: 350, label: "Vocab Sweep", jp: "三百五十", note: "Full vocab corpus mastered." },
+  { mastered: 500, label: "Full Corpus", jp: "五百", note: "Complete corpus mastered." },
+];
+
+function checkMilestone(mastered) {
+  state.milestonesShown = state.milestonesShown || [];
+  for (let i = 0; i < MILESTONES.length; i++) {
+    const m = MILESTONES[i];
+    if (mastered >= m.mastered && state.milestonesShown.indexOf(m.mastered) === -1) {
+      state.milestonesShown.push(m.mastered);
+      return m;
+    }
+  }
+  return null;
+}
+
+/* ============================================================
+   DOM HELPERS
+   ============================================================ */
+
+function h(tag, props, children) {
+  const el = document.createElement(tag);
+  if (props) {
+    for (const key in props) {
+      const val = props[key];
+      // Skip null/undefined/false attribute values entirely (prevents disabled='null' bug)
+      if (key !== "onClick" && key !== "onChange" && (val === null || val === undefined || val === false)) continue;
+      if (key === "class") el.className = val;
+      else if (key === "onClick") el.addEventListener("click", val);
+      else if (key === "onChange") el.addEventListener("change", val);
+      else if (key === "style") {
+        if (typeof val === "string") el.style.cssText = val;
+        else Object.assign(el.style, val);
+      }
+      else if (key === "html") el.innerHTML = val;
+      else el.setAttribute(key, val);
+    }
+  }
+  if (children !== undefined && children !== null) {
+    if (!Array.isArray(children)) children = [children];
+    // Flatten one level so .map() results inside children work naturally
+    const flat = [];
+    for (let i = 0; i < children.length; i++) {
+      const c = children[i];
+      if (Array.isArray(c)) {
+        for (let j = 0; j < c.length; j++) flat.push(c[j]);
+      } else {
+        flat.push(c);
+      }
+    }
+    for (let i = 0; i < flat.length; i++) {
+      const c = flat[i];
+      if (c === null || c === undefined || c === false) continue;
+      if (typeof c === "string" || typeof c === "number") {
+        el.appendChild(document.createTextNode(String(c)));
+      } else {
+        el.appendChild(c);
+      }
+    }
+  }
+  return el;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+function clearRoot() {
+  const root = document.getElementById("root");
+  while (root.firstChild) root.removeChild(root.firstChild);
+}
+
+function render(opts) {
+  try {
+    const preserveScroll = opts && opts.preserveScroll;
+    const prevScrollY = preserveScroll ? window.scrollY : null;
+    clearRoot();
+    let view_el;
+    if (view === "onboarding") view_el = renderOnboarding();
+    else if (view === "diagnostic") view_el = renderDiagnostic();
+    else if (view === "study") view_el = renderStudy();
+    else if (view === "reading") view_el = renderReading();
+    else if (view === "match") view_el = renderMatch();
+    else if (view === "progress") view_el = renderProgress();
+    else if (view === "browse") view_el = renderBrowse();
+    else if (view === "dashboard") view_el = renderDashboard();
+    else view_el = h("div", { class: "loading" }, "LOADING…");
+    document.getElementById("root").appendChild(view_el);
+    if (preserveScroll) {
+      window.scrollTo(0, prevScrollY);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  } catch (err) {
+    showError(err);
+  }
+}
+
+function showError(err) {
+  const display = document.getElementById("error-display");
+  display.style.display = "block";
+  display.textContent = "ERROR\n\n" + (err.message || err) + "\n\nStack:\n" + (err.stack || "(no stack)") + "\n\nReload to retry.";
+}
+
+function setView(v) {
+  view = v;
+  viewState = {};
+  render();
+}
+
+/* ============================================================
+   SCREEN: SHELL WRAPPERS
+   ============================================================ */
+
+function shell(content) {
+  return h("div", { class: "shell" }, [h("div", { class: "container" }, content)]);
+}
+
+function header(subtitle, title, right) {
+  return h("div", { class: "header" }, [
+    h("div", null, [
+      subtitle ? h("div", { class: "header-subtitle mono" }, subtitle) : null,
+      h("h1", { class: "header-title" }, title),
+    ]),
+    right || null,
+  ]);
+}
+
+// Reusable back-link button (rendered in header right slot OR standalone)
+function backLink(label, onClick) {
+  return h("button", {
+    class: "footer-link mono",
+    onClick: onClick,
+  }, label || "← Back");
+}
+
+// Back row above content (for screens that don't use header right slot)
+function backRow(label, onClick) {
+  return h("div", { class: "back-row" }, [
+    h("button", { class: "footer-link mono", onClick: onClick }, label || "← Back"),
+  ]);
+}
+
+/* ============================================================
+   SCREEN: ONBOARDING
+   ============================================================ */
+
+function renderOnboarding() {
+  const step = viewState.step || 0;
+  const examDate = viewState.examDate || "2026-07-05";
+  const dailyMinutes = viewState.dailyMinutes || 45;
+
+  if (step === 0) {
+    return shell([
+      h("div", { class: "onb-hero" }, [
+        h("div", { class: "tag-accent mono" }, "N3 · BETA v3"),
+        h("h1", { class: "onb-title" }, "日本語能力試験"),
+        h("h2", { class: "onb-subtitle jp" }, "N3への最短ルート"),
+        h("p", { class: "onb-lead" }, "The most efficient path to N3 — backed by spaced repetition and analysis of past exams."),
+        h("p", { class: "onb-note" }, "This beta includes vocabulary, kanji, grammar, and graded reading passages."),
+        h("button", {
+          class: "btn-primary mono",
+          onClick: function () {
+            viewState.step = 1;
+            viewState.examDate = examDate;
+            viewState.dailyMinutes = dailyMinutes;
+            render();
+          },
+        }, "Begin →"),
+      ]),
+    ]);
+  }
+
+  if (step === 1) {
+    return shell([
+      backRow("← Back", function () {
+        viewState.step = 0;
+        render();
+      }),
+      header("Step 1 of 2", "When is your exam?"),
+      h("div", null, [
+        h("label", { class: "label mono" }, "EXAM DATE"),
+        (function () {
+          const inp = h("input", {
+            type: "date",
+            value: examDate,
+            class: "input",
+          });
+          inp.addEventListener("change", function (e) {
+            viewState.examDate = e.target.value;
+          });
+          return inp;
+        })(),
+        h("div", { class: "field-help" }, "July 5, 2026 is the next sitting. Change for December."),
+        h("div", { style: "padding-top:24px" }, [
+          h("button", {
+            class: "btn-primary mono",
+            onClick: function () {
+              const inp = document.querySelector('input[type="date"]');
+              if (inp && inp.value) viewState.examDate = inp.value;
+              viewState.step = 2;
+              viewState.dailyMinutes = dailyMinutes;
+              render();
+            },
+          }, "Next →"),
+        ]),
+      ]),
+    ]);
+  }
+
+  // step 2
+  const minutes = [15, 30, 45, 60, 75, 90, 120, 150];
+  const grid = h("div", { class: "minute-grid" }, minutes.map(function (m) {
+    return h("button", {
+      class: "minute-btn mono" + (dailyMinutes === m ? " selected" : ""),
+      onClick: function () {
+        viewState.dailyMinutes = m;
+        render();
+      },
+    }, String(m));
+  }));
+
+  return shell([
+    backRow("← Back", function () {
+      viewState.step = 1;
+      render();
+    }),
+    header("Step 2 of 2", "How much time per day?"),
+    h("div", null, [
+      h("label", { class: "label mono" }, "DAILY MINUTES"),
+      grid,
+      h("div", { class: "field-help" }, "For N3 from N4 base in 10 weeks, aim for 45–60 min. From scratch, 90+."),
+      h("div", { style: "padding-top:24px" }, [
+        h("button", {
+          class: "btn-primary mono",
+          onClick: function () {
+            const examTs = new Date(viewState.examDate || examDate).getTime();
+            state = {
+              examDate: examTs,
+              dailyMinutes: viewState.dailyMinutes || dailyMinutes,
+              cards: {},
+              startedAt: Date.now(),
+              sessions: 0,
+              readingsDone: [],
+              diagnosticDone: false,
+            };
+            saveState();
+            setView("diagnostic");
+          },
+        }, "Continue →"),
+      ]),
+    ]),
+  ]);
+}
+
+/* ============================================================
+   SCREEN: DIAGNOSTIC (MCQ)
+   ============================================================ */
+
+// Get the meaning text for any item type (used as the "right answer" and as distractors)
+function meaningOf(item) {
+  return item.type === "vocab" ? item.en : item.meaning;
+}
+
+// Pick `count` plausible wrong answers from the same item type pool.
+// Avoids: the correct meaning, exact duplicates of meaning text, items with identical first word
+// (so e.g. "to start" doesn't get "to start (intr.)" as a distractor — too easy).
+function getDistractors(item, allItemsList, count) {
+  const correctMeaning = meaningOf(item);
+  const correctFirstWord = correctMeaning.split(/[\s,(]/)[0].toLowerCase();
+  const pool = allItemsList.filter(function (i) {
+    if (i.type !== item.type || i.id === item.id) return false;
+    const m = meaningOf(i);
+    if (!m || m === correctMeaning) return false;
+    // Avoid distractors that share the head word (too similar)
+    const fw = m.split(/[\s,(]/)[0].toLowerCase();
+    if (fw === correctFirstWord) return false;
+    return true;
+  });
+  // Fisher-Yates shuffle
+  const arr = pool.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  const out = [];
+  const seen = {};
+  for (let i = 0; i < arr.length && out.length < count; i++) {
+    const m = meaningOf(arr[i]);
+    if (!seen[m]) {
+      seen[m] = true;
+      out.push(m);
+    }
+  }
+  return out;
+}
+
+function generateOptions(item, allItemsList) {
+  const correct = meaningOf(item);
+  const distractors = getDistractors(item, allItemsList, 3);
+  const opts = [{ text: correct, isCorrect: true }];
+  distractors.forEach(function (d) { opts.push({ text: d, isCorrect: false }); });
+  // Shuffle the order so correct isn't always first
+  for (let i = opts.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = opts[i]; opts[i] = opts[j]; opts[j] = tmp;
+  }
+  return opts;
+}
+
+function renderDiagnostic() {
+  if (viewState.idx === undefined) {
+    viewState.idx = 0;
+    viewState.options = {};   // {itemId: [{text, isCorrect}, ...]}
+    viewState.picked = {};    // {itemId: optionIndex}
+  }
+  const all = allItems();
+  const diagItems = DIAG_IDS.map(function (id) {
+    return all.find(function (i) { return i.id === id; });
+  }).filter(function (x) { return x; });
+
+  // ====== Completion screen ======
+  if (viewState.idx >= diagItems.length) {
+    const cards = {};
+    const correctList = [], wrongList = [];
+    diagItems.forEach(function (item) {
+      const picked = viewState.picked[item.id];
+      const opts = viewState.options[item.id];
+      if (picked === undefined || !opts) {
+        wrongList.push(item);
+        return;
+      }
+      if (opts[picked] && opts[picked].isCorrect) {
+        // Got it right → seed with 7-day stability
+        cards[item.id] = initCard(item.id, item.type, 7);
+        correctList.push(item);
+      } else {
+        wrongList.push(item);
+      }
+    });
+    const score = Math.round((correctList.length / diagItems.length) * 100);
+    return shell([
+      header("Placement complete", "診断結果"),
+      h("div", { class: "card surface border" }, [
+        h("div", { class: "diag-score-big" }, score + "%"),
+        h("div", { class: "diag-score-sub mono" }, correctList.length + " / " + diagItems.length + " CORRECT"),
+        h("div", { class: "diag-results" }, [
+          h("div", null, [
+            h("div", { class: "diag-num", style: "color:#4A7C3A" }, String(correctList.length)),
+            h("div", { class: "diag-label mono" }, "CORRECT"),
+          ]),
+          h("div", null, [
+            h("div", { class: "diag-num", style: "color:#B33A3A" }, String(wrongList.length)),
+            h("div", { class: "diag-label mono" }, "TO LEARN"),
+          ]),
+        ]),
+        h("p", { class: "diag-note" }, "Items you got right are spaced for review. Items you missed enter your study queue, prioritized by exam frequency."),
+      ]),
+      h("button", {
+        class: "btn-primary mono full",
+        onClick: function () {
+          state.cards = cards;
+          state.diagnosticDone = true;
+          saveState();
+          setView("dashboard");
+        },
+      }, "Go to Dashboard →"),
+    ]);
+  }
+
+  // ====== Question screen ======
+  const item = diagItems[viewState.idx];
+
+  // Lazily generate options once per item (so they don't reshuffle on rerender)
+  if (!viewState.options[item.id]) {
+    viewState.options[item.id] = generateOptions(item, all);
+  }
+  const options = viewState.options[item.id];
+  const picked = viewState.picked[item.id];
+  const revealed = picked !== undefined;
+  const isCorrect = revealed && options[picked] && options[picked].isCorrect;
+
+  function pickOption(idx) {
+    if (revealed) return; // can't change answer after picking
+    viewState.picked[item.id] = idx;
+    render();
+  }
+
+  function nextCard() {
+    viewState.idx++;
+    render();
+  }
+
+  function exitDiagnostic() {
+    if (confirm("Exit placement? Your answers so far will be discarded; you can retake it later via Reset.")) {
+      state.cards = {};
+      state.diagnosticDone = true;
+      saveState();
+      setView("dashboard");
+    }
+  }
+
+  // Prompt card (the Japanese term)
+  const promptChildren = [h("div", { class: "card-type mono type-" + item.type + "-text" }, item.type + " · WHAT DOES THIS MEAN?")];
+  if (item.type === "vocab") {
+    promptChildren.push(h("div", { class: "diag-vocab jp" }, item.jp));
+    promptChildren.push(h("div", { class: "diag-reading jp" }, item.r));
+  } else if (item.type === "kanji") {
+    promptChildren.push(h("div", { class: "diag-kanji jp" }, item.jp));
+  } else {
+    promptChildren.push(h("div", { class: "diag-grammar jp" }, item.jp));
+  }
+
+  // MCQ option buttons
+  const optionEls = options.map(function (opt, oi) {
+    let cls = "mcq-option";
+    if (revealed) {
+      if (opt.isCorrect) cls += " correct";
+      else if (oi === picked) cls += " wrong";
+      else cls += " other";
+    }
+    return h("button", {
+      class: cls,
+      onClick: function () { pickOption(oi); },
+    }, [
+      h("span", { class: "mcq-letter mono" }, String.fromCharCode(65 + oi)),
+      h("span", { class: "mcq-text" }, opt.text),
+      revealed && opt.isCorrect ? h("span", { class: "mcq-mark" }, "✓") : null,
+      revealed && oi === picked && !opt.isCorrect ? h("span", { class: "mcq-mark wrong" }, "✗") : null,
+    ]);
+  });
+
+  // After-pick: show feedback + the rich detail
+  const detailChildren = [];
+  if (revealed) {
+    detailChildren.push(h("div", { class: "diag-feedback " + (isCorrect ? "good" : "bad") }, [
+      h("span", { class: "feedback-icon" }, isCorrect ? "✓" : "✗"),
+      h("span", { class: "feedback-text" }, isCorrect ? "Correct!" : "Not this time — review below"),
+    ]));
+
+    // Rich detail panel
+    if (item.type === "vocab") {
+      detailChildren.push(h("div", { class: "diag-detail-card surface border" }, [
+        h("div", { class: "section-label mono" }, "Example"),
+        h("div", { class: "diag-example jp" }, item.ex),
+        item.ex_en ? h("div", { class: "diag-example-en" }, item.ex_en) : null,
+        (function () {
+          const m = deriveVocabMnemonic(item);
+          return m ? h("div", null, [
+            h("div", { class: "section-label mono", style: "margin-top:12px" }, "Memory aid"),
+            h("div", { class: "section-text mnem-text" }, m),
+          ]) : null;
+        })(),
+      ]));
+    } else if (item.type === "kanji") {
+      detailChildren.push(h("div", { class: "diag-detail-card surface border" }, [
+        h("div", { class: "diag-onkun" }, [
+          "On: ", h("span", { class: "jp" }, item.on),
+          " · Kun: ", h("span", { class: "jp" }, item.kun),
+        ]),
+        h("div", { class: "section-label mono", style: "margin-top:12px" }, "Components"),
+        h("div", { class: "section-text jp" }, item.comp),
+        h("div", { class: "section-label mono", style: "margin-top:12px" }, "Mnemonic"),
+        h("div", { class: "section-text mnem-text" }, item.mnem),
+      ]));
+    } else {
+      detailChildren.push(h("div", { class: "diag-detail-card surface border" }, [
+        h("div", { class: "section-label mono" }, "Explanation"),
+        h("div", { class: "section-text" }, item.explanation),
+        h("div", { class: "section-label mono", style: "margin-top:12px" }, "Example"),
+        h("div", { class: "section-text jp" }, item.ex),
+        item.ex_en ? h("div", { class: "section-text-en" }, item.ex_en) : null,
+        item.mnem ? h("div", null, [
+          h("div", { class: "section-label mono", style: "margin-top:12px" }, "Memory aid"),
+          h("div", { class: "section-text mnem-text" }, item.mnem),
+        ]) : null,
+      ]));
+    }
+  }
+
+  const continueBtn = revealed
+    ? h("button", {
+        class: "btn-primary mono full",
+        onClick: nextCard,
+      }, viewState.idx + 1 < diagItems.length ? "Continue →" : "Finish placement →")
+    : null;
+
+  return shell([
+    viewState.idx > 0
+      ? backRow("← Previous question", function () {
+          viewState.idx--;
+          render();
+        })
+      : null,
+    header("Placement · " + (viewState.idx + 1) + "/" + diagItems.length, revealed ? (isCorrect ? "Correct" : "Review") : "Pick the meaning"),
+    h("div", { class: "card surface border diag-prompt-card type-" + item.type }, promptChildren),
+    h("div", { class: "mcq-options" }, optionEls),
+    detailChildren.length > 0 ? h("div", null, detailChildren) : null,
+    continueBtn,
+    h("div", { class: "diag-help mono" }, revealed
+      ? "Got it. Continue when ready."
+      : "Tap the meaning. One is correct, the others are decoys from the same N3 pool."),
+    h("div", { class: "diag-exit-row" }, [
+      h("button", {
+        class: "footer-link mono",
+        onClick: exitDiagnostic,
+      }, "Skip placement →"),
+    ]),
+  ]);
+}
+
+/* ============================================================
+   SCREEN: DASHBOARD
+   ============================================================ */
+
+function renderDashboard() {
+  // Initialize section preference
+  if (!state.section) state.section = "all";
+  const queue = buildTodayQueue(state.section);
+  const proj = projectReadiness();
+  const onTrack = proj.projectedMasteryPct >= 85;
+  const statusClass = onTrack ? "status-good" : (proj.projectedMasteryPct >= 65 ? "status-warn" : "status-bad");
+  const statusLabel = onTrack ? "ON TRACK" : (proj.projectedMasteryPct >= 65 ? "BEHIND" : "AT RISK");
+  const todayTotal = queue.due.length + queue.newItems.length;
+  const readingsRemaining = READINGS.length - (state.readingsDone || []).length;
+  const streak = state.streak || 0;
+
+  const right = h("div", { class: "header-right" }, [
+    h("div", { class: "mono " + statusClass }, statusLabel),
+    h("div", { class: "header-projlabel mono" }, "PROJ. " + proj.projectedMasteryPct + "%"),
+  ]);
+
+  // JLPT N3 badge + streak banner row
+  const topBanner = h("div", { class: "top-banner" }, [
+    h("div", { class: "jlpt-badge mono" }, "JLPT · N3"),
+    streak > 0 ? h("div", { class: "streak-pill mono" }, "🔥 " + streak + "-DAY STREAK") : null,
+  ]);
+
+  // Section selector (study mode picker)
+  const SECTIONS = [
+    { id: "all", label: "ALL" },
+    { id: "vocab", label: "VOCAB" },
+    { id: "kanji", label: "KANJI" },
+    { id: "grammar", label: "GRAMMAR" },
+  ];
+  const sectionSelector = h("div", { class: "section-selector" }, [
+    h("div", { class: "section-label-mini mono" }, "STUDY SECTION"),
+    h("div", { class: "section-row" }, SECTIONS.map(function (s) {
+      return h("button", {
+        class: "section-btn mono section-" + s.id + (state.section === s.id ? " active" : ""),
+        onClick: function () {
+          state.section = s.id;
+          saveState();
+          render();
+        },
+      }, s.label);
+    })),
+    h("div", { class: "color-tip" }, "Each section has its own color — your brain links the hue to the category, aiding recall."),
+  ]);
+
+  const todayCard = h("div", { class: "card surface border" }, [
+    h("div", { class: "card-label mono" }, "SRS · TODAY"),
+    h("div", { class: "stat-row" }, [
+      h("div", null, [
+        h("div", { class: "stat-num" }, String(queue.due.length)),
+        h("div", { class: "stat-label mono" }, "REVIEWS DUE"),
+      ]),
+      h("div", null, [
+        h("div", { class: "stat-num" }, String(queue.newItems.length)),
+        h("div", { class: "stat-label mono" }, "NEW ITEMS"),
+      ]),
+      h("div", null, [
+        h("div", { class: "stat-num" }, "~" + Math.round(todayTotal * 0.5)),
+        h("div", { class: "stat-label mono" }, "MINUTES"),
+      ]),
+    ]),
+    todayTotal > 0
+      ? h("button", {
+          class: "btn-primary mono full",
+          onClick: function () { setView("study"); },
+        }, "Start Session →")
+      : h("div", { class: "muted-italic" }, "All caught up in this section. Try a different one or come back tomorrow."),
+  ]);
+
+  const readingCard = h("div", { class: "card surface border reading-card-accent" }, [
+    h("div", { class: "card-label-row" }, [
+      h("div", { class: "card-label mono type-reading-text" }, "READING"),
+      h("div", { class: "card-counter mono" }, ((state.readingsDone || []).length) + " / " + READINGS.length),
+    ]),
+    readingsRemaining > 0
+      ? h("button", {
+          class: "btn-secondary mono full",
+          onClick: function () { setView("reading"); },
+        }, "Next passage →")
+      : h("div", { class: "muted-italic" }, "All passages complete."),
+  ]);
+
+  // Match Game card — pulls from learned + new items in the active section
+  const totalForGame = (function () {
+    const seenIds = Object.keys(state.cards || {});
+    const filtered = filterBySection(allItems(), state.section);
+    return Math.min(filtered.length, Math.max(6, seenIds.length + 8));
+  })();
+  const matchCard = h("div", { class: "card surface border match-card-accent" }, [
+    h("div", { class: "card-label-row" }, [
+      h("div", { class: "card-label mono type-match-text" }, "MATCH GAME"),
+      h("div", { class: "card-counter mono" }, "🎮 " + (state.matchHighScore || 0) + " BEST"),
+    ]),
+    h("div", { class: "match-blurb" }, "Flip cards · pair Japanese with English · beat your time."),
+    h("button", {
+      class: "btn-secondary mono full",
+      onClick: function () { setView("match"); },
+    }, "Play match game →"),
+  ]);
+
+  const progressBar = h("div", { class: "progress-section" }, [
+    h("div", { class: "progress-labels mono" }, [
+      h("span", { class: "muted" }, "CORPUS MASTERY"),
+      h("span", null, queue.learned + "/" + queue.total + " · " + proj.mastered + " mastered"),
+    ]),
+    h("div", { class: "progress-bg" }, [
+      h("div", {
+        class: "progress-fill",
+        style: "width:" + Math.min(100, (queue.learned / queue.total) * 100) + "%",
+      }),
+    ]),
+  ]);
+
+  const breakdownCards = ["vocab", "kanji", "grammar"].map(function (type) {
+    const typeItems = allItems().filter(function (i) { return i.type === type; });
+    let typeLearned = 0;
+    Object.keys(state.cards || {}).forEach(function (id) {
+      if (typeItems.find(function (i) { return i.id === id; })) typeLearned++;
+    });
+    return h("div", { class: "card surface border small" }, [
+      h("div", { class: "card-label mono type-" + type + "-text" }, type),
+      h("div", { class: "type-num" }, [
+        String(typeLearned),
+        h("span", { class: "muted small" }, "/" + typeItems.length),
+      ]),
+    ]);
+  });
+
+  const breakdown = h("div", { class: "breakdown-grid" }, breakdownCards);
+
+  const footer = h("div", { class: "footer-row" }, [
+    h("button", {
+      class: "footer-link mono",
+      onClick: function () { setView("progress"); },
+    }, "Progress"),
+    h("button", {
+      class: "footer-link mono",
+      onClick: function () { setView("browse"); },
+    }, "Browse"),
+    h("div", { class: "spacer" }),
+    h("button", {
+      class: "footer-link mono danger",
+      onClick: function () {
+        if (confirm("Reset all beta data? This clears your SRS history.")) {
+          localStorage.removeItem(SKEY);
+          state = null;
+          setView("onboarding");
+        }
+      },
+    }, "Reset"),
+  ]);
+
+  return shell([
+    header(proj.daysLeft + " DAYS TO EXAM", "今日の計画", right),
+    topBanner,
+    sectionSelector,
+    todayCard,
+    readingCard,
+    matchCard,
+    progressBar,
+    breakdown,
+    footer,
+  ]);
+}
+
+/* ============================================================
+   SCREEN: STUDY
+   ============================================================ */
+
+function renderStudy() {
+  if (!viewState.queue) {
+    const q = [];
+    const queue = buildTodayQueue(state.section || "all");
+    const dueArr = queue.due.slice();
+    const newArr = queue.newItems.slice();
+    while (dueArr.length || newArr.length) {
+      if (dueArr.length) q.push({ kind: "review", item: dueArr.shift().item });
+      if (newArr.length) q.push({ kind: "new", item: newArr.shift() });
+      if (dueArr.length) q.push({ kind: "review", item: dueArr.shift().item });
+    }
+    viewState.queue = q;
+    viewState.idx = 0;
+    viewState.localCards = Object.assign({}, state.cards || {});
+    viewState.completed = 0;
+    viewState.revealed = false;
+    viewState.undoStack = [];
+    viewState.weakItems = []; // ids rated Again or Hard during this session
+    viewState.inWeakRound = false;
+    viewState.weakRoundOffered = false;
+  }
+
+  // End-of-queue branching: weak items round prompt or completion
+  if (viewState.idx >= viewState.queue.length) {
+    // Offer weak-items round if not yet done and there are weak items
+    if (!viewState.inWeakRound && !viewState.weakRoundOffered && viewState.weakItems.length > 0) {
+      viewState.weakRoundOffered = true;
+      return shell([
+        header("Mid-session", "弱点復習"),
+        h("div", { class: "card surface border center" }, [
+          h("div", { class: "weak-icon" }, "🎯"),
+          h("h2", { class: "weak-h" }, "Weak items round"),
+          h("p", { class: "weak-p" }, "You marked " + viewState.weakItems.length + " card" + (viewState.weakItems.length === 1 ? "" : "s") + " as Again or Hard. Reviewing them now reinforces them while they're still fresh."),
+          h("div", { class: "weak-buttons" }, [
+            h("button", {
+              class: "btn-primary mono full",
+              onClick: function () {
+                // Build a new queue from weak items
+                const weakQueue = viewState.weakItems.map(function (id) {
+                  const it = allItems().find(function (x) { return x.id === id; });
+                  return it ? { kind: "review", item: it } : null;
+                }).filter(Boolean);
+                viewState.queue = weakQueue;
+                viewState.idx = 0;
+                viewState.weakItems = [];
+                viewState.inWeakRound = true;
+                viewState.revealed = false;
+                render();
+              },
+            }, "Review weak items (" + viewState.weakItems.length + ") →"),
+            h("button", {
+              class: "btn-secondary mono full skip-btn",
+              onClick: function () {
+                viewState.weakItems = [];
+                render();
+              },
+            }, "Skip → finish session"),
+          ]),
+        ]),
+      ]);
+    }
+
+    // Final completion screen with celebration
+    const finalProj = projectReadiness();
+    const newMastered = Object.values(viewState.localCards).filter(function (c) {
+      return c.stability > 7 && c.status === "review";
+    }).length;
+    // Compute milestone using new mastered count
+    const milestoneToShow = (function () {
+      const ms = (state.milestonesShown || []).slice();
+      for (let i = 0; i < MILESTONES.length; i++) {
+        const m = MILESTONES[i];
+        if (newMastered >= m.mastered && ms.indexOf(m.mastered) === -1) {
+          return m;
+        }
+      }
+      return null;
+    })();
+    const encouragement = pickEncouragement(viewState.completed);
+
+    return shell([
+      header("Session Complete", "お疲れさまでした"),
+      milestoneToShow
+        ? h("div", { class: "card milestone-card" }, [
+            h("div", { class: "milestone-jp jp" }, milestoneToShow.jp),
+            h("div", { class: "milestone-label mono" }, "MILESTONE · " + milestoneToShow.label.toUpperCase()),
+            h("div", { class: "milestone-note" }, milestoneToShow.note),
+          ])
+        : null,
+      h("div", { class: "card surface border center" }, [
+        h("div", { class: "big-num" }, String(viewState.completed)),
+        h("div", { class: "stat-label mono" }, "CARDS COMPLETED"),
+        h("p", { class: "encouragement" }, encouragement),
+        h("button", {
+          class: "btn-primary mono",
+          onClick: function () {
+            state.cards = viewState.localCards;
+            state.sessions = (state.sessions || 0) + 1;
+            updateStreak();
+            // Persist milestone if shown
+            if (milestoneToShow) {
+              state.milestonesShown = state.milestonesShown || [];
+              if (state.milestonesShown.indexOf(milestoneToShow.mastered) === -1) {
+                state.milestonesShown.push(milestoneToShow.mastered);
+              }
+            }
+            saveState();
+            setView("dashboard");
+          },
+        }, "Back to Dashboard →"),
+      ]),
+    ]);
+  }
+
+  const current = viewState.queue[viewState.idx];
+  const item = current.item;
+  const kind = current.kind;
+  const existing = viewState.localCards[item.id] || initCard(item.id, item.type);
+
+  function handleRate(rating) {
+    // Snapshot for undo
+    viewState.undoStack.push({
+      idx: viewState.idx,
+      localCards: Object.assign({}, viewState.localCards),
+      queue: viewState.queue.slice(),
+      completed: viewState.completed,
+      weakItems: viewState.weakItems.slice(),
+    });
+    const updated = schedule(existing, rating);
+    viewState.localCards[item.id] = updated;
+    viewState.completed++;
+    // Track weak items for end-of-session re-review
+    if (!viewState.inWeakRound && (rating === RATING.AGAIN || rating === RATING.HARD)) {
+      if (viewState.weakItems.indexOf(item.id) === -1) {
+        viewState.weakItems.push(item.id);
+      }
+    }
+    if (rating === RATING.AGAIN && kind === "review" && viewState.idx < viewState.queue.length - 1) {
+      const insertAt = Math.min(viewState.idx + 3, viewState.queue.length);
+      viewState.queue.splice(insertAt, 0, { kind: kind, item: item });
+    }
+    viewState.idx++;
+    viewState.revealed = false;
+    render();
+  }
+
+  function handleUndo() {
+    if (viewState.undoStack.length === 0) return;
+    const prev = viewState.undoStack.pop();
+    viewState.idx = prev.idx;
+    viewState.localCards = prev.localCards;
+    viewState.queue = prev.queue;
+    viewState.completed = prev.completed;
+    if (prev.weakItems) viewState.weakItems = prev.weakItems;
+    viewState.revealed = true; // show the answer side since they're going back
+    render();
+  }
+
+  // Build card display
+  const cardChildren = [];
+  // JLPT N3 badge in top-right of card
+  cardChildren.push(h("div", { class: "card-n3-badge mono" }, "N3"));
+  if (item.type === "vocab") {
+    cardChildren.push(h("div", { class: "card-jp-large jp" }, item.jp));
+    if (viewState.revealed) {
+      cardChildren.push(h("div", { class: "card-reading jp" }, item.r));
+      cardChildren.push(h("div", { class: "card-meaning" }, item.en));
+      cardChildren.push(h("div", { class: "card-section" }, [
+        h("div", { class: "section-label mono" }, "Example"),
+        h("div", { class: "card-example jp" }, item.ex),
+        item.ex_en ? h("div", { class: "card-example-en" }, item.ex_en) : null,
+      ]));
+      const vocabMnem = deriveVocabMnemonic(item);
+      if (vocabMnem) {
+        cardChildren.push(h("div", { class: "card-section" }, [
+          h("div", { class: "section-label mono" }, "Memory aid"),
+          h("div", { class: "section-text mnem-text" }, vocabMnem),
+        ]));
+      }
+    }
+  } else if (item.type === "kanji") {
+    cardChildren.push(h("div", { class: "card-jp-huge jp" }, item.jp));
+    if (viewState.revealed) {
+      cardChildren.push(h("div", { class: "card-meaning" }, item.meaning));
+      cardChildren.push(h("div", { class: "card-onkun mono" }, [
+        "On: ",
+        h("span", { class: "jp" }, item.on),
+        " · Kun: ",
+        h("span", { class: "jp" }, item.kun),
+      ]));
+      cardChildren.push(h("div", { class: "card-section" }, [
+        h("div", { class: "section-label mono" }, "Components"),
+        h("div", { class: "section-text jp" }, item.comp),
+        h("div", { class: "section-label mono" }, "Mnemonic"),
+        h("div", { class: "section-text mnem-text" }, item.mnem),
+      ]));
+    }
+  } else {
+    cardChildren.push(h("div", { class: "card-jp-medium jp" }, item.jp));
+    if (viewState.revealed) {
+      cardChildren.push(h("div", { class: "card-meaning" }, item.meaning));
+      cardChildren.push(h("div", { class: "card-section" }, [
+        h("div", { class: "section-label mono" }, "Explanation"),
+        h("div", { class: "section-text" }, item.explanation),
+      ]));
+      cardChildren.push(h("div", { class: "card-section" }, [
+        h("div", { class: "section-label mono" }, "Example"),
+        h("div", { class: "section-text jp" }, item.ex),
+        item.ex_en ? h("div", { class: "section-text-en" }, item.ex_en) : null,
+      ]));
+      if (item.mnem) {
+        cardChildren.push(h("div", { class: "card-section" }, [
+          h("div", { class: "section-label mono" }, "Memory aid"),
+          h("div", { class: "section-text mnem-text" }, item.mnem),
+        ]));
+      }
+    }
+  }
+
+  const cardEl = h("div", { class: "card surface border study-card type-" + item.type }, cardChildren);
+
+  let actions;
+  if (!viewState.revealed) {
+    actions = h("button", {
+      class: "btn-secondary mono full reveal",
+      onClick: function () { viewState.revealed = true; render(); },
+    }, "Reveal ↓");
+  } else {
+    actions = h("div", { class: "btn-row-4" }, [
+      h("button", { class: "btn-rate again mono", onClick: function () { handleRate(RATING.AGAIN); } }, "Again"),
+      h("button", { class: "btn-rate hard mono", onClick: function () { handleRate(RATING.HARD); } }, "Hard"),
+      h("button", { class: "btn-rate good mono", onClick: function () { handleRate(RATING.GOOD); } }, "Good"),
+      h("button", { class: "btn-rate easy mono", onClick: function () { handleRate(RATING.EASY); } }, "Easy"),
+    ]);
+  }
+
+  return shell([
+    h("div", { class: "study-bar" }, [
+      h("div", null, [
+        h("button", {
+          class: "footer-link mono",
+          onClick: function () {
+            state.cards = viewState.localCards;
+            saveState();
+            setView("dashboard");
+          },
+        }, "← Dashboard"),
+      ]),
+      h("div", { class: "study-counter mono" }, (viewState.idx + 1) + " / " + viewState.queue.length),
+    ]),
+    h("div", { class: "study-kind-row mono type-" + item.type + "-text" }, (kind === "new" ? "★ New" : "↻ Review") + " · " + item.type),
+    h("div", { class: "study-progress" }, [
+      h("div", {
+        class: "study-progress-fill",
+        style: "width:" + (((viewState.idx + 1) / viewState.queue.length) * 100) + "%",
+      }),
+    ]),
+    cardEl,
+    actions,
+    viewState.undoStack.length > 0
+      ? h("div", { class: "undo-row" }, [
+          h("button", {
+            class: "footer-link mono",
+            onClick: handleUndo,
+          }, "↶ Undo last rating"),
+        ])
+      : null,
+  ]);
+}
+
+/* ============================================================
+   SCREEN: READING
+   ============================================================ */
+
+function renderReading() {
+  const done = state.readingsDone || [];
+  const next = READINGS.find(function (r) { return done.indexOf(r.id) === -1; });
+  if (!next) {
+    return shell([
+      header("Reading", "All passages complete"),
+      h("button", {
+        class: "btn-primary mono full",
+        onClick: function () { setView("dashboard"); },
+      }, "Back →"),
+    ]);
+  }
+
+  if (!viewState.phase) {
+    viewState.phase = "read";
+    viewState.answers = [];
+  }
+
+  if (viewState.phase === "read") {
+    return shell([
+      header("Reading · " + (done.length + 1) + "/" + READINGS.length, next.title,
+        h("div", { class: "header-en mono" }, next.title_en)
+      ),
+      h("div", { class: "card surface border passage" }, [
+        h("div", { class: "passage-text jp" }, next.passage),
+      ]),
+      h("button", {
+        class: "btn-primary mono full",
+        onClick: function () { viewState.phase = "questions"; render(); },
+      }, "Answer questions →"),
+      h("div", { style: "margin-top:16px" }, [
+        h("button", {
+          class: "footer-link mono",
+          onClick: function () { setView("dashboard"); },
+        }, "Exit"),
+      ]),
+    ]);
+  }
+
+  if (viewState.phase === "questions") {
+    const questionEls = next.questions.map(function (q, qi) {
+      const optionEls = q.options.map(function (opt, oi) {
+        const selected = viewState.answers[qi] === oi;
+        return h("button", {
+          class: "option-btn jp" + (selected ? " selected" : ""),
+          onClick: function () {
+            viewState.answers[qi] = oi;
+            render();
+          },
+        }, [
+          h("span", { class: "mono opt-letter" }, String.fromCharCode(65 + oi)),
+          opt,
+        ]);
+      });
+      return h("div", { class: "card surface border question" }, [
+        h("div", { class: "question-text jp" }, q.q),
+        h("div", { class: "options" }, optionEls),
+      ]);
+    });
+    const allAnswered = next.questions.every(function (_, qi) {
+      return viewState.answers[qi] !== undefined;
+    });
+    return shell([
+      backRow("← Re-read passage", function () {
+        viewState.phase = "read";
+        render();
+      }),
+      header("Reading · Questions", next.title),
+      h("div", { class: "questions-list" }, questionEls),
+      h("button", {
+        class: "btn-primary mono full check-btn" + (allAnswered ? "" : " disabled"),
+        onClick: function () {
+          if (allAnswered) {
+            viewState.phase = "results";
+            render();
+          }
+        },
+      }, "Check →"),
+    ]);
+  }
+
+  // results
+  let correct = 0;
+  next.questions.forEach(function (q, qi) {
+    if (viewState.answers[qi] === q.a) correct++;
+  });
+  const resultEls = next.questions.map(function (q, qi) {
+    const isRight = viewState.answers[qi] === q.a;
+    const children = [
+      h("div", { class: "result-q jp" }, q.q),
+      h("div", { class: "result-you mono" }, [
+        "You: ",
+        h("span", { class: "jp" }, q.options[viewState.answers[qi]] || "—"),
+      ]),
+    ];
+    if (!isRight) {
+      children.push(h("div", { class: "result-correct mono" }, [
+        "Correct: ",
+        h("span", { class: "jp" }, q.options[q.a]),
+      ]));
+    }
+    return h("div", { class: "result-card surface " + (isRight ? "right" : "wrong") }, children);
+  });
+  return shell([
+    header("Reading · Results", next.title),
+    h("div", { class: "card surface border center" }, [
+      h("div", { class: "big-num" }, correct + " / " + next.questions.length),
+      h("div", { class: "stat-label mono" }, "CORRECT"),
+    ]),
+    h("div", { class: "results-list" }, resultEls),
+    h("button", {
+      class: "btn-primary mono full",
+      onClick: function () {
+        state.readingsDone = (state.readingsDone || []).concat([next.id]);
+        saveState();
+        setView("dashboard");
+      },
+    }, "Back to Dashboard →"),
+  ]);
+}
+
+/* ============================================================
+   SCREEN: MATCH GAME (flip-to-pair memory game)
+   ============================================================ */
+
+function renderMatch() {
+  // -------- Setup new game on first render --------
+  if (!viewState.gameStarted) {
+    // Pair counts chosen so they fit cleanly into a 4-column grid:
+    //   6 pairs = 12 tiles = 3 rows × 4 cols
+    //   8 pairs = 16 tiles = 4 × 4
+    //  10 pairs = 20 tiles = 5 × 4
+    //  12 pairs = 24 tiles = 6 × 4
+    const sizeOptions = [6, 8, 10, 12];
+    const desiredPairs = viewState.size || 8;
+
+    const sectionPool = filterBySection(allItems(), state.section || "all");
+    const cards = state.cards || {};
+    const learnedItems = sectionPool.filter(function (i) { return cards[i.id]; });
+    let pool;
+    if (learnedItems.length >= desiredPairs) {
+      pool = learnedItems;
+    } else {
+      const unseen = sectionPool
+        .filter(function (i) { return !cards[i.id]; })
+        .sort(function (a, b) { return getPriority(b) - getPriority(a); });
+      pool = learnedItems.concat(unseen).slice(0, desiredPairs * 2);
+    }
+
+    // Choose pairs randomly
+    const shuffledPool = pool.slice();
+    for (let i = shuffledPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = shuffledPool[i]; shuffledPool[i] = shuffledPool[j]; shuffledPool[j] = tmp;
+    }
+    const chosenPairs = shuffledPool.slice(0, desiredPairs);
+
+    // Build all cards (JP + EN), mix into one shuffled deck
+    const gameCards = [];
+    chosenPairs.forEach(function (item, idx) {
+      gameCards.push({ pairId: idx, face: "jp", item: item, id: "jp_" + idx });
+      gameCards.push({ pairId: idx, face: "en", item: item, id: "en_" + idx });
+    });
+    for (let i = gameCards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = gameCards[i]; gameCards[i] = gameCards[j]; gameCards[j] = tmp;
+    }
+
+    // Assign a display number (1-N) per pair in the order they get matched.
+    // We'll fill these in as matches happen.
+    viewState.gameStarted = true;
+    viewState.gameCards = gameCards;
+    viewState.selected = null;        // {id, face} or null
+    viewState.matched = {};            // {pairId: matchOrder (1-based)}
+    viewState.attempts = 0;
+    viewState.matches = 0;
+    viewState.totalPairs = desiredPairs;
+    viewState.startTime = Date.now();
+    viewState.elapsedAtFinish = null;
+    viewState.feedback = null;
+    viewState.sizeOptions = sizeOptions;
+    viewState.desiredPairs = desiredPairs;
+    viewState.lockUntil = 0;
+    viewState.combo = 0;
+    viewState.bestCombo = 0;
+  }
+
+  // -------- Win check --------
+  const allMatched = viewState.matches === viewState.totalPairs;
+  if (allMatched && viewState.elapsedAtFinish === null) {
+    viewState.elapsedAtFinish = Math.round((Date.now() - viewState.startTime) / 1000);
+    const accuracy = viewState.totalPairs / Math.max(1, viewState.attempts);
+    const speedBonus = Math.max(0, 200 - viewState.elapsedAtFinish);
+    const comboBonus = (viewState.bestCombo || 0) * 10;
+    const score = Math.round(accuracy * 100 + speedBonus + comboBonus);
+    viewState.gameScore = score;
+    viewState.gameComboBonus = comboBonus;
+    if (!state.matchHighScore || score > state.matchHighScore) {
+      state.matchHighScore = score;
+      viewState.newRecord = true;
+    }
+    state.matchGamesPlayed = (state.matchGamesPlayed || 0) + 1;
+    saveState();
+  }
+
+  // -------- WIN SCREEN --------
+  if (allMatched) {
+    return shell([
+      header("Match Game", "完成!"),
+      h("div", { class: "card surface border match-win" }, [
+        viewState.newRecord ? h("div", { class: "match-new-record mono" }, "★ NEW BEST") : null,
+        h("div", { class: "match-trophy" }, "🏆"),
+        h("div", { class: "match-stats" }, [
+          h("div", null, [
+            h("div", { class: "stat-num" }, String(viewState.matches)),
+            h("div", { class: "stat-label mono" }, "MATCHES"),
+          ]),
+          h("div", null, [
+            h("div", { class: "stat-num" }, viewState.elapsedAtFinish + "s"),
+            h("div", { class: "stat-label mono" }, "TIME"),
+          ]),
+          h("div", null, [
+            h("div", { class: "stat-num" }, String(viewState.attempts)),
+            h("div", { class: "stat-label mono" }, "TRIES"),
+          ]),
+        ]),
+        (viewState.bestCombo || 0) >= 2 ? h("div", { class: "win-combo-line" }, [
+          h("span", { class: "win-combo-badge" }, "🔥 BEST STREAK"),
+          h("span", { class: "win-combo-num" }, String(viewState.bestCombo)),
+          h("span", { class: "win-combo-bonus mono" }, "+" + (viewState.gameComboBonus || 0) + " pts"),
+        ]) : null,
+        h("div", { class: "match-score-big" }, String(viewState.gameScore)),
+        h("div", { class: "match-score-label mono" }, "SCORE"),
+        h("button", {
+          class: "btn-primary mono full",
+          style: "margin-top:20px",
+          onClick: function () {
+            viewState = { gameStarted: false, size: viewState.desiredPairs };
+            render();
+          },
+        }, "Play again →"),
+        h("button", {
+          class: "btn-secondary mono full",
+          style: "margin-top:8px",
+          onClick: function () {
+            viewState = {};
+            setView("dashboard");
+          },
+        }, "Back to Dashboard"),
+      ]),
+    ]);
+  }
+
+  // -------- Tap handler with mixed-grid logic --------
+  // Behavior:
+  //   - First tap on unmatched tile selects it
+  //   - Tap same tile again: deselects
+  //   - Tap different tile, same face: switch selection (no penalty)
+  //   - Tap different tile, opposite face: attempt match
+  function handleTap(card) {
+    if (Date.now() < viewState.lockUntil) return;
+    if (viewState.matched[card.pairId]) return;
+
+    const sel = viewState.selected;
+    if (!sel) {
+      viewState.selected = { id: card.id, face: card.face };
+    } else if (sel.id === card.id) {
+      // Same tile = deselect
+      viewState.selected = null;
+    } else if (sel.face === card.face) {
+      // Same side, different tile = switch selection (no penalty)
+      viewState.selected = { id: card.id, face: card.face };
+    } else {
+      // Opposite face = attempt match
+      const prev = viewState.gameCards.find(function (c) { return c.id === sel.id; });
+      viewState.attempts++;
+      if (prev.pairId === card.pairId) {
+        // MATCH
+        viewState.matches++;
+        viewState.matched[card.pairId] = viewState.matches; // store the order
+        viewState.combo = (viewState.combo || 0) + 1;
+        if (viewState.combo > viewState.bestCombo) viewState.bestCombo = viewState.combo;
+        viewState.feedback = { pairId: card.pairId, result: "match" };
+        viewState.selected = null;
+        setTimeout(function () {
+          if (viewState.feedback && viewState.feedback.result === "match") {
+            viewState.feedback = null;
+            render({ preserveScroll: true });
+          }
+        }, 500);
+      } else {
+        // MISS
+        viewState.combo = 0;
+        viewState.feedback = { missIds: [sel.id, card.id], result: "miss" };
+        viewState.lockUntil = Date.now() + 700;
+        setTimeout(function () {
+          viewState.feedback = null;
+          viewState.selected = null;
+          render({ preserveScroll: true });
+        }, 700);
+      }
+    }
+    // Preserve scroll on all in-game taps so the user stays where they are
+    render({ preserveScroll: true });
+  }
+
+  // -------- Build a tile element --------
+  function buildTile(c) {
+    const matchOrder = viewState.matched[c.pairId]; // undefined if not matched
+    const isMatched = !!matchOrder;
+    const isSelected = viewState.selected && viewState.selected.id === c.id;
+    const isMissFlash = viewState.feedback && viewState.feedback.result === "miss"
+      && viewState.feedback.missIds.indexOf(c.id) !== -1;
+    const isMatchFlash = viewState.feedback && viewState.feedback.result === "match"
+      && viewState.feedback.pairId === c.pairId;
+
+    let mainText, subText;
+    if (c.face === "jp") {
+      if (c.item.type === "vocab") {
+        mainText = c.item.jp;
+        subText = c.item.r;
+      } else if (c.item.type === "kanji") {
+        mainText = c.item.jp;
+        // shorter on/kun for tile space
+        subText = c.item.on + " · " + c.item.kun;
+      } else {
+        mainText = c.item.jp;
+        subText = "";
+      }
+    } else {
+      // English: prefer the first comma-separated part if very long
+      const meaning = c.item.type === "vocab" ? c.item.en : c.item.meaning;
+      mainText = meaning;
+      subText = "";
+    }
+
+    let cls = "pair-tile pair-tile-" + c.face;
+    if (isMatched) cls += " matched";
+    else if (isSelected) cls += " selected";
+    if (isMissFlash) cls += " miss-flash";
+    if (isMatchFlash) cls += " match-flash";
+
+    // Hue per pair for subtle differentiation. 47 is coprime to 360 → good distribution.
+    const hue = (c.pairId * 47) % 360;
+    const style = isMatched ? ("--pair-hue:" + hue) : "";
+
+    const children = [];
+    if (c.face === "jp") {
+      // Size class based on length: kana count > 6 = "long", > 9 = "very-long"
+      let lenCls = "";
+      const len = mainText.length;
+      if (len > 9) lenCls = " very-long";
+      else if (len > 6) lenCls = " long";
+      children.push(h("div", { class: "tile-jp-main jp" + lenCls }, mainText));
+      if (subText) children.push(h("div", { class: "tile-jp-sub jp" }, subText));
+    } else {
+      children.push(h("div", { class: "tile-en-main" }, mainText));
+    }
+    if (isMatched) {
+      children.push(h("span", { class: "tile-pair-num mono" }, String(matchOrder)));
+    }
+
+    return h("button", {
+      class: cls,
+      style: style,
+      onClick: function () { handleTap(c); },
+      disabled: isMatched ? "" : null,
+    }, children);
+  }
+
+  const tileEls = viewState.gameCards.map(buildTile);
+
+  const elapsed = Math.round((Date.now() - viewState.startTime) / 1000);
+  const combo = viewState.combo || 0;
+
+  const stats = h("div", { class: "match-stats-bar" }, [
+    h("div", { class: "match-stat" }, [
+      h("span", { class: "match-stat-num" }, viewState.matches + "/" + viewState.totalPairs),
+      h("span", { class: "match-stat-label mono" }, "PAIRS"),
+    ]),
+    h("div", { class: "match-stat" }, [
+      h("span", { class: "match-stat-num" }, String(viewState.attempts)),
+      h("span", { class: "match-stat-label mono" }, "TRIES"),
+    ]),
+    combo >= 2 ? h("div", { class: "combo-badge" }, "🔥 " + combo + " IN A ROW") : null,
+  ]);
+
+  const showDifficulty = viewState.attempts === 0 && viewState.matches === 0;
+  const difficultyRow = showDifficulty ? h("div", { class: "match-difficulty" },
+    [h("span", { class: "match-diff-label mono" }, "PAIRS:")].concat(
+      viewState.sizeOptions.map(function (n) {
+        return h("button", {
+          class: "match-diff-btn mono" + (viewState.desiredPairs === n ? " active" : ""),
+          onClick: function () {
+            viewState = { gameStarted: false, size: n };
+            render();
+          },
+        }, String(n));
+      })
+    )
+  ) : null;
+
+  // Apply awaiting-class to grid: if a tile is selected, opposite-face tiles glow subtly
+  let gridCls = "pair-grid-4";
+  if (viewState.selected && viewState.selected.face === "jp") gridCls += " awaiting-en";
+  else if (viewState.selected && viewState.selected.face === "en") gridCls += " awaiting-jp";
+
+  return shell([
+    backRow("← Dashboard", function () {
+      viewState = {};
+      setView("dashboard");
+    }),
+    header("Match Game · " + (state.section || "all").toUpperCase(), "ペア合わせ"),
+    h("div", { class: "match-blurb-row" }, "Tap a Japanese word, then its English meaning."),
+    stats,
+    difficultyRow,
+    h("div", { class: gridCls }, tileEls),
+    h("div", { class: "match-footer-row" }, [
+      h("button", {
+        class: "footer-link mono",
+        onClick: function () {
+          viewState = { gameStarted: false, size: viewState.desiredPairs };
+          render();
+        },
+      }, "↻ New deal"),
+      h("div", { class: "spacer" }),
+      h("span", { class: "mono muted" }, "⏱ " + elapsed + "s"),
+    ]),
+  ]);
+}
+
+/* ============================================================
+   SCREEN: PROGRESS
+   ============================================================ */
+
+function renderProgress() {
+  const proj = projectReadiness();
+  const cards = state.cards || {};
+  const all = allItems();
+  const breakdown = ["vocab", "kanji", "grammar"].map(function (type) {
+    const typeItems = all.filter(function (i) { return i.type === type; });
+    const seen = typeItems.map(function (i) { return cards[i.id]; }).filter(function (c) { return c; });
+    const learning = seen.filter(function (c) { return c.status === "learning"; }).length;
+    const review = seen.filter(function (c) { return c.status === "review"; }).length;
+    const mastered = seen.filter(function (c) { return c.stability > 7; }).length;
+    return { type: type, total: typeItems.length, seen: seen.length, learning: learning, review: review, mastered: mastered };
+  });
+
+  let totalLapses = 0, totalReviews = 0;
+  Object.keys(cards).forEach(function (k) {
+    totalLapses += cards[k].lapses || 0;
+    totalReviews += cards[k].reviews || 0;
+  });
+  const accuracy = totalReviews > 0 ? Math.round(((totalReviews - totalLapses) / totalReviews) * 100) : 0;
+
+  const right = h("button", {
+    class: "footer-link mono",
+    onClick: function () { setView("dashboard"); },
+  }, "← Back");
+
+  const stats = h("div", { class: "stats-grid" }, [
+    h("div", { class: "card surface border" }, [
+      h("div", { class: "card-label mono" }, "Days Left"),
+      h("div", { class: "stat-big" }, String(proj.daysLeft)),
+    ]),
+    h("div", { class: "card surface border" }, [
+      h("div", { class: "card-label mono" }, "Proj. Mastery"),
+      h("div", { class: "stat-big" }, proj.projectedMasteryPct + "%"),
+    ]),
+    h("div", { class: "card surface border" }, [
+      h("div", { class: "card-label mono" }, "Sessions"),
+      h("div", { class: "stat-big" }, String(state.sessions || 0)),
+    ]),
+    h("div", { class: "card surface border" }, [
+      h("div", { class: "card-label mono" }, "Accuracy"),
+      h("div", { class: "stat-big" }, accuracy + "%"),
+    ]),
+  ]);
+
+  const breakdownEls = breakdown.map(function (b) {
+    const masterPct = (b.mastered / b.total) * 100;
+    const reviewPct = (b.review / b.total) * 100;
+    const learningPct = (b.learning / b.total) * 100;
+    return h("div", { class: "card surface border breakdown-row" }, [
+      h("div", { class: "breakdown-head" }, [
+        h("div", { class: "breakdown-type" }, b.type),
+        h("div", { class: "mono muted" }, b.seen + "/" + b.total),
+      ]),
+      h("div", { class: "stack-bar" }, [
+        h("div", { class: "stack-mastered", style: "width:" + masterPct + "%" }),
+        h("div", {
+          class: "stack-review",
+          style: "left:" + masterPct + "%; width:" + reviewPct + "%",
+        }),
+        h("div", {
+          class: "stack-learning",
+          style: "left:" + (masterPct + reviewPct) + "%; width:" + learningPct + "%",
+        }),
+      ]),
+      h("div", { class: "breakdown-legend mono" }, [
+        h("span", null, "● mastered " + b.mastered),
+        h("span", null, "● review " + b.review),
+        h("span", null, "● learning " + b.learning),
+      ]),
+    ]);
+  });
+
+  return shell([
+    header("Your progress", "進捗", right),
+    stats,
+    h("div", { class: "section-block" }, [
+      h("div", { class: "section-heading mono" }, "By Skill"),
+      h("div", null, breakdownEls),
+    ]),
+    h("div", { class: "card surface border reading-summary" }, [
+      h("div", { class: "card-label mono" }, "Reading"),
+      h("div", null, [
+        "Completed: ",
+        h("strong", null, String((state.readingsDone || []).length)),
+        " / " + READINGS.length,
+      ]),
+    ]),
+    h("div", { class: "beta-notes" }, [
+      h("div", { class: "section-heading mono" }, "Beta Notes"),
+      h("p", { class: "italic" }, "Corpus: " + proj.total + " items (" + VOCAB.length + " vocab + " + KANJI.length + " kanji + " + GRAMMAR.length + " grammar) + " + READINGS.length + " reading passages. Algorithm being validated: FSRS-lite SRS, past-exam-weighted prioritization, self-assessed diagnostic placement."),
+    ]),
+  ]);
+}
+
+/* ============================================================
+   SCREEN: BROWSE — view all items with answers visible
+   ============================================================ */
+
+function renderBrowse() {
+  if (!viewState.tab) viewState.tab = "vocab";
+  if (viewState.search === undefined) viewState.search = "";
+  if (!viewState.expanded) viewState.expanded = {};
+
+  const cards = state.cards || {};
+  const tab = viewState.tab;
+  const search = viewState.search.trim().toLowerCase();
+
+  function statusBadge(itemId) {
+    const c = cards[itemId];
+    if (!c) return h("span", { class: "badge new mono" }, "·");
+    if (c.stability > 7 && c.status === "review") return h("span", { class: "badge mastered mono" }, "✓");
+    if (c.status === "review") return h("span", { class: "badge review mono" }, "↻");
+    return h("span", { class: "badge learning mono" }, "…");
+  }
+
+  function tabBtn(key, label, count) {
+    return h("button", {
+      class: "tab-btn mono" + (tab === key ? " active" : ""),
+      onClick: function () {
+        viewState.tab = key;
+        viewState.expanded = {};
+        render();
+      },
+    }, [
+      h("span", { class: "tab-label" }, label),
+      h("span", { class: "tab-count" }, "(" + count + ")"),
+    ]);
+  }
+
+  const tabBar = h("div", { class: "tab-bar" }, [
+    tabBtn("vocab", "Vocab", VOCAB.length),
+    tabBtn("kanji", "Kanji", KANJI.length),
+    tabBtn("grammar", "Grammar", GRAMMAR.length),
+    tabBtn("reading", "Reading", READINGS.length),
+  ]);
+
+  const searchInput = h("input", {
+    type: "text",
+    class: "input search-input",
+    placeholder: "Search " + tab + "…",
+    value: viewState.search,
+  });
+  searchInput.addEventListener("input", function (e) {
+    viewState.search = e.target.value;
+    // Re-render only the list; full render also fine
+    render();
+  });
+
+  let listEls = [];
+
+  if (tab === "vocab") {
+    const filtered = VOCAB.filter(function (v) {
+      if (!search) return true;
+      return (
+        v.jp.toLowerCase().indexOf(search) >= 0 ||
+        v.r.toLowerCase().indexOf(search) >= 0 ||
+        v.en.toLowerCase().indexOf(search) >= 0
+      );
+    });
+    listEls = filtered.map(function (v) {
+      const expanded = viewState.expanded[v.id];
+      return h("div", { class: "browse-item" + (expanded ? " expanded" : "") }, [
+        h("button", {
+          class: "browse-row",
+          onClick: function () {
+            viewState.expanded[v.id] = !expanded;
+            render();
+          },
+        }, [
+          h("div", { class: "browse-row-left" }, [
+            statusBadge(v.id),
+            h("span", { class: "browse-jp jp" }, v.jp),
+            h("span", { class: "browse-reading jp muted" }, v.r),
+          ]),
+          h("span", { class: "browse-en" }, v.en),
+        ]),
+        expanded
+          ? h("div", { class: "browse-detail" }, [
+              h("div", { class: "section-label mono" }, "Example"),
+              h("div", { class: "browse-example jp" }, v.ex),
+            ])
+          : null,
+      ]);
+    });
+  } else if (tab === "kanji") {
+    const filtered = KANJI.filter(function (k) {
+      if (!search) return true;
+      return (
+        k.jp.indexOf(search) >= 0 ||
+        (k.on || "").toLowerCase().indexOf(search) >= 0 ||
+        (k.kun || "").toLowerCase().indexOf(search) >= 0 ||
+        k.meaning.toLowerCase().indexOf(search) >= 0
+      );
+    });
+    listEls = filtered.map(function (k) {
+      const expanded = viewState.expanded[k.id];
+      return h("div", { class: "browse-item" + (expanded ? " expanded" : "") }, [
+        h("button", {
+          class: "browse-row",
+          onClick: function () {
+            viewState.expanded[k.id] = !expanded;
+            render();
+          },
+        }, [
+          h("div", { class: "browse-row-left" }, [
+            statusBadge(k.id),
+            h("span", { class: "browse-jp jp kanji" }, k.jp),
+            h("span", { class: "browse-onkun mono muted" }, k.on + " / " + k.kun),
+          ]),
+          h("span", { class: "browse-en" }, k.meaning),
+        ]),
+        expanded
+          ? h("div", { class: "browse-detail" }, [
+              h("div", { class: "section-label mono" }, "Components"),
+              h("div", { class: "browse-detail-text jp" }, k.comp),
+              h("div", { class: "section-label mono" }, "Mnemonic"),
+              h("div", { class: "browse-detail-text italic" }, k.mnem),
+            ])
+          : null,
+      ]);
+    });
+  } else if (tab === "grammar") {
+    const filtered = GRAMMAR.filter(function (g) {
+      if (!search) return true;
+      return (
+        g.jp.indexOf(search) >= 0 ||
+        g.meaning.toLowerCase().indexOf(search) >= 0 ||
+        g.explanation.toLowerCase().indexOf(search) >= 0
+      );
+    });
+    listEls = filtered.map(function (g) {
+      const expanded = viewState.expanded[g.id];
+      return h("div", { class: "browse-item" + (expanded ? " expanded" : "") }, [
+        h("button", {
+          class: "browse-row",
+          onClick: function () {
+            viewState.expanded[g.id] = !expanded;
+            render();
+          },
+        }, [
+          h("div", { class: "browse-row-left" }, [
+            statusBadge(g.id),
+            h("span", { class: "browse-jp jp" }, g.jp),
+          ]),
+          h("span", { class: "browse-en" }, g.meaning),
+        ]),
+        expanded
+          ? h("div", { class: "browse-detail" }, [
+              h("div", { class: "section-label mono" }, "Explanation"),
+              h("div", { class: "browse-detail-text" }, g.explanation),
+              h("div", { class: "section-label mono" }, "Example"),
+              h("div", { class: "browse-detail-text jp" }, g.ex),
+            ])
+          : null,
+      ]);
+    });
+  } else if (tab === "reading") {
+    listEls = READINGS.map(function (r, i) {
+      const expanded = viewState.expanded[r.id];
+      const done = (state.readingsDone || []).indexOf(r.id) >= 0;
+      return h("div", { class: "browse-item reading-item" + (expanded ? " expanded" : "") }, [
+        h("button", {
+          class: "browse-row",
+          onClick: function () {
+            viewState.expanded[r.id] = !expanded;
+            render();
+          },
+        }, [
+          h("div", { class: "browse-row-left" }, [
+            h("span", { class: done ? "badge mastered mono" : "badge new mono" }, done ? "✓" : (i + 1)),
+            h("span", { class: "browse-jp jp" }, r.title),
+          ]),
+          h("span", { class: "browse-en italic muted" }, r.title_en),
+        ]),
+        expanded
+          ? h("div", { class: "browse-detail" }, [
+              h("div", { class: "section-label mono" }, "Passage"),
+              h("div", { class: "passage-text jp" }, r.passage),
+              h("div", { class: "section-label mono", style: "margin-top:16px" }, "Questions & Answers"),
+              h("div", null, r.questions.map(function (q, qi) {
+                return h("div", { class: "qa-block" }, [
+                  h("div", { class: "qa-q jp" }, (qi + 1) + ". " + q.q),
+                  h("div", null, q.options.map(function (opt, oi) {
+                    return h("div", {
+                      class: "qa-opt jp" + (oi === q.a ? " correct" : ""),
+                    }, [
+                      h("span", { class: "mono opt-letter" }, String.fromCharCode(65 + oi)),
+                      opt,
+                      oi === q.a ? h("span", { class: "qa-mark mono" }, " ✓") : null,
+                    ]);
+                  })),
+                ]);
+              })),
+            ])
+          : null,
+      ]);
+    });
+  }
+
+  const right = h("button", {
+    class: "footer-link mono",
+    onClick: function () { setView("dashboard"); },
+  }, "← Back");
+
+  return shell([
+    header("Browse all items", "目録", right),
+    tabBar,
+    tab === "reading" ? null : searchInput,
+    h("div", { class: "browse-list" }, listEls.length > 0
+      ? listEls
+      : [h("div", { class: "muted-italic" }, "No matches.")]),
+  ]);
+}
+
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+
+function boot() {
+  try {
+    state = loadState();
+    if (state) {
+      view = state.diagnosticDone ? "dashboard" : "diagnostic";
+    } else {
+      view = "onboarding";
+    }
+    render();
+  } catch (err) {
+    showError(err);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", boot);
+
+</script>
+</body>
+</html>
