@@ -1271,6 +1271,185 @@ input { font-family: inherit; }
   color: #4A7C3A;
 }
 
+/* ====== REPORT SYSTEM ====== */
+.report-btn-inline {
+  background: transparent;
+  border: 1px solid #D9D0BC;
+  color: #8B8178;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 6px 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.report-btn-inline:hover {
+  color: #B33A3A;
+  border-color: #B33A3A;
+}
+.report-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed #D9D0BC;
+}
+.report-row.center {
+  justify-content: center;
+}
+
+.report-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fade-in 0.15s ease-out;
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.report-modal {
+  background: #F5F1E8;
+  border: 1px solid #1A1A1A;
+  max-width: 420px;
+  width: 100%;
+  padding: 24px;
+  border-radius: 4px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  animation: modal-rise 0.2s ease-out;
+}
+@keyframes modal-rise {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.report-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #8B8178;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.report-preview {
+  font-size: 16px;
+  padding: 12px;
+  background: #EDE7D8;
+  border-left: 3px solid #B33A3A;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.report-help {
+  font-size: 12px;
+  color: #8B8178;
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.report-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.report-reason-btn {
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  padding: 12px 14px;
+  font-size: 13px;
+  text-align: left;
+  color: #1A1A1A;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: normal;
+}
+.report-reason-btn:hover {
+  border-color: #B33A3A;
+  background: #F5F1E8;
+}
+.report-cancel {
+  background: transparent;
+  border: none;
+  color: #8B8178;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  padding: 8px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+}
+.report-cancel:hover { color: #1A1A1A; }
+
+.report-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1A1A1A;
+  color: #F5F1E8;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 13px;
+  z-index: 1100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.report-toast.fade-out {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.reports-section { }
+.reports-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.report-item {
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  padding: 12px 14px;
+  border-left: 3px solid #B33A3A;
+  position: relative;
+}
+.report-item-snapshot {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.report-item-meta {
+  font-size: 11px;
+  color: #8B8178;
+  letter-spacing: 0.05em;
+}
+.report-item-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #8B8178;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+.report-item-remove:hover { color: #B33A3A; }
+.reports-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.reports-actions .btn-secondary {
+  width: auto;
+  padding: 10px 18px;
+  display: inline-block;
+}
+
 /* Mobile tweaks */
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
@@ -1876,6 +2055,306 @@ const VOCAB = [
   { id: "v348", jp: "わざわざ", r: "わざわざ", en: "going out of one's way", ex: "わざわざありがとう。", ex_en: "Thanks for going out of your way.", efreq: 5, gfreq: 6, pre: 2 },
   { id: "v349", jp: "せっかく", r: "せっかく", en: "with much effort/trouble", ex: "せっかく来たのに。", ex_en: "Even though I came all this way…", efreq: 6, gfreq: 7, pre: 3 },
   { id: "v350", jp: "ちゃんと", r: "ちゃんと", en: "properly", ex: "ちゃんと食べる。", ex_en: "Eat properly.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "v351", jp: "増える", r: "ふえる", en: "to increase (intr.)", ex: "人口が増える。", ex_en: "The population increases.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v352", jp: "減る", r: "へる", en: "to decrease (intr.)", ex: "体重が減る。", ex_en: "Weight decreases.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v353", jp: "増やす", r: "ふやす", en: "to increase (tr.)", ex: "貯金を増やす。", ex_en: "Increase savings.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v354", jp: "減らす", r: "へらす", en: "to decrease (tr.)", ex: "費用を減らす。", ex_en: "Reduce expenses.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v355", jp: "進む", r: "すすむ", en: "to advance, proceed", ex: "計画が進む。", ex_en: "The plan progresses.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v356", jp: "進める", r: "すすめる", en: "to advance (tr.)", ex: "話を進める。", ex_en: "Move the conversation forward.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v357", jp: "戻る", r: "もどる", en: "to return, go back", ex: "家に戻る。", ex_en: "Return home.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v358", jp: "戻す", r: "もどす", en: "to put back", ex: "本を棚に戻す。", ex_en: "Put the book back on the shelf.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v359", jp: "渡る", r: "わたる", en: "to cross", ex: "橋を渡る。", ex_en: "Cross the bridge.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v360", jp: "渡す", r: "わたす", en: "to hand over", ex: "鍵を渡す。", ex_en: "Hand over the key.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v361", jp: "回る", r: "まわる", en: "to turn, go around", ex: "店を回る。", ex_en: "Go around the shops.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v362", jp: "回す", r: "まわす", en: "to turn (tr.)", ex: "ハンドルを回す。", ex_en: "Turn the handle.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v363", jp: "落ちる", r: "おちる", en: "to fall (intr.)", ex: "葉が落ちる。", ex_en: "Leaves fall.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v364", jp: "落とす", r: "おとす", en: "to drop (tr.)", ex: "財布を落とす。", ex_en: "Drop one's wallet.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v365", jp: "上がる", r: "あがる", en: "to go up (intr.)", ex: "値段が上がる。", ex_en: "Prices go up.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v366", jp: "下がる", r: "さがる", en: "to go down (intr.)", ex: "気温が下がる。", ex_en: "Temperature drops.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v367", jp: "上げる", r: "あげる", en: "to raise (tr.)", ex: "手を上げる。", ex_en: "Raise your hand.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v368", jp: "下げる", r: "さげる", en: "to lower (tr.)", ex: "音量を下げる。", ex_en: "Lower the volume.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v369", jp: "入れる", r: "いれる", en: "to put in", ex: "コーヒーに砂糖を入れる。", ex_en: "Put sugar in the coffee.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v370", jp: "出す", r: "だす", en: "to take out, submit", ex: "宿題を出す。", ex_en: "Hand in homework.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v371", jp: "預ける", r: "あずける", en: "to leave in care of", ex: "荷物を預ける。", ex_en: "Check the luggage.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v372", jp: "預かる", r: "あずかる", en: "to receive in care", ex: "鍵を預かる。", ex_en: "Hold the key (for someone).", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v373", jp: "貯める", r: "ためる", en: "to save up", ex: "お金を貯める。", ex_en: "Save money.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v374", jp: "溜まる", r: "たまる", en: "to accumulate", ex: "疲れが溜まる。", ex_en: "Fatigue builds up.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v375", jp: "片付ける", r: "かたづける", en: "to tidy up", ex: "部屋を片付ける。", ex_en: "Tidy the room.", efreq: 8, gfreq: 7, pre: 5 },
+  { id: "v376", jp: "片付く", r: "かたづく", en: "to get put in order", ex: "問題が片付く。", ex_en: "The matter gets settled.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v377", jp: "間違える", r: "まちがえる", en: "to make a mistake", ex: "答えを間違える。", ex_en: "Get the answer wrong.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v378", jp: "間違う", r: "まちがう", en: "to be mistaken", ex: "道を間違う。", ex_en: "Take the wrong road.", efreq: 8, gfreq: 7, pre: 5 },
+  { id: "v379", jp: "比べる", r: "くらべる", en: "to compare", ex: "値段を比べる。", ex_en: "Compare prices.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v380", jp: "確かめる", r: "たしかめる", en: "to confirm, verify", ex: "事実を確かめる。", ex_en: "Verify the facts.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v381", jp: "気付く", r: "きづく", en: "to notice", ex: "間違いに気付く。", ex_en: "Notice a mistake.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v382", jp: "迷う", r: "まよう", en: "to be lost, hesitate", ex: "道に迷う。", ex_en: "Get lost on the road.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v383", jp: "急ぐ", r: "いそぐ", en: "to hurry", ex: "駅まで急ぐ。", ex_en: "Hurry to the station.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v384", jp: "慌てる", r: "あわてる", en: "to panic, rush", ex: "急なニュースで慌てる。", ex_en: "Panic at sudden news.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v385", jp: "落ち着く", r: "おちつく", en: "to calm down", ex: "ゆっくり落ち着く。", ex_en: "Calm down slowly.", efreq: 8, gfreq: 7, pre: 5 },
+  { id: "v386", jp: "驚く", r: "おどろく", en: "to be surprised", ex: "結果に驚く。", ex_en: "Be surprised at the result.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v387", jp: "怒る", r: "おこる", en: "to get angry", ex: "父に怒られた。", ex_en: "Got scolded by my father.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v388", jp: "泣く", r: "なく", en: "to cry", ex: "赤ちゃんが泣く。", ex_en: "The baby cries.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v389", jp: "笑う", r: "わらう", en: "to laugh", ex: "みんなで笑う。", ex_en: "Everyone laughs together.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v390", jp: "感じる", r: "かんじる", en: "to feel", ex: "寒さを感じる。", ex_en: "Feel the cold.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v391", jp: "祈る", r: "いのる", en: "to pray", ex: "成功を祈る。", ex_en: "Pray for success.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v392", jp: "願う", r: "ねがう", en: "to wish", ex: "幸せを願う。", ex_en: "Wish for happiness.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v393", jp: "希望する", r: "きぼうする", en: "to hope for", ex: "進学を希望する。", ex_en: "Hope to advance to higher education.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v394", jp: "信じる", r: "しんじる", en: "to believe", ex: "友人を信じる。", ex_en: "Believe in a friend.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v395", jp: "疑う", r: "うたがう", en: "to doubt", ex: "言葉を疑う。", ex_en: "Doubt one's words.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v396", jp: "考える", r: "かんがえる", en: "to think, consider", ex: "よく考える。", ex_en: "Think carefully.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "v397", jp: "思い出す", r: "おもいだす", en: "to recall", ex: "昔のことを思い出す。", ex_en: "Recall the old days.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v398", jp: "忘れる", r: "わすれる", en: "to forget", ex: "名前を忘れる。", ex_en: "Forget the name.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v399", jp: "覚える", r: "おぼえる", en: "to memorize", ex: "単語を覚える。", ex_en: "Memorize vocabulary.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v400", jp: "思いつく", r: "おもいつく", en: "to come up with", ex: "いい考えを思いつく。", ex_en: "Come up with a good idea.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v401", jp: "決める", r: "きめる", en: "to decide", ex: "進路を決める。", ex_en: "Decide one's path.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v402", jp: "決まる", r: "きまる", en: "to be decided", ex: "予定が決まる。", ex_en: "The schedule gets decided.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v403", jp: "選ぶ", r: "えらぶ", en: "to choose", ex: "好きな色を選ぶ。", ex_en: "Choose your favorite color.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v404", jp: "試す", r: "ためす", en: "to try, test", ex: "新しい方法を試す。", ex_en: "Try a new method.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v405", jp: "頼む", r: "たのむ", en: "to ask, request", ex: "助けを頼む。", ex_en: "Ask for help.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v406", jp: "頼る", r: "たよる", en: "to rely on", ex: "友人に頼る。", ex_en: "Rely on a friend.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v407", jp: "助ける", r: "たすける", en: "to help", ex: "困った人を助ける。", ex_en: "Help someone in trouble.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v408", jp: "守る", r: "まもる", en: "to protect, keep", ex: "約束を守る。", ex_en: "Keep a promise.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v409", jp: "攻める", r: "せめる", en: "to attack", ex: "敵を攻める。", ex_en: "Attack the enemy.", efreq: 5, gfreq: 5, pre: 2 },
+  { id: "v410", jp: "戦う", r: "たたかう", en: "to fight", ex: "病気と戦う。", ex_en: "Fight against illness.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v411", jp: "勝つ", r: "かつ", en: "to win", ex: "試合に勝つ。", ex_en: "Win the match.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v412", jp: "負ける", r: "まける", en: "to lose", ex: "試合に負ける。", ex_en: "Lose the match.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v413", jp: "比較する", r: "ひかくする", en: "to compare", ex: "二つを比較する。", ex_en: "Compare the two.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v414", jp: "増加する", r: "ぞうかする", en: "to increase", ex: "人口が増加する。", ex_en: "Population increases.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v415", jp: "減少する", r: "げんしょうする", en: "to decrease", ex: "人口が減少する。", ex_en: "Population decreases.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v416", jp: "実行する", r: "じっこうする", en: "to carry out", ex: "計画を実行する。", ex_en: "Carry out the plan.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v417", jp: "実現する", r: "じつげんする", en: "to realize, achieve", ex: "夢を実現する。", ex_en: "Achieve a dream.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v418", jp: "解決する", r: "かいけつする", en: "to solve", ex: "問題を解決する。", ex_en: "Solve a problem.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v419", jp: "発見する", r: "はっけんする", en: "to discover", ex: "新種を発見する。", ex_en: "Discover a new species.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v420", jp: "発明する", r: "はつめいする", en: "to invent", ex: "新しい機械を発明する。", ex_en: "Invent a new machine.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v421", jp: "改善する", r: "かいぜんする", en: "to improve", ex: "サービスを改善する。", ex_en: "Improve the service.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v422", jp: "改正する", r: "かいせいする", en: "to revise (a law)", ex: "法律を改正する。", ex_en: "Revise the law.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v423", jp: "変更する", r: "へんこうする", en: "to change (a plan)", ex: "予定を変更する。", ex_en: "Change the schedule.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v424", jp: "完成する", r: "かんせいする", en: "to complete", ex: "作品を完成する。", ex_en: "Complete a work.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v425", jp: "完了する", r: "かんりょうする", en: "to finish, complete", ex: "作業を完了する。", ex_en: "Finish the task.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v426", jp: "中止する", r: "ちゅうしする", en: "to call off", ex: "イベントを中止する。", ex_en: "Cancel the event.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v427", jp: "停止する", r: "ていしする", en: "to stop, suspend", ex: "電車が停止する。", ex_en: "The train stops.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v428", jp: "出発する", r: "しゅっぱつする", en: "to depart", ex: "朝早く出発する。", ex_en: "Depart early in the morning.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v429", jp: "到着する", r: "とうちゃくする", en: "to arrive", ex: "空港に到着する。", ex_en: "Arrive at the airport.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v430", jp: "通過する", r: "つうかする", en: "to pass through", ex: "駅を通過する。", ex_en: "Pass through the station.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v431", jp: "状況", r: "じょうきょう", en: "situation, circumstances", ex: "今の状況を説明する。", ex_en: "Explain the current situation.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "v432", jp: "状態", r: "じょうたい", en: "state, condition", ex: "良い状態を保つ。", ex_en: "Maintain a good condition.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v433", jp: "場合", r: "ばあい", en: "case, occasion", ex: "雨の場合は中止。", ex_en: "In case of rain, cancel.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v434", jp: "立場", r: "たちば", en: "standpoint, position", ex: "相手の立場を考える。", ex_en: "Consider the other person's position.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v435", jp: "態度", r: "たいど", en: "attitude", ex: "態度が悪い。", ex_en: "His attitude is bad.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v436", jp: "性格", r: "せいかく", en: "personality", ex: "明るい性格。", ex_en: "A cheerful personality.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v437", jp: "性質", r: "せいしつ", en: "nature, property", ex: "物質の性質。", ex_en: "The nature of a substance.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v438", jp: "印象", r: "いんしょう", en: "impression", ex: "良い印象を受ける。", ex_en: "Get a good impression.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v439", jp: "感想", r: "かんそう", en: "thoughts, impressions", ex: "映画の感想を聞く。", ex_en: "Ask for thoughts on the movie.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v440", jp: "意見", r: "いけん", en: "opinion", ex: "意見を述べる。", ex_en: "State an opinion.", efreq: 8, gfreq: 9, pre: 7 },
+  { id: "v441", jp: "判断", r: "はんだん", en: "judgment", ex: "判断が難しい。", ex_en: "The judgment is difficult.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v442", jp: "決定", r: "けってい", en: "decision", ex: "決定を下す。", ex_en: "Make a decision.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v443", jp: "結論", r: "けつろん", en: "conclusion", ex: "結論を出す。", ex_en: "Reach a conclusion.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v444", jp: "結果", r: "けっか", en: "result", ex: "テストの結果が出る。", ex_en: "The test results come out.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v445", jp: "原因", r: "げんいん", en: "cause", ex: "事故の原因を調べる。", ex_en: "Investigate the cause of the accident.", efreq: 8, gfreq: 9, pre: 7 },
+  { id: "v446", jp: "理由", r: "りゆう", en: "reason", ex: "遅れた理由を話す。", ex_en: "Talk about the reason for being late.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v447", jp: "目的", r: "もくてき", en: "purpose", ex: "旅行の目的。", ex_en: "The purpose of the trip.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v448", jp: "目標", r: "もくひょう", en: "goal", ex: "目標を立てる。", ex_en: "Set a goal.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v449", jp: "予定", r: "よてい", en: "schedule, plan", ex: "明日の予定。", ex_en: "Tomorrow's schedule.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v450", jp: "計画", r: "けいかく", en: "plan", ex: "計画を立てる。", ex_en: "Make a plan.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v451", jp: "予想", r: "よそう", en: "prediction", ex: "予想が当たる。", ex_en: "The prediction is correct.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v452", jp: "想像", r: "そうぞう", en: "imagination", ex: "想像できない。", ex_en: "I can't imagine it.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v453", jp: "現実", r: "げんじつ", en: "reality", ex: "現実を見る。", ex_en: "Face reality.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v454", jp: "事実", r: "じじつ", en: "fact", ex: "事実を確認する。", ex_en: "Verify the facts.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v455", jp: "真実", r: "しんじつ", en: "truth", ex: "真実を知る。", ex_en: "Know the truth.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v456", jp: "情報", r: "じょうほう", en: "information", ex: "正しい情報を得る。", ex_en: "Get correct information.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v457", jp: "知識", r: "ちしき", en: "knowledge", ex: "知識を深める。", ex_en: "Deepen knowledge.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v458", jp: "経験", r: "けいけん", en: "experience (related to v1)", ex: "貴重な経験。", ex_en: "A valuable experience.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v459", jp: "技術", r: "ぎじゅつ", en: "technology, skill", ex: "新しい技術。", ex_en: "New technology.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "v460", jp: "能力", r: "のうりょく", en: "ability", ex: "高い能力を持つ。", ex_en: "Have high ability.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v461", jp: "才能", r: "さいのう", en: "talent", ex: "音楽の才能がある。", ex_en: "Have musical talent.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v462", jp: "努力", r: "どりょく", en: "effort", ex: "努力が必要だ。", ex_en: "Effort is necessary.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v463", jp: "成功", r: "せいこう", en: "success", ex: "事業に成功する。", ex_en: "Succeed in business.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v464", jp: "失敗", r: "しっぱい", en: "failure", ex: "失敗を恐れない。", ex_en: "Don't fear failure.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v465", jp: "成長", r: "せいちょう", en: "growth", ex: "経済の成長。", ex_en: "Economic growth.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v466", jp: "発展", r: "はってん", en: "development", ex: "町の発展。", ex_en: "Town's development.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v467", jp: "進歩", r: "しんぽ", en: "progress", ex: "技術の進歩。", ex_en: "Technological progress.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v468", jp: "影響", r: "えいきょう", en: "influence, effect", ex: "天気に影響される。", ex_en: "Be influenced by weather.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "v469", jp: "効果", r: "こうか", en: "effect, result", ex: "薬の効果。", ex_en: "The effect of the medicine.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v470", jp: "原因", r: "げんいん", en: "cause (duplicate check)", ex: "原因不明。", ex_en: "Cause unknown.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v471", jp: "関係", r: "かんけい", en: "relationship", ex: "家族の関係。", ex_en: "Family relationship.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v472", jp: "関心", r: "かんしん", en: "interest, concern", ex: "政治に関心がある。", ex_en: "Be interested in politics.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v473", jp: "興味", r: "きょうみ", en: "interest", ex: "音楽に興味がある。", ex_en: "Be interested in music.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v474", jp: "趣味", r: "しゅみ", en: "hobby", ex: "私の趣味は読書だ。", ex_en: "My hobby is reading.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v475", jp: "習慣", r: "しゅうかん", en: "habit, custom", ex: "朝の習慣。", ex_en: "Morning habit.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v476", jp: "伝統", r: "でんとう", en: "tradition", ex: "古い伝統。", ex_en: "An old tradition.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v477", jp: "文化", r: "ぶんか", en: "culture", ex: "日本の文化。", ex_en: "Japanese culture.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v478", jp: "社会", r: "しゃかい", en: "society", ex: "社会の問題。", ex_en: "Social issues.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "v479", jp: "政治", r: "せいじ", en: "politics", ex: "政治に興味がある。", ex_en: "Interested in politics.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v480", jp: "経済", r: "けいざい", en: "economy", ex: "経済ニュース。", ex_en: "Economic news.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v481", jp: "環境", r: "かんきょう", en: "environment", ex: "環境を守る。", ex_en: "Protect the environment.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "v482", jp: "自然", r: "しぜん", en: "nature", ex: "自然が豊かだ。", ex_en: "Nature is abundant.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v483", jp: "世界", r: "せかい", en: "world", ex: "世界を旅する。", ex_en: "Travel around the world.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v484", jp: "国際", r: "こくさい", en: "international", ex: "国際関係。", ex_en: "International relations.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v485", jp: "地球", r: "ちきゅう", en: "earth", ex: "地球を大切に。", ex_en: "Take care of the Earth.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v486", jp: "宇宙", r: "うちゅう", en: "universe, space", ex: "宇宙の研究。", ex_en: "Space research.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v487", jp: "歴史", r: "れきし", en: "history", ex: "日本の歴史。", ex_en: "Japanese history.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v488", jp: "現代", r: "げんだい", en: "modern times", ex: "現代の社会。", ex_en: "Modern society.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v489", jp: "時代", r: "じだい", en: "era, period", ex: "新しい時代。", ex_en: "A new era.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v490", jp: "未来", r: "みらい", en: "future", ex: "未来の夢。", ex_en: "A future dream.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v491", jp: "過去", r: "かこ", en: "past", ex: "過去の話。", ex_en: "Stories of the past.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v492", jp: "現在", r: "げんざい", en: "present, now", ex: "現在の状況。", ex_en: "The current situation.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v493", jp: "瞬間", r: "しゅんかん", en: "moment", ex: "決定的な瞬間。", ex_en: "The decisive moment.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v494", jp: "期間", r: "きかん", en: "period of time", ex: "勉強期間。", ex_en: "Study period.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v495", jp: "時期", r: "じき", en: "time, season", ex: "梅雨の時期。", ex_en: "Rainy season.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v496", jp: "季節", r: "きせつ", en: "season", ex: "好きな季節。", ex_en: "Favorite season.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v497", jp: "天気", r: "てんき", en: "weather", ex: "今日の天気。", ex_en: "Today's weather.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v498", jp: "気候", r: "きこう", en: "climate", ex: "温暖な気候。", ex_en: "A warm climate.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v499", jp: "雰囲気", r: "ふんいき", en: "atmosphere", ex: "店の雰囲気。", ex_en: "The shop's atmosphere.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v500", jp: "様子", r: "ようす", en: "state, appearance", ex: "様子を見る。", ex_en: "See how things are.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v501", jp: "形", r: "かたち", en: "shape, form", ex: "丸い形。", ex_en: "A round shape.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v502", jp: "色", r: "いろ", en: "color", ex: "好きな色。", ex_en: "Favorite color.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v503", jp: "音", r: "おと", en: "sound", ex: "大きな音。", ex_en: "A loud sound.", efreq: 8, gfreq: 8, pre: 7 },
+  { id: "v504", jp: "声", r: "こえ", en: "voice", ex: "大きな声で話す。", ex_en: "Speak in a loud voice.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v505", jp: "匂い", r: "におい", en: "smell", ex: "いい匂いがする。", ex_en: "It smells nice.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v506", jp: "味", r: "あじ", en: "taste, flavor", ex: "甘い味。", ex_en: "A sweet taste.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v507", jp: "感覚", r: "かんかく", en: "sense, feeling", ex: "鋭い感覚。", ex_en: "A sharp sense.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v508", jp: "気持ち", r: "きもち", en: "feeling, mood", ex: "気持ちがいい。", ex_en: "Feels good.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v509", jp: "感情", r: "かんじょう", en: "emotion", ex: "感情を抑える。", ex_en: "Restrain one's emotions.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v510", jp: "笑顔", r: "えがお", en: "smile, smiling face", ex: "笑顔で挨拶する。", ex_en: "Greet with a smile.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v511", jp: "涙", r: "なみだ", en: "tear", ex: "涙が出る。", ex_en: "Tears come out.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v512", jp: "夢", r: "ゆめ", en: "dream", ex: "夢を見る。", ex_en: "See a dream.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v513", jp: "希望", r: "きぼう", en: "hope", ex: "希望を持つ。", ex_en: "Have hope.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v514", jp: "幸せ", r: "しあわせ", en: "happiness", ex: "幸せな家族。", ex_en: "A happy family.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v515", jp: "不安", r: "ふあん", en: "anxiety, unease", ex: "将来に不安を感じる。", ex_en: "Feel anxious about the future.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v516", jp: "心配", r: "しんぱい", en: "worry", ex: "親に心配をかける。", ex_en: "Cause worry to one's parents.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v517", jp: "緊張", r: "きんちょう", en: "tension, nervousness", ex: "面接で緊張する。", ex_en: "Get nervous at the interview.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v518", jp: "疲れ", r: "つかれ", en: "tiredness", ex: "疲れが取れない。", ex_en: "Can't shake off the fatigue.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v519", jp: "病気", r: "びょうき", en: "illness", ex: "病気になる。", ex_en: "Get sick.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v520", jp: "怪我", r: "けが", en: "injury", ex: "怪我をする。", ex_en: "Get injured.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v521", jp: "薬", r: "くすり", en: "medicine", ex: "薬を飲む。", ex_en: "Take medicine.", efreq: 8, gfreq: 8, pre: 7 },
+  { id: "v522", jp: "治療", r: "ちりょう", en: "treatment", ex: "治療を受ける。", ex_en: "Receive treatment.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v523", jp: "予防", r: "よぼう", en: "prevention", ex: "病気を予防する。", ex_en: "Prevent illness.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v524", jp: "健康", r: "けんこう", en: "health", ex: "健康が一番。", ex_en: "Health comes first.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v525", jp: "栄養", r: "えいよう", en: "nutrition", ex: "栄養が足りない。", ex_en: "Lacking nutrition.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v526", jp: "食事", r: "しょくじ", en: "meal", ex: "食事を取る。", ex_en: "Have a meal.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v527", jp: "料理", r: "りょうり", en: "cooking, cuisine", ex: "母の料理。", ex_en: "Mother's cooking.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v528", jp: "材料", r: "ざいりょう", en: "ingredients, material", ex: "料理の材料を買う。", ex_en: "Buy ingredients for cooking.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v529", jp: "値段", r: "ねだん", en: "price", ex: "値段が高い。", ex_en: "The price is high.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v530", jp: "値上げ", r: "ねあげ", en: "price increase", ex: "値上げが続く。", ex_en: "Price increases continue.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v531", jp: "値下げ", r: "ねさげ", en: "price reduction", ex: "値下げセール。", ex_en: "Discount sale.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v532", jp: "割引", r: "わりびき", en: "discount", ex: "学生割引。", ex_en: "Student discount.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v533", jp: "消費", r: "しょうひ", en: "consumption", ex: "消費が増える。", ex_en: "Consumption increases.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v534", jp: "生産", r: "せいさん", en: "production", ex: "生産が止まる。", ex_en: "Production stops.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v535", jp: "商品", r: "しょうひん", en: "product, goods", ex: "新商品。", ex_en: "New product.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v536", jp: "製品", r: "せいひん", en: "manufactured product", ex: "高品質な製品。", ex_en: "A high-quality product.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v537", jp: "品質", r: "ひんしつ", en: "quality", ex: "品質が良い。", ex_en: "Quality is good.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v538", jp: "数", r: "かず", en: "number, count", ex: "数が多い。", ex_en: "The number is large.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v539", jp: "数字", r: "すうじ", en: "digit, number", ex: "電話の数字。", ex_en: "Phone numbers.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v540", jp: "量", r: "りょう", en: "quantity, amount", ex: "適切な量。", ex_en: "An appropriate amount.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v541", jp: "程度", r: "ていど", en: "degree, extent", ex: "ある程度わかる。", ex_en: "Understand to some degree.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v542", jp: "割合", r: "わりあい", en: "ratio, proportion", ex: "高い割合。", ex_en: "A high ratio.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v543", jp: "倍", r: "ばい", en: "double, times", ex: "売上が二倍になる。", ex_en: "Sales double.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v544", jp: "半分", r: "はんぶん", en: "half", ex: "半分に分ける。", ex_en: "Divide in half.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v545", jp: "全部", r: "ぜんぶ", en: "all, whole", ex: "全部食べる。", ex_en: "Eat it all.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v546", jp: "一部", r: "いちぶ", en: "part, portion", ex: "一部の人。", ex_en: "Some people.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v547", jp: "残り", r: "のこり", en: "remainder", ex: "残りは明日。", ex_en: "The rest is for tomorrow.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v548", jp: "始まり", r: "はじまり", en: "beginning", ex: "新しい始まり。", ex_en: "A new beginning.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v549", jp: "終わり", r: "おわり", en: "end", ex: "話の終わり。", ex_en: "The end of the story.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v550", jp: "途中", r: "とちゅう", en: "halfway, on the way", ex: "途中で会う。", ex_en: "Meet on the way.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v551", jp: "細かい", r: "こまかい", en: "fine, detailed", ex: "細かい字を読む。", ex_en: "Read small text.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v552", jp: "厚い", r: "あつい", en: "thick", ex: "厚い本。", ex_en: "A thick book.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v553", jp: "薄い", r: "うすい", en: "thin", ex: "薄い紙。", ex_en: "Thin paper.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v554", jp: "深い", r: "ふかい", en: "deep", ex: "深い海。", ex_en: "Deep sea.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v555", jp: "浅い", r: "あさい", en: "shallow", ex: "浅いプール。", ex_en: "Shallow pool.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v556", jp: "硬い", r: "かたい", en: "hard, solid", ex: "硬い石。", ex_en: "A hard stone.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v557", jp: "柔らかい", r: "やわらかい", en: "soft", ex: "柔らかいパン。", ex_en: "Soft bread.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v558", jp: "鋭い", r: "するどい", en: "sharp", ex: "鋭いナイフ。", ex_en: "A sharp knife.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v559", jp: "鈍い", r: "にぶい", en: "dull, slow", ex: "感覚が鈍い。", ex_en: "The senses are dull.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v560", jp: "明らか", r: "あきらか", en: "obvious, clear", ex: "明らかな間違い。", ex_en: "An obvious mistake.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v561", jp: "豊か", r: "ゆたか", en: "rich, abundant", ex: "豊かな自然。", ex_en: "Rich nature.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v562", jp: "貧しい", r: "まずしい", en: "poor", ex: "貧しい家庭。", ex_en: "A poor family.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v563", jp: "厳しい", r: "きびしい", en: "strict, severe", ex: "厳しい先生。", ex_en: "A strict teacher.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v564", jp: "優しい", r: "やさしい", en: "kind, gentle", ex: "優しい人。", ex_en: "A kind person.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v565", jp: "怖い", r: "こわい", en: "scary", ex: "怖い映画。", ex_en: "A scary movie.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v566", jp: "恥ずかしい", r: "はずかしい", en: "embarrassing", ex: "恥ずかしい話。", ex_en: "An embarrassing story.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v567", jp: "羨ましい", r: "うらやましい", en: "envious", ex: "君が羨ましい。", ex_en: "I envy you.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v568", jp: "懐かしい", r: "なつかしい", en: "nostalgic", ex: "懐かしい歌。", ex_en: "A nostalgic song.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v569", jp: "悔しい", r: "くやしい", en: "regretful, frustrating", ex: "負けて悔しい。", ex_en: "Frustrated at losing.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v570", jp: "面倒", r: "めんどう", en: "troublesome (na-adj)", ex: "面倒な仕事。", ex_en: "Troublesome work.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v571", jp: "丁寧", r: "ていねい", en: "polite, careful", ex: "丁寧に話す。", ex_en: "Speak politely.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v572", jp: "正確", r: "せいかく", en: "accurate", ex: "正確な答え。", ex_en: "An accurate answer.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v573", jp: "確実", r: "かくじつ", en: "certain, reliable", ex: "確実な情報。", ex_en: "Reliable information.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v574", jp: "適当", r: "てきとう", en: "suitable / lazy", ex: "適当な答え。", ex_en: "An appropriate (or casual) answer.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v575", jp: "十分", r: "じゅうぶん", en: "sufficient", ex: "十分な時間。", ex_en: "Sufficient time.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v576", jp: "完全", r: "かんぜん", en: "complete, perfect", ex: "完全な勝利。", ex_en: "A complete victory.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v577", jp: "新鮮", r: "しんせん", en: "fresh", ex: "新鮮な野菜。", ex_en: "Fresh vegetables.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v578", jp: "豪華", r: "ごうか", en: "luxurious", ex: "豪華なホテル。", ex_en: "A luxurious hotel.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v579", jp: "派手", r: "はで", en: "flashy", ex: "派手な服。", ex_en: "Flashy clothes.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v580", jp: "地味", r: "じみ", en: "plain, sober", ex: "地味な色。", ex_en: "A plain color.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v581", jp: "賑やか", r: "にぎやか", en: "lively, bustling", ex: "賑やかな街。", ex_en: "A lively town.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v582", jp: "退屈", r: "たいくつ", en: "boring", ex: "退屈な授業。", ex_en: "A boring class.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v583", jp: "騒がしい", r: "さわがしい", en: "noisy", ex: "騒がしい部屋。", ex_en: "A noisy room.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v584", jp: "うるさい", r: "うるさい", en: "noisy, annoying", ex: "うるさい音。", ex_en: "An annoying noise.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v585", jp: "苦い", r: "にがい", en: "bitter", ex: "苦いコーヒー。", ex_en: "Bitter coffee.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v586", jp: "酸っぱい", r: "すっぱい", en: "sour", ex: "酸っぱいレモン。", ex_en: "Sour lemon.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v587", jp: "塩辛い", r: "しおからい", en: "salty", ex: "塩辛い料理。", ex_en: "A salty dish.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v588", jp: "辛い", r: "からい", en: "spicy", ex: "辛いカレー。", ex_en: "Spicy curry.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v589", jp: "苦しい", r: "くるしい", en: "painful, distressing", ex: "苦しい状況。", ex_en: "A painful situation.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v590", jp: "楽しい", r: "たのしい", en: "fun", ex: "楽しい時間。", ex_en: "A fun time.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v591", jp: "悲しい", r: "かなしい", en: "sad", ex: "悲しい話。", ex_en: "A sad story.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v592", jp: "嬉しい", r: "うれしい", en: "happy, glad", ex: "会えて嬉しい。", ex_en: "Glad to meet you.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v593", jp: "苦手", r: "にがて", en: "weak at, dislike (na)", ex: "数学が苦手。", ex_en: "Bad at math.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v594", jp: "得意", r: "とくい", en: "good at (na)", ex: "英語が得意。", ex_en: "Good at English.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v595", jp: "上手", r: "じょうず", en: "skillful (na)", ex: "料理が上手。", ex_en: "Skilled at cooking.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v596", jp: "下手", r: "へた", en: "unskilled (na)", ex: "歌が下手。", ex_en: "Bad at singing.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v597", jp: "可能", r: "かのう", en: "possible (na)", ex: "実現可能だ。", ex_en: "Realistically possible.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v598", jp: "不可能", r: "ふかのう", en: "impossible (na)", ex: "ほぼ不可能だ。", ex_en: "Nearly impossible.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v599", jp: "必要", r: "ひつよう", en: "necessary", ex: "準備が必要だ。", ex_en: "Preparation is necessary.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v600", jp: "不要", r: "ふよう", en: "unnecessary", ex: "不要な物を捨てる。", ex_en: "Throw away unnecessary things.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v601", jp: "以上", r: "いじょう", en: "or more, the above", ex: "千円以上。", ex_en: "1000 yen or more.", efreq: 8, gfreq: 9, pre: 7 },
+  { id: "v602", jp: "以下", r: "いか", en: "or less, below", ex: "二十歳以下。", ex_en: "20 years old or younger.", efreq: 8, gfreq: 9, pre: 7 },
+  { id: "v603", jp: "以内", r: "いない", en: "within", ex: "一週間以内。", ex_en: "Within a week.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v604", jp: "以外", r: "いがい", en: "other than", ex: "君以外は知らない。", ex_en: "Other than you, I don't know anyone.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v605", jp: "以前", r: "いぜん", en: "before, previously", ex: "以前会った人。", ex_en: "A person I met before.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v606", jp: "以後", r: "いご", en: "after, from now on", ex: "以後気をつける。", ex_en: "I'll be careful from now on.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v607", jp: "最近", r: "さいきん", en: "recently", ex: "最近忙しい。", ex_en: "I've been busy recently.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v608", jp: "近頃", r: "ちかごろ", en: "recently, these days", ex: "近頃の若者。", ex_en: "Young people these days.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v609", jp: "当時", r: "とうじ", en: "at that time", ex: "当時は子供だった。", ex_en: "At that time I was a child.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v610", jp: "次", r: "つぎ", en: "next", ex: "次の駅。", ex_en: "The next station.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v611", jp: "前", r: "まえ", en: "before, in front", ex: "三日前。", ex_en: "Three days ago.", efreq: 10, gfreq: 10, pre: 9 },
+  { id: "v612", jp: "後", r: "あと", en: "after, later", ex: "三時間後。", ex_en: "Three hours later.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v613", jp: "後", r: "うしろ", en: "behind", ex: "後を見る。", ex_en: "Look behind.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v614", jp: "間", r: "あいだ", en: "between, during", ex: "二人の間。", ex_en: "Between the two.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v615", jp: "中", r: "なか", en: "inside, middle", ex: "箱の中。", ex_en: "Inside the box.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v616", jp: "外", r: "そと", en: "outside", ex: "外に出る。", ex_en: "Go outside.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v617", jp: "右", r: "みぎ", en: "right", ex: "右を見る。", ex_en: "Look right.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v618", jp: "左", r: "ひだり", en: "left", ex: "左に曲がる。", ex_en: "Turn left.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v619", jp: "向こう", r: "むこう", en: "over there, opposite", ex: "向こうの店。", ex_en: "The shop over there.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v620", jp: "周り", r: "まわり", en: "surroundings", ex: "周りを見る。", ex_en: "Look around.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v621", jp: "近く", r: "ちかく", en: "near, vicinity", ex: "駅の近く。", ex_en: "Near the station.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v622", jp: "遠く", r: "とおく", en: "far", ex: "遠くから来る。", ex_en: "Come from afar.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v623", jp: "場所", r: "ばしょ", en: "place", ex: "好きな場所。", ex_en: "Favorite place.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v624", jp: "位置", r: "いち", en: "position", ex: "正しい位置。", ex_en: "The correct position.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v625", jp: "方向", r: "ほうこう", en: "direction", ex: "方向を確認する。", ex_en: "Check the direction.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v626", jp: "距離", r: "きょり", en: "distance", ex: "距離が遠い。", ex_en: "The distance is far.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v627", jp: "速度", r: "そくど", en: "speed", ex: "速度を上げる。", ex_en: "Increase the speed.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v628", jp: "高さ", r: "たかさ", en: "height", ex: "山の高さ。", ex_en: "The mountain's height.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v629", jp: "広さ", r: "ひろさ", en: "size, area", ex: "部屋の広さ。", ex_en: "The room's size.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v630", jp: "重さ", r: "おもさ", en: "weight", ex: "荷物の重さ。", ex_en: "The luggage's weight.", efreq: 6, gfreq: 6, pre: 4 },
+  { id: "v631", jp: "長さ", r: "ながさ", en: "length", ex: "髪の長さ。", ex_en: "The hair's length.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v632", jp: "深さ", r: "ふかさ", en: "depth", ex: "プールの深さ。", ex_en: "The pool's depth.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v633", jp: "幅", r: "はば", en: "width", ex: "道の幅。", ex_en: "The road's width.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v634", jp: "面積", r: "めんせき", en: "area (size)", ex: "土地の面積。", ex_en: "The land's area.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v635", jp: "体積", r: "たいせき", en: "volume", ex: "箱の体積。", ex_en: "The box's volume.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v636", jp: "重量", r: "じゅうりょう", en: "weight (formal)", ex: "重量制限。", ex_en: "Weight limit.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v637", jp: "目", r: "め", en: "eye", ex: "目を開ける。", ex_en: "Open one's eyes.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "v638", jp: "耳", r: "みみ", en: "ear", ex: "耳を澄ます。", ex_en: "Listen carefully.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v639", jp: "鼻", r: "はな", en: "nose", ex: "鼻をかむ。", ex_en: "Blow one's nose.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v640", jp: "口", r: "くち", en: "mouth", ex: "口を開ける。", ex_en: "Open one's mouth.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v641", jp: "歯", r: "は", en: "tooth", ex: "歯を磨く。", ex_en: "Brush teeth.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v642", jp: "舌", r: "した", en: "tongue", ex: "舌を出す。", ex_en: "Stick out one's tongue.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v643", jp: "首", r: "くび", en: "neck", ex: "首が痛い。", ex_en: "My neck hurts.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v644", jp: "肩", r: "かた", en: "shoulder", ex: "肩を叩く。", ex_en: "Pat on the shoulder.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v645", jp: "腕", r: "うで", en: "arm", ex: "腕を組む。", ex_en: "Cross one's arms.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v646", jp: "指", r: "ゆび", en: "finger", ex: "指を切る。", ex_en: "Cut one's finger.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v647", jp: "膝", r: "ひざ", en: "knee", ex: "膝が痛い。", ex_en: "My knee hurts.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v648", jp: "腰", r: "こし", en: "lower back, waist", ex: "腰が痛い。", ex_en: "My back hurts.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v649", jp: "胸", r: "むね", en: "chest", ex: "胸が痛い。", ex_en: "My chest hurts.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v650", jp: "背中", r: "せなか", en: "back (body)", ex: "背中をかく。", ex_en: "Scratch one's back.", efreq: 6, gfreq: 7, pre: 4 },
 ];
 
 const KANJI = [
@@ -2278,6 +2757,115 @@ function saveState() {
   } catch (e) {
     console.error("save failed", e);
   }
+}
+
+/* ============================================================
+   REPORT SYSTEM — let users flag incorrect content for review
+   ============================================================ */
+
+function addReport(itemId, itemType, reason, snapshot) {
+  state.reports = state.reports || [];
+  // Prevent duplicate reports of the same item with the same reason
+  const existing = state.reports.find(function (r) {
+    return r.itemId === itemId && r.reason === reason;
+  });
+  if (existing) return false;
+  state.reports.push({
+    itemId: itemId,
+    itemType: itemType,
+    reason: reason,
+    snapshot: snapshot, // small preview so I can see what they were looking at
+    ts: Date.now(),
+  });
+  saveState();
+  return true;
+}
+
+function buildReportSnapshot(item) {
+  if (!item) return "";
+  if (item.type === "vocab") return item.jp + " (" + item.r + ") → " + item.en;
+  if (item.type === "kanji") return item.jp + " → " + item.meaning;
+  if (item.type === "grammar") return item.jp + " → " + item.meaning;
+  if (item.title) return "Reading: " + item.title; // reading passage
+  return item.id || "?";
+}
+
+// Reason options shown in the report dialog
+const REPORT_REASONS = [
+  { id: "wrong_meaning", label: "Wrong English meaning" },
+  { id: "wrong_reading", label: "Wrong reading (furigana)" },
+  { id: "unnatural_example", label: "Example sentence sounds unnatural" },
+  { id: "wrong_translation", label: "Example translation is wrong" },
+  { id: "wrong_mnemonic", label: "Mnemonic is confusing/wrong" },
+  { id: "not_n3", label: "Not actually N3 level" },
+  { id: "other", label: "Something else" },
+];
+
+function openReportDialog(item) {
+  // Build a modal overlay
+  const overlay = document.createElement("div");
+  overlay.className = "report-overlay";
+  overlay.addEventListener("click", function (e) {
+    if (e.target === overlay) closeReportDialog();
+  });
+
+  const snapshot = buildReportSnapshot(item);
+  const modal = document.createElement("div");
+  modal.className = "report-modal";
+
+  modal.appendChild(h("div", { class: "report-title" }, "Report this card"));
+  modal.appendChild(h("div", { class: "report-preview jp" }, snapshot));
+  modal.appendChild(h("div", { class: "report-help" }, "What's wrong? Your reports get saved locally so you can share them back later."));
+
+  const reasonList = h("div", { class: "report-reasons" }, REPORT_REASONS.map(function (r) {
+    return h("button", {
+      class: "report-reason-btn mono",
+      onClick: function () {
+        const added = addReport(item.id, item.type || "reading", r.id, snapshot);
+        // Show confirmation in same modal
+        closeReportDialog();
+        showReportToast(added ? "Thanks — report saved." : "Already reported.");
+      },
+    }, r.label);
+  }));
+  modal.appendChild(reasonList);
+
+  modal.appendChild(h("button", {
+    class: "report-cancel mono",
+    onClick: closeReportDialog,
+  }, "Cancel"));
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+}
+
+function closeReportDialog() {
+  const o = document.querySelector(".report-overlay");
+  if (o) o.parentNode.removeChild(o);
+}
+
+function showReportToast(text) {
+  const toast = document.createElement("div");
+  toast.className = "report-toast";
+  toast.textContent = text;
+  document.body.appendChild(toast);
+  setTimeout(function () {
+    toast.classList.add("fade-out");
+  }, 2000);
+  setTimeout(function () {
+    if (toast.parentNode) toast.parentNode.removeChild(toast);
+  }, 2500);
+}
+
+// Small report button helper used in screens
+function reportBtn(item) {
+  return h("button", {
+    class: "report-btn-inline mono",
+    onClick: function (e) {
+      e.stopPropagation();
+      openReportDialog(item);
+    },
+  }, "⚑ Report");
 }
 
 function initCard(id, itemType, initialStability) {
@@ -2965,6 +3553,7 @@ function renderDiagnostic() {
     h("div", { class: "diag-help mono" }, revealed
       ? "Got it. Continue when ready."
       : "Tap the meaning. One is correct, the others are decoys from the same N3 pool."),
+    revealed ? h("div", { class: "report-row center" }, [reportBtn(Object.assign({}, item))]) : null,
     h("div", { class: "diag-exit-row" }, [
       h("button", {
         class: "footer-link mono",
@@ -3414,6 +4003,9 @@ function renderStudy() {
           }, "↶ Undo last rating"),
         ])
       : null,
+    viewState.revealed
+      ? h("div", { class: "report-row" }, [reportBtn(Object.assign({}, item))])
+      : null,
   ]);
 }
 
@@ -3451,11 +4043,12 @@ function renderReading() {
         class: "btn-primary mono full",
         onClick: function () { viewState.phase = "questions"; render(); },
       }, "Answer questions →"),
-      h("div", { style: "margin-top:16px" }, [
+      h("div", { style: "margin-top:16px; display:flex; justify-content:space-between; align-items:center;" }, [
         h("button", {
           class: "footer-link mono",
           onClick: function () { setView("dashboard"); },
         }, "Exit"),
+        reportBtn(next),
       ]),
     ]);
   }
@@ -3947,7 +4540,85 @@ function renderProgress() {
       h("div", { class: "section-heading mono" }, "Beta Notes"),
       h("p", { class: "italic" }, "Corpus: " + proj.total + " items (" + VOCAB.length + " vocab + " + KANJI.length + " kanji + " + GRAMMAR.length + " grammar) + " + READINGS.length + " reading passages. Algorithm being validated: FSRS-lite SRS, past-exam-weighted prioritization, self-assessed diagnostic placement."),
     ]),
+    renderReportsSection(),
   ]);
+}
+
+function renderReportsSection() {
+  const reports = state.reports || [];
+  const children = [
+    h("div", { class: "section-heading mono" }, "Card Reports"),
+  ];
+
+  if (reports.length === 0) {
+    children.push(h("p", { class: "muted italic", style: "font-size:13px;" },
+      "No reports yet. Tap the ⚑ Report button on any card to flag wrong content. Reports stay on your device until you export them."));
+    return h("div", { class: "reports-section", style: "margin-top:32px;" }, children);
+  }
+
+  children.push(h("p", { class: "muted", style: "font-size:13px; margin-bottom:12px;" },
+    reports.length + " report" + (reports.length === 1 ? "" : "s") + " saved. Tap 'Copy reports' to copy all reports as text — paste them back in the chat for fixes."));
+
+  const reasonLabels = {};
+  REPORT_REASONS.forEach(function (r) { reasonLabels[r.id] = r.label; });
+
+  const listEls = reports.slice().reverse().map(function (r, idx) {
+    return h("div", { class: "report-item" }, [
+      h("div", { class: "report-item-snapshot jp" }, r.snapshot),
+      h("div", { class: "report-item-meta mono" }, [
+        r.itemId + " · " + (r.itemType || "?") + " · " + (reasonLabels[r.reason] || r.reason),
+      ]),
+      h("button", {
+        class: "report-item-remove mono",
+        onClick: function () {
+          if (confirm("Remove this report?")) {
+            state.reports.splice(state.reports.length - 1 - idx, 1);
+            saveState();
+            render();
+          }
+        },
+      }, "× Remove"),
+    ]);
+  });
+  children.push(h("div", { class: "reports-list" }, listEls));
+
+  children.push(h("div", { class: "reports-actions" }, [
+    h("button", {
+      class: "btn-secondary mono",
+      onClick: function () {
+        const lines = ["JLPT N3 Beta — Card Reports", "Exported: " + new Date().toISOString(), ""];
+        reports.forEach(function (r) {
+          lines.push("[" + r.itemId + " · " + (r.itemType || "?") + "] " + r.snapshot);
+          lines.push("  Issue: " + (reasonLabels[r.reason] || r.reason));
+          lines.push("");
+        });
+        const txt = lines.join("\n");
+        // Try clipboard API, fall back to prompt
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(function () {
+            showReportToast("Copied " + reports.length + " reports to clipboard.");
+          }, function () {
+            window.prompt("Copy reports (Cmd/Ctrl+C, then Enter):", txt);
+          });
+        } else {
+          window.prompt("Copy reports (Cmd/Ctrl+C, then Enter):", txt);
+        }
+      },
+    }, "Copy reports"),
+    h("button", {
+      class: "footer-link mono danger",
+      style: "margin-left:auto;",
+      onClick: function () {
+        if (confirm("Clear all " + reports.length + " reports? They cannot be recovered.")) {
+          state.reports = [];
+          saveState();
+          render();
+        }
+      },
+    }, "Clear all"),
+  ]));
+
+  return h("div", { class: "reports-section", style: "margin-top:32px;" }, children);
 }
 
 /* ============================================================
