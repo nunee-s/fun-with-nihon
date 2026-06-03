@@ -1006,6 +1006,207 @@ input { font-family: inherit; }
   border-color: #C47E1F;
 }
 
+/* ====== INU-SENSEI MASCOT & DIALOGUE BUBBLE ====== */
+.sensei-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 20px 0;
+  padding: 14px;
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  border-radius: 4px;
+  position: relative;
+}
+.inu-sensei {
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(26, 26, 26, 0.08));
+}
+.sensei-bubble {
+  flex: 1;
+  background: #F5F1E8;
+  border: 1px solid #C8C2B5;
+  border-radius: 4px;
+  padding: 10px 14px;
+  position: relative;
+  min-width: 0;
+}
+.sensei-bubble::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 7px solid #C8C2B5;
+}
+.sensei-bubble::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 6px solid #F5F1E8;
+}
+.sensei-jp {
+  font-size: 17px;
+  font-weight: 500;
+  color: #1A1A1A;
+  line-height: 1.3;
+}
+.sensei-reading {
+  font-size: 11px;
+  color: #8B8178;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+.sensei-en {
+  font-size: 13px;
+  font-style: italic;
+  color: #2A3A2A;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* Compact version for dashboard ambient mascot */
+.sensei-dashboard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #EDE7D8;
+  border: 1px solid #D9D0BC;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.sensei-dashboard-text {
+  flex: 1;
+  font-size: 12px;
+  color: #5C5346;
+  line-height: 1.45;
+  font-style: italic;
+}
+
+/* ====== STAGE SELECT GRID ====== */
+.stage-select-heading {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #8B8178;
+  text-transform: uppercase;
+  margin: 16px 0 10px 0;
+}
+.stage-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.stage-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  background: #F2E4D2;
+  border: 1.5px solid #D9C9B0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: inherit;
+  font-family: inherit;
+  letter-spacing: normal;
+}
+.stage-card:hover:not(:disabled) {
+  border-color: #C47E1F;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(196, 126, 31, 0.15);
+}
+.stage-card.cleared {
+  background: #E4EEE2;
+  border-color: #7A9870;
+}
+.stage-card.cleared:hover {
+  border-color: #5A7850;
+}
+.stage-card.locked {
+  background: #EFEAD9;
+  border-color: #D9D0BC;
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: saturate(0.4);
+}
+.stage-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.stage-label-block { display: flex; flex-direction: column; }
+.stage-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1A1A1A;
+  letter-spacing: 0.02em;
+}
+.stage-jp {
+  font-size: 13px;
+  color: #5C5346;
+  margin-top: 2px;
+}
+.stage-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+.stage-pairs {
+  color: #5C5346;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+}
+.stage-checkmark {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #7A9870;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 13px;
+}
+.stage-lock { font-size: 14px; }
+.stage-desc {
+  font-size: 12px;
+  color: #5C5346;
+  font-style: italic;
+  margin-top: 4px;
+}
+.stage-stats {
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #5A7850;
+  letter-spacing: 0.05em;
+}
+.stage-clears {
+  background: #5A7850;
+  color: white;
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-size: 10px;
+  margin-left: auto;
+}
+
 /* ====== PAIR MATCH GRID (4-column, mixed JP+EN, square tiles) ====== */
 .pair-grid-4 {
   display: grid;
@@ -3261,6 +3462,306 @@ const VOCAB = [
   { id: "v1548", jp: "かなり", r: "かなり", en: "considerably", ex: "かなり難しい。", ex_en: "Considerably difficult.", efreq: 7, gfreq: 7, pre: 4 },
   { id: "v1549", jp: "わりと", r: "わりと", en: "relatively, fairly", ex: "わりと簡単だった。", ex_en: "Relatively easy.", efreq: 5, gfreq: 6, pre: 3 },
   { id: "v1550", jp: "そこそこ", r: "そこそこ", en: "fairly, so-so", ex: "そこそこできた。", ex_en: "Did fairly well.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1551", jp: "たとえ", r: "たとえ", en: "even if (with ても)", ex: "たとえ雨でも行く。", ex_en: "I'll go even if it rains.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1552", jp: "いかに", r: "いかに", en: "how, no matter how (formal)", ex: "いかに難しくても。", ex_en: "No matter how hard it is.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1553", jp: "いかなる", r: "いかなる", en: "any kind of (formal)", ex: "いかなる理由でも。", ex_en: "For any reason whatsoever.", efreq: 3, gfreq: 6, pre: 2 },
+  { id: "v1554", jp: "あえて", r: "あえて", en: "daringly, deliberately", ex: "あえて反対する。", ex_en: "Deliberately oppose.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1555", jp: "さぞ", r: "さぞ", en: "surely, no doubt", ex: "さぞ疲れただろう。", ex_en: "You must be tired.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1556", jp: "どうやら", r: "どうやら", en: "apparently, seemingly", ex: "どうやら本当らしい。", ex_en: "Apparently it's true.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1557", jp: "どうも", r: "どうも", en: "somehow / thanks", ex: "どうも変だ。", ex_en: "Something feels off.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1558", jp: "なお", r: "なお", en: "still / furthermore (formal)", ex: "なお詳細は後日。", ex_en: "Further details to follow.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1559", jp: "ただし", r: "ただし", en: "however, provided", ex: "ただし条件がある。", ex_en: "However, there is a condition.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1560", jp: "もっとも", r: "もっとも", en: "though, however", ex: "難しい。もっとも、できる。", ex_en: "Hard. Though, doable.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1561", jp: "従って", r: "したがって", en: "therefore (formal)", ex: "従って結論はこうだ。", ex_en: "Therefore the conclusion is this.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1562", jp: "ゆえに", r: "ゆえに", en: "therefore (literary)", ex: "ゆえに正しい。", ex_en: "Therefore it is correct.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1563", jp: "それゆえ", r: "それゆえ", en: "for that reason", ex: "それゆえに失敗した。", ex_en: "For that reason it failed.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1564", jp: "なぜなら", r: "なぜなら", en: "because, the reason is", ex: "なぜなら時間がない。", ex_en: "Because there's no time.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1565", jp: "というのは", r: "というのは", en: "the thing is", ex: "というのは、忙しいから。", ex_en: "The thing is, I'm busy.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1566", jp: "もしも", r: "もしも", en: "if (hypothetical)", ex: "もしも宝くじが当たったら。", ex_en: "If I won the lottery.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1567", jp: "仮に", r: "かりに", en: "supposing, tentatively", ex: "仮にそうだとしても。", ex_en: "Supposing that were so.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1568", jp: "万一", r: "まんいち", en: "in case (formal)", ex: "万一の場合に備える。", ex_en: "Prepare for any eventuality.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1569", jp: "もし", r: "もし", en: "if", ex: "もし雨なら中止。", ex_en: "If it rains, cancel.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1570", jp: "それでも", r: "それでも", en: "still, even so", ex: "それでも続ける。", ex_en: "Continue even so.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1571", jp: "それなのに", r: "それなのに", en: "and yet, despite that", ex: "それなのに来なかった。", ex_en: "And yet they didn't come.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1572", jp: "それどころか", r: "それどころか", en: "on the contrary", ex: "それどころか悪化した。", ex_en: "On the contrary, it worsened.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1573", jp: "とはいうものの", r: "とはいうものの", en: "that being said", ex: "とはいうものの、難しい。", ex_en: "That said, it's difficult.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1574", jp: "むしろ", r: "むしろ", en: "rather, instead", ex: "むしろこちらが好きだ。", ex_en: "Rather, I like this one.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1575", jp: "かえって", r: "かえって", en: "on the contrary, instead", ex: "かえって悪くなる。", ex_en: "It actually gets worse.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1576", jp: "一方", r: "いっぽう", en: "on the other hand", ex: "一方、こちらは安い。", ex_en: "On the other hand, this is cheap.", efreq: 6, gfreq: 8, pre: 5 },
+  { id: "v1577", jp: "他方", r: "たほう", en: "the other hand (formal)", ex: "他方では別の問題がある。", ex_en: "On the other side, there's another issue.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1578", jp: "なぜか", r: "なぜか", en: "somehow, for some reason", ex: "なぜか不安だ。", ex_en: "Somehow I'm uneasy.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1579", jp: "どうしても", r: "どうしても", en: "no matter what", ex: "どうしても行きたい。", ex_en: "I really want to go no matter what.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1580", jp: "いずれにせよ", r: "いずれにせよ", en: "in any case", ex: "いずれにせよやる。", ex_en: "In any case, I'll do it.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1581", jp: "述べる", r: "のべる", en: "to state, mention", ex: "意見を述べる。", ex_en: "State an opinion.", efreq: 6, gfreq: 8, pre: 5 },
+  { id: "v1582", jp: "示す", r: "しめす", en: "to show, indicate", ex: "結果を示す。", ex_en: "Show the results.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v1583", jp: "表す", r: "あらわす", en: "to express, show", ex: "感情を表す。", ex_en: "Express emotion.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1584", jp: "現れる", r: "あらわれる", en: "to appear", ex: "問題が現れる。", ex_en: "A problem appears.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1585", jp: "示唆", r: "しさ", en: "suggestion, hint", ex: "示唆に富む話。", ex_en: "A suggestive story.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1586", jp: "意図", r: "いと", en: "intention, aim", ex: "意図が分からない。", ex_en: "I don't get the intent.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1587", jp: "意図する", r: "いとする", en: "to intend", ex: "改革を意図する。", ex_en: "Intend reform.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1588", jp: "目的", r: "もくてき", en: "purpose (review)", ex: "目的を明確にする。", ex_en: "Clarify the purpose.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v1589", jp: "目指す", r: "めざす", en: "to aim for", ex: "合格を目指す。", ex_en: "Aim for passing.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1590", jp: "見込み", r: "みこみ", en: "prospect, expectation", ex: "成功の見込み。", ex_en: "Prospect of success.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1591", jp: "見通し", r: "みとおし", en: "outlook, prospect", ex: "経済の見通し。", ex_en: "Economic outlook.", efreq: 4, gfreq: 7, pre: 3 },
+  { id: "v1592", jp: "見方", r: "みかた", en: "view, perspective", ex: "別の見方をする。", ex_en: "Take a different view.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1593", jp: "立場", r: "たちば", en: "position, standpoint (review)", ex: "立場を考慮する。", ex_en: "Consider the position.", efreq: 6, gfreq: 8, pre: 5 },
+  { id: "v1594", jp: "観点", r: "かんてん", en: "viewpoint", ex: "違う観点から見る。", ex_en: "Look from a different viewpoint.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1595", jp: "視点", r: "してん", en: "perspective, viewpoint", ex: "新しい視点。", ex_en: "A new perspective.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1596", jp: "基準", r: "きじゅん", en: "standard, criterion", ex: "判断の基準。", ex_en: "Criterion for judgment.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1597", jp: "標準", r: "ひょうじゅん", en: "standard, norm", ex: "標準サイズ。", ex_en: "Standard size.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1598", jp: "規則", r: "きそく", en: "rule, regulation", ex: "規則を守る。", ex_en: "Follow the rules.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1599", jp: "規定", r: "きてい", en: "regulation, provision", ex: "規定により処分する。", ex_en: "Handle per regulations.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1600", jp: "制度", r: "せいど", en: "system, institution", ex: "新しい制度。", ex_en: "A new system.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1601", jp: "仕組み", r: "しくみ", en: "structure, mechanism", ex: "会社の仕組み。", ex_en: "Company structure.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1602", jp: "構造", r: "こうぞう", en: "structure", ex: "建物の構造。", ex_en: "Building structure.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1603", jp: "組織", r: "そしき", en: "organization", ex: "大きな組織。", ex_en: "A large organization.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1604", jp: "団体", r: "だんたい", en: "group, organization", ex: "ボランティア団体。", ex_en: "Volunteer group.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1605", jp: "集団", r: "しゅうだん", en: "group, mass", ex: "集団で行動する。", ex_en: "Act as a group.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1606", jp: "個人", r: "こじん", en: "individual", ex: "個人の自由。", ex_en: "Individual freedom.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1607", jp: "公共", r: "こうきょう", en: "public", ex: "公共の場。", ex_en: "Public space.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1608", jp: "私的", r: "してき", en: "private (na)", ex: "私的な事情。", ex_en: "Private matters.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1609", jp: "個別", r: "こべつ", en: "individual, separate", ex: "個別に対応する。", ex_en: "Handle individually.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1610", jp: "全般的", r: "ぜんぱんてき", en: "general (na)", ex: "全般的な傾向。", ex_en: "General trend.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1611", jp: "総合", r: "そうごう", en: "comprehensive", ex: "総合的に判断する。", ex_en: "Judge comprehensively.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1612", jp: "詳細", r: "しょうさい", en: "details (review)", ex: "詳細を確認する。", ex_en: "Confirm the details.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1613", jp: "具体的", r: "ぐたいてき", en: "concrete (na)", ex: "具体的な例。", ex_en: "A concrete example.", efreq: 6, gfreq: 8, pre: 5 },
+  { id: "v1614", jp: "抽象的", r: "ちゅうしょうてき", en: "abstract (na)", ex: "抽象的な話。", ex_en: "Abstract talk.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1615", jp: "理論", r: "りろん", en: "theory", ex: "経済理論。", ex_en: "Economic theory.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1616", jp: "実践", r: "じっせん", en: "practice (vs theory)", ex: "理論と実践。", ex_en: "Theory and practice.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1617", jp: "実用", r: "じつよう", en: "practical use", ex: "実用的な技術。", ex_en: "Practical technology.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1618", jp: "応用", r: "おうよう", en: "application, applied", ex: "知識を応用する。", ex_en: "Apply knowledge.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1619", jp: "活用", r: "かつよう", en: "utilization", ex: "技術を活用する。", ex_en: "Utilize the technology.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1620", jp: "利用", r: "りよう", en: "use, utilization", ex: "図書館を利用する。", ex_en: "Use the library.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v1621", jp: "選挙", r: "せんきょ", en: "election", ex: "選挙に参加する。", ex_en: "Participate in election.", efreq: 4, gfreq: 7, pre: 3 },
+  { id: "v1622", jp: "政策", r: "せいさく", en: "policy", ex: "新しい政策。", ex_en: "A new policy.", efreq: 4, gfreq: 7, pre: 3 },
+  { id: "v1623", jp: "法律", r: "ほうりつ", en: "law", ex: "法律を守る。", ex_en: "Obey the law.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1624", jp: "犯罪", r: "はんざい", en: "crime", ex: "犯罪を防ぐ。", ex_en: "Prevent crime.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1625", jp: "犯人", r: "はんにん", en: "criminal, culprit", ex: "犯人を捕まえる。", ex_en: "Catch the criminal.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1626", jp: "警察", r: "けいさつ", en: "police", ex: "警察を呼ぶ。", ex_en: "Call the police.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1627", jp: "裁判", r: "さいばん", en: "trial, judgment", ex: "裁判が始まる。", ex_en: "The trial begins.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1628", jp: "判決", r: "はんけつ", en: "verdict, judgment", ex: "判決が下る。", ex_en: "A verdict is handed down.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1629", jp: "罰", r: "ばつ", en: "punishment", ex: "罰を与える。", ex_en: "Give punishment.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1630", jp: "罰金", r: "ばっきん", en: "fine (penalty)", ex: "罰金を払う。", ex_en: "Pay a fine.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1631", jp: "懲役", r: "ちょうえき", en: "prison sentence", ex: "懲役十年。", ex_en: "Ten-year prison sentence.", efreq: 2, gfreq: 4, pre: 1 },
+  { id: "v1632", jp: "市場", r: "しじょう", en: "market", ex: "市場が拡大する。", ex_en: "The market expands.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1633", jp: "需要", r: "じゅよう", en: "demand (economic)", ex: "需要が高い。", ex_en: "Demand is high.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1634", jp: "供給", r: "きょうきゅう", en: "supply", ex: "電力の供給。", ex_en: "Power supply.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1635", jp: "貿易", r: "ぼうえき", en: "trade", ex: "国際貿易。", ex_en: "International trade.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1636", jp: "輸出", r: "ゆしゅつ", en: "export", ex: "車を輸出する。", ex_en: "Export cars.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1637", jp: "輸入", r: "ゆにゅう", en: "import", ex: "食品を輸入する。", ex_en: "Import food.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1638", jp: "為替", r: "かわせ", en: "currency exchange", ex: "為替レート。", ex_en: "Exchange rate.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1639", jp: "株", r: "かぶ", en: "stock, share", ex: "株が上がる。", ex_en: "Stocks rise.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1640", jp: "投資", r: "とうし", en: "investment", ex: "株に投資する。", ex_en: "Invest in stocks.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1641", jp: "利益", r: "りえき", en: "profit", ex: "利益を上げる。", ex_en: "Raise profits.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1642", jp: "損", r: "そん", en: "loss", ex: "損をする。", ex_en: "Take a loss.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1643", jp: "損失", r: "そんしつ", en: "loss (formal)", ex: "大きな損失。", ex_en: "A big loss.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1644", jp: "破産", r: "はさん", en: "bankruptcy", ex: "会社が破産する。", ex_en: "The company goes bankrupt.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1645", jp: "失業", r: "しつぎょう", en: "unemployment", ex: "失業率。", ex_en: "Unemployment rate.", efreq: 3, gfreq: 6, pre: 2 },
+  { id: "v1646", jp: "就職", r: "しゅうしょく", en: "getting a job", ex: "就職活動。", ex_en: "Job hunting.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1647", jp: "退職", r: "たいしょく", en: "retirement, resignation", ex: "定年退職。", ex_en: "Retire at retirement age.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1648", jp: "転職", r: "てんしょく", en: "changing jobs", ex: "転職を考える。", ex_en: "Consider changing jobs.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1649", jp: "求人", r: "きゅうじん", en: "job offering", ex: "求人広告。", ex_en: "Help wanted ad.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1650", jp: "募集", r: "ぼしゅう", en: "recruitment", ex: "アルバイト募集。", ex_en: "Part-time job recruitment.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1651", jp: "気温", r: "きおん", en: "temperature (air)", ex: "気温が下がる。", ex_en: "Temperature drops.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1652", jp: "湿度", r: "しつど", en: "humidity", ex: "湿度が高い。", ex_en: "Humidity is high.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1653", jp: "気圧", r: "きあつ", en: "atmospheric pressure", ex: "低気圧。", ex_en: "Low pressure.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1654", jp: "嵐", r: "あらし", en: "storm", ex: "大きな嵐。", ex_en: "A big storm.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1655", jp: "台風", r: "たいふう", en: "typhoon", ex: "台風が来る。", ex_en: "A typhoon is coming.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v1656", jp: "地震", r: "じしん", en: "earthquake", ex: "地震が起きる。", ex_en: "An earthquake happens.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1657", jp: "津波", r: "つなみ", en: "tsunami", ex: "津波の警報。", ex_en: "Tsunami warning.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1658", jp: "洪水", r: "こうずい", en: "flood", ex: "洪水で家が流れる。", ex_en: "Flood sweeps the house.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1659", jp: "災害", r: "さいがい", en: "disaster", ex: "自然災害。", ex_en: "Natural disaster.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1660", jp: "被害", r: "ひがい", en: "damage, injury", ex: "台風の被害。", ex_en: "Typhoon damage.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1661", jp: "復興", r: "ふっこう", en: "reconstruction", ex: "震災からの復興。", ex_en: "Recovery from disaster.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1662", jp: "救助", r: "きゅうじょ", en: "rescue", ex: "救助を求める。", ex_en: "Call for rescue.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1663", jp: "避難", r: "ひなん", en: "evacuation", ex: "避難所に行く。", ex_en: "Go to an evacuation site.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1664", jp: "防災", r: "ぼうさい", en: "disaster prevention", ex: "防災訓練。", ex_en: "Disaster drill.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1665", jp: "汚染", r: "おせん", en: "pollution", ex: "大気汚染。", ex_en: "Air pollution.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1666", jp: "公害", r: "こうがい", en: "environmental pollution", ex: "公害問題。", ex_en: "Pollution problem.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1667", jp: "温暖化", r: "おんだんか", en: "global warming", ex: "地球温暖化。", ex_en: "Global warming.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1668", jp: "資源", r: "しげん", en: "resource", ex: "天然資源。", ex_en: "Natural resources.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1669", jp: "エネルギー", r: "エネルギー", en: "energy", ex: "エネルギーを節約する。", ex_en: "Save energy.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1670", jp: "石油", r: "せきゆ", en: "petroleum, oil", ex: "石油の価格。", ex_en: "Oil price.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1671", jp: "石炭", r: "せきたん", en: "coal", ex: "石炭を燃やす。", ex_en: "Burn coal.", efreq: 3, gfreq: 4, pre: 1 },
+  { id: "v1672", jp: "ガソリン", r: "ガソリン", en: "gasoline", ex: "ガソリンを入れる。", ex_en: "Fill up with gas.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1673", jp: "電力", r: "でんりょく", en: "electric power", ex: "電力不足。", ex_en: "Power shortage.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1674", jp: "原子力", r: "げんしりょく", en: "nuclear power", ex: "原子力発電。", ex_en: "Nuclear power generation.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1675", jp: "風力", r: "ふうりょく", en: "wind power", ex: "風力発電。", ex_en: "Wind power generation.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1676", jp: "太陽", r: "たいよう", en: "sun", ex: "太陽の光。", ex_en: "Sunlight.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1677", jp: "月", r: "つき", en: "moon, month", ex: "満月。", ex_en: "Full moon.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1678", jp: "星", r: "ほし", en: "star", ex: "夜空の星。", ex_en: "Stars in the night sky.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1679", jp: "空", r: "そら", en: "sky", ex: "青い空。", ex_en: "Blue sky.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v1680", jp: "雲", r: "くも", en: "cloud", ex: "黒い雲。", ex_en: "Black clouds.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1681", jp: "起きる", r: "おきる", en: "to wake up / happen", ex: "朝早く起きる。", ex_en: "Wake up early.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1682", jp: "寝る", r: "ねる", en: "to sleep", ex: "早く寝る。", ex_en: "Go to bed early.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1683", jp: "起こす", r: "おこす", en: "to wake (someone)", ex: "弟を起こす。", ex_en: "Wake up little brother.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1684", jp: "目覚める", r: "めざめる", en: "to awaken", ex: "音で目覚める。", ex_en: "Wake to a sound.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1685", jp: "眠る", r: "ねむる", en: "to sleep (formal)", ex: "ぐっすり眠る。", ex_en: "Sleep soundly.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "v1686", jp: "眠い", r: "ねむい", en: "sleepy", ex: "眠くてたまらない。", ex_en: "I'm unbearably sleepy.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1687", jp: "目が覚める", r: "めがさめる", en: "to wake up (lit.)", ex: "六時に目が覚める。", ex_en: "Wake up at six.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1688", jp: "夢を見る", r: "ゆめをみる", en: "to have a dream", ex: "怖い夢を見る。", ex_en: "Have a scary dream.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1689", jp: "あくび", r: "あくび", en: "yawn", ex: "あくびが出る。", ex_en: "A yawn comes out.", efreq: 4, gfreq: 4, pre: 1 },
+  { id: "v1690", jp: "寝坊", r: "ねぼう", en: "oversleeping", ex: "寝坊して遅刻する。", ex_en: "Oversleep and be late.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1691", jp: "歯を磨く", r: "はをみがく", en: "to brush teeth", ex: "毎朝歯を磨く。", ex_en: "Brush teeth every morning.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1692", jp: "顔を洗う", r: "かおをあらう", en: "to wash face", ex: "朝、顔を洗う。", ex_en: "Wash face in the morning.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1693", jp: "シャワー", r: "シャワー", en: "shower", ex: "シャワーを浴びる。", ex_en: "Take a shower.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1694", jp: "浴びる", r: "あびる", en: "to bathe in, pour over", ex: "シャワーを浴びる。", ex_en: "Take a shower.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1695", jp: "風呂に入る", r: "ふろにはいる", en: "to take a bath", ex: "夜、風呂に入る。", ex_en: "Take a bath at night.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1696", jp: "髪を洗う", r: "かみをあらう", en: "to wash hair", ex: "週に三回髪を洗う。", ex_en: "Wash hair 3 times a week.", efreq: 5, gfreq: 5, pre: 2 },
+  { id: "v1697", jp: "化粧をする", r: "けしょうをする", en: "to put on makeup", ex: "毎朝化粧をする。", ex_en: "Put on makeup every morning.", efreq: 5, gfreq: 5, pre: 2 },
+  { id: "v1698", jp: "着替える", r: "きがえる", en: "to change clothes", ex: "服を着替える。", ex_en: "Change clothes.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1699", jp: "出勤", r: "しゅっきん", en: "going to work", ex: "出勤時間。", ex_en: "Time to leave for work.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1700", jp: "通勤", r: "つうきん", en: "commuting", ex: "通勤に一時間かかる。", ex_en: "Takes an hour to commute.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1701", jp: "通学", r: "つうがく", en: "commuting to school", ex: "通学路。", ex_en: "Commute route to school.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1702", jp: "登校", r: "とうこう", en: "going to school", ex: "登校時間。", ex_en: "Time to go to school.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1703", jp: "下校", r: "げこう", en: "leaving school", ex: "下校する。", ex_en: "Leave school for the day.", efreq: 3, gfreq: 4, pre: 1 },
+  { id: "v1704", jp: "帰宅", r: "きたく", en: "returning home", ex: "夜遅く帰宅する。", ex_en: "Return home late at night.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1705", jp: "帰り", r: "かえり", en: "return, on the way back", ex: "帰りに買い物する。", ex_en: "Shop on the way back.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1706", jp: "行き", r: "いき", en: "going, outbound", ex: "行きは電車で。", ex_en: "Going by train.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1707", jp: "往復", r: "おうふく", en: "round trip", ex: "往復の切符。", ex_en: "Round-trip ticket.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1708", jp: "片道", r: "かたみち", en: "one way", ex: "片道切符。", ex_en: "One-way ticket.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1709", jp: "乗り換え", r: "のりかえ", en: "transfer (transit)", ex: "乗り換えが多い。", ex_en: "Many transfers.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1710", jp: "乗る", r: "のる", en: "to ride, board", ex: "バスに乗る。", ex_en: "Board a bus.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1711", jp: "降りる", r: "おりる", en: "to get off, descend", ex: "電車を降りる。", ex_en: "Get off the train.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1712", jp: "出かける", r: "でかける", en: "to go out (review)", ex: "買い物に出かける。", ex_en: "Go out shopping.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1713", jp: "帰る", r: "かえる", en: "to return", ex: "家に帰る。", ex_en: "Return home.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1714", jp: "戻る", r: "もどる", en: "to go back, return (review)", ex: "席に戻る。", ex_en: "Return to one's seat.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1715", jp: "立つ", r: "たつ", en: "to stand", ex: "席を立つ。", ex_en: "Stand up from one's seat.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1716", jp: "座る", r: "すわる", en: "to sit", ex: "椅子に座る。", ex_en: "Sit on the chair.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1717", jp: "歩く", r: "あるく", en: "to walk", ex: "ゆっくり歩く。", ex_en: "Walk slowly.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1718", jp: "走る", r: "はしる", en: "to run", ex: "公園を走る。", ex_en: "Run in the park.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1719", jp: "止まる", r: "とまる", en: "to stop (intr.)", ex: "車が止まる。", ex_en: "The car stops.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1720", jp: "止める", r: "とめる", en: "to stop (tr.)", ex: "車を止める。", ex_en: "Stop the car.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1721", jp: "動く", r: "うごく", en: "to move (intr.)", ex: "ゆっくり動く。", ex_en: "Move slowly.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1722", jp: "動かす", r: "うごかす", en: "to move (tr.)", ex: "机を動かす。", ex_en: "Move the desk.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1723", jp: "押す", r: "おす", en: "to push", ex: "ボタンを押す。", ex_en: "Push the button.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1724", jp: "引く", r: "ひく", en: "to pull", ex: "ドアを引く。", ex_en: "Pull the door.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1725", jp: "持つ", r: "もつ", en: "to hold, have", ex: "鞄を持つ。", ex_en: "Hold the bag.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1726", jp: "持っていく", r: "もっていく", en: "to take (away)", ex: "傘を持っていく。", ex_en: "Take the umbrella.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v1727", jp: "持ってくる", r: "もってくる", en: "to bring", ex: "本を持ってくる。", ex_en: "Bring the book.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v1728", jp: "運ぶ", r: "はこぶ", en: "to carry, transport", ex: "荷物を運ぶ。", ex_en: "Carry the luggage.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1729", jp: "送る", r: "おくる", en: "to send / see off", ex: "メールを送る。", ex_en: "Send an email.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1730", jp: "届く", r: "とどく", en: "to reach, arrive", ex: "手紙が届く。", ex_en: "The letter arrives.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v1731", jp: "届ける", r: "とどける", en: "to deliver", ex: "荷物を届ける。", ex_en: "Deliver the package.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1732", jp: "渡る", r: "わたる", en: "to cross (review)", ex: "信号を渡る。", ex_en: "Cross the traffic light.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1733", jp: "渡す", r: "わたす", en: "to hand over (review)", ex: "書類を渡す。", ex_en: "Hand over the documents.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1734", jp: "通る", r: "とおる", en: "to pass through", ex: "道を通る。", ex_en: "Pass through the road.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v1735", jp: "通す", r: "とおす", en: "to let through", ex: "客を通す。", ex_en: "Show the guest in.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1736", jp: "繋ぐ", r: "つなぐ", en: "to connect, tie", ex: "手を繋ぐ。", ex_en: "Hold hands.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1737", jp: "繋がる", r: "つながる", en: "to be connected", ex: "電話が繋がる。", ex_en: "Get through on the phone.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1738", jp: "結ぶ", r: "むすぶ", en: "to tie, bind", ex: "靴ひもを結ぶ。", ex_en: "Tie shoelaces.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1739", jp: "結びつく", r: "むすびつく", en: "to be tied to", ex: "原因と結びつく。", ex_en: "Be tied to the cause.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1740", jp: "結果", r: "けっか", en: "result (review)", ex: "良い結果。", ex_en: "A good result.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1741", jp: "結局", r: "けっきょく", en: "in the end (review)", ex: "結局やめた。", ex_en: "In the end I quit.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1742", jp: "むしろ", r: "むしろ", en: "rather (review)", ex: "むしろ良い。", ex_en: "Rather good.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1743", jp: "代表", r: "だいひょう", en: "representative", ex: "クラスの代表。", ex_en: "Class representative.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1744", jp: "代理", r: "だいり", en: "agent, proxy", ex: "代理を頼む。", ex_en: "Ask for a proxy.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1745", jp: "委員", r: "いいん", en: "committee member", ex: "委員に選ぶ。", ex_en: "Select as committee member.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1746", jp: "会員", r: "かいいん", en: "member", ex: "会員になる。", ex_en: "Become a member.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1747", jp: "メンバー", r: "メンバー", en: "member", ex: "新しいメンバー。", ex_en: "A new member.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1748", jp: "仲間", r: "なかま", en: "companion, fellow", ex: "学校の仲間。", ex_en: "School fellows.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1749", jp: "知人", r: "ちじん", en: "acquaintance", ex: "古い知人。", ex_en: "An old acquaintance.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1750", jp: "友人", r: "ゆうじん", en: "friend (formal)", ex: "大学の友人。", ex_en: "A university friend.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1751", jp: "親友", r: "しんゆう", en: "close friend", ex: "親友と話す。", ex_en: "Talk to a close friend.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1752", jp: "恋人", r: "こいびと", en: "lover, sweetheart", ex: "恋人と過ごす。", ex_en: "Spend time with a lover.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1753", jp: "家族", r: "かぞく", en: "family", ex: "家族で旅行する。", ex_en: "Travel as a family.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "v1754", jp: "親", r: "おや", en: "parent", ex: "親に話す。", ex_en: "Talk to one's parents.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "v1755", jp: "兄弟", r: "きょうだい", en: "siblings", ex: "三人兄弟。", ex_en: "Three siblings.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1756", jp: "夫婦", r: "ふうふ", en: "married couple", ex: "若い夫婦。", ex_en: "A young couple.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1757", jp: "夫", r: "おっと", en: "husband", ex: "夫と相談する。", ex_en: "Consult with one's husband.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1758", jp: "妻", r: "つま", en: "wife", ex: "妻と出かける。", ex_en: "Go out with one's wife.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1759", jp: "息子", r: "むすこ", en: "son", ex: "息子の誕生日。", ex_en: "Son's birthday.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1760", jp: "娘", r: "むすめ", en: "daughter", ex: "娘が結婚する。", ex_en: "Daughter gets married.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1761", jp: "両親", r: "りょうしん", en: "both parents", ex: "両親に会う。", ex_en: "Meet both parents.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1762", jp: "親戚", r: "しんせき", en: "relatives", ex: "親戚の家。", ex_en: "Relatives' house.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1763", jp: "祖父", r: "そふ", en: "grandfather", ex: "祖父の家。", ex_en: "Grandfather's house.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1764", jp: "祖母", r: "そぼ", en: "grandmother", ex: "祖母と話す。", ex_en: "Talk with grandmother.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1765", jp: "孫", r: "まご", en: "grandchild", ex: "孫が来る。", ex_en: "Grandchild visits.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1766", jp: "甥", r: "おい", en: "nephew", ex: "甥にプレゼントを送る。", ex_en: "Send a present to my nephew.", efreq: 3, gfreq: 4, pre: 1 },
+  { id: "v1767", jp: "姪", r: "めい", en: "niece", ex: "姪が遊びに来る。", ex_en: "Niece comes to play.", efreq: 3, gfreq: 4, pre: 1 },
+  { id: "v1768", jp: "いとこ", r: "いとこ", en: "cousin", ex: "いとこに会う。", ex_en: "Meet a cousin.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1769", jp: "おじ", r: "おじ", en: "uncle", ex: "おじが来る。", ex_en: "Uncle visits.", efreq: 5, gfreq: 5, pre: 2 },
+  { id: "v1770", jp: "おば", r: "おば", en: "aunt", ex: "おばの家。", ex_en: "Aunt's house.", efreq: 5, gfreq: 5, pre: 2 },
+  { id: "v1771", jp: "知人", r: "ちじん", en: "acquaintance (review)", ex: "彼は知人だ。", ex_en: "He's an acquaintance.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1772", jp: "近所", r: "きんじょ", en: "neighborhood", ex: "近所の人。", ex_en: "Neighborhood people.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1773", jp: "ご近所", r: "ごきんじょ", en: "neighbors (polite)", ex: "ご近所さん。", ex_en: "Neighbors.", efreq: 5, gfreq: 5, pre: 2 },
+  { id: "v1774", jp: "隣", r: "となり", en: "next door, beside", ex: "隣の家。", ex_en: "The house next door.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v1775", jp: "向かい", r: "むかい", en: "across, opposite", ex: "向かいの店。", ex_en: "The shop across the way.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1776", jp: "正面", r: "しょうめん", en: "front, facade", ex: "正面から見る。", ex_en: "View from the front.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1777", jp: "裏", r: "うら", en: "back, reverse", ex: "紙の裏。", ex_en: "Back of the paper.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1778", jp: "表", r: "おもて", en: "front, surface", ex: "コインの表。", ex_en: "Front of the coin.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1779", jp: "底", r: "そこ", en: "bottom", ex: "海の底。", ex_en: "Bottom of the sea.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1780", jp: "頂上", r: "ちょうじょう", en: "summit, top", ex: "山の頂上。", ex_en: "Mountain summit.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1781", jp: "端", r: "はし", en: "edge, end", ex: "テーブルの端。", ex_en: "Edge of the table.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1782", jp: "角", r: "かど", en: "corner", ex: "通りの角。", ex_en: "Corner of the street.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1783", jp: "辺", r: "へん", en: "area, vicinity", ex: "この辺に住む。", ex_en: "Live around here.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1784", jp: "付近", r: "ふきん", en: "vicinity, near", ex: "駅の付近。", ex_en: "Near the station.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1785", jp: "周囲", r: "しゅうい", en: "surroundings", ex: "周囲を見る。", ex_en: "Look around.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1786", jp: "あちこち", r: "あちこち", en: "here and there", ex: "あちこち探す。", ex_en: "Search here and there.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1787", jp: "どこか", r: "どこか", en: "somewhere", ex: "どこか静かな所。", ex_en: "Somewhere quiet.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "v1788", jp: "どこにも", r: "どこにも", en: "nowhere (with neg)", ex: "どこにもない。", ex_en: "Nowhere to be found.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1789", jp: "どこでも", r: "どこでも", en: "anywhere", ex: "どこでも行ける。", ex_en: "Can go anywhere.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1790", jp: "いつか", r: "いつか", en: "someday", ex: "いつか会いましょう。", ex_en: "Let's meet someday.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1791", jp: "誰か", r: "だれか", en: "someone", ex: "誰か来た。", ex_en: "Someone came.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v1792", jp: "誰も", r: "だれも", en: "no one (with neg)", ex: "誰もいない。", ex_en: "No one is there.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1793", jp: "何か", r: "なにか", en: "something", ex: "何か食べたい。", ex_en: "I want something to eat.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v1794", jp: "何も", r: "なにも", en: "nothing (with neg)", ex: "何もない。", ex_en: "Nothing.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "v1795", jp: "何でも", r: "なんでも", en: "anything", ex: "何でも食べる。", ex_en: "Eat anything.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1796", jp: "皆", r: "みんな", en: "everyone, all", ex: "皆で楽しむ。", ex_en: "Enjoy together.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v1797", jp: "皆さん", r: "みなさん", en: "everyone (polite)", ex: "皆さんお元気で。", ex_en: "Everyone, stay well.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1798", jp: "各々", r: "おのおの", en: "each one", ex: "各々の意見。", ex_en: "Each one's opinion.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1799", jp: "それぞれ", r: "それぞれ", en: "each, respectively", ex: "それぞれ違う。", ex_en: "Each is different.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1800", jp: "両者", r: "りょうしゃ", en: "both parties", ex: "両者の意見。", ex_en: "Both parties' opinions.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1801", jp: "片方", r: "かたほう", en: "one side (review)", ex: "片方の手。", ex_en: "One hand.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1802", jp: "前後", r: "ぜんご", en: "before and after", ex: "前後の文脈。", ex_en: "Context before and after.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1803", jp: "左右", r: "さゆう", en: "left and right", ex: "左右を確認する。", ex_en: "Check left and right.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1804", jp: "上下", r: "じょうげ", en: "up and down", ex: "上下に動く。", ex_en: "Move up and down.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1805", jp: "内外", r: "ないがい", en: "inside and outside", ex: "建物の内外。", ex_en: "Inside and outside the building.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1806", jp: "南北", r: "なんぼく", en: "north and south", ex: "南北に走る道。", ex_en: "Road running north-south.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1807", jp: "東西", r: "とうざい", en: "east and west", ex: "東西を結ぶ。", ex_en: "Connect east and west.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1808", jp: "東", r: "ひがし", en: "east", ex: "東に進む。", ex_en: "Head east.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1809", jp: "西", r: "にし", en: "west", ex: "西に向かう。", ex_en: "Head west.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1810", jp: "南", r: "みなみ", en: "south", ex: "南の島。", ex_en: "Southern island.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1811", jp: "北", r: "きた", en: "north", ex: "北の地方。", ex_en: "Northern region.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1812", jp: "中央", r: "ちゅうおう", en: "center", ex: "中央に立つ。", ex_en: "Stand in the center.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1813", jp: "真ん中", r: "まんなか", en: "the middle", ex: "部屋の真ん中。", ex_en: "Middle of the room.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1814", jp: "中心", r: "ちゅうしん", en: "center, focus", ex: "町の中心。", ex_en: "Center of town.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1815", jp: "周辺", r: "しゅうへん", en: "outskirts, vicinity", ex: "駅の周辺。", ex_en: "Vicinity of the station.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1816", jp: "地域", r: "ちいき", en: "area, region", ex: "地域の人々。", ex_en: "Local people.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1817", jp: "地方", r: "ちほう", en: "region (review)", ex: "地方の文化。", ex_en: "Regional culture.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1818", jp: "首都", r: "しゅと", en: "capital city", ex: "日本の首都。", ex_en: "Capital of Japan.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1819", jp: "都", r: "みやこ", en: "capital (literary)", ex: "古い都。", ex_en: "An old capital.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1820", jp: "県庁", r: "けんちょう", en: "prefectural office", ex: "県庁所在地。", ex_en: "Prefectural capital.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1821", jp: "役所", r: "やくしょ", en: "government office", ex: "市役所に行く。", ex_en: "Go to the city hall.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1822", jp: "役人", r: "やくにん", en: "official", ex: "国家の役人。", ex_en: "A national official.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1823", jp: "公務員", r: "こうむいん", en: "civil servant", ex: "公務員試験。", ex_en: "Civil service exam.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1824", jp: "会社員", r: "かいしゃいん", en: "company employee", ex: "普通の会社員。", ex_en: "An ordinary office worker.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v1825", jp: "サラリーマン", r: "サラリーマン", en: "salaryman", ex: "典型的なサラリーマン。", ex_en: "A typical salaryman.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1826", jp: "アルバイト", r: "アルバイト", en: "part-time job", ex: "アルバイトを探す。", ex_en: "Look for a part-time job.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1827", jp: "パート", r: "パート", en: "part-time work", ex: "パートで働く。", ex_en: "Work part-time.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1828", jp: "正社員", r: "せいしゃいん", en: "full-time employee", ex: "正社員として働く。", ex_en: "Work as a full-timer.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1829", jp: "派遣", r: "はけん", en: "dispatch (worker)", ex: "派遣社員。", ex_en: "Dispatched worker.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1830", jp: "労働", r: "ろうどう", en: "labor, work", ex: "労働条件。", ex_en: "Working conditions.", efreq: 4, gfreq: 7, pre: 3 },
+  { id: "v1831", jp: "職業", r: "しょくぎょう", en: "occupation", ex: "職業を選ぶ。", ex_en: "Choose an occupation.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1832", jp: "業種", r: "ぎょうしゅ", en: "type of industry", ex: "業種を変える。", ex_en: "Change industries.", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "v1833", jp: "業界", r: "ぎょうかい", en: "industry, business world", ex: "音楽業界。", ex_en: "Music industry.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1834", jp: "企業", r: "きぎょう", en: "enterprise, company", ex: "大企業。", ex_en: "Large company.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "v1835", jp: "商売", r: "しょうばい", en: "business, trade", ex: "商売を始める。", ex_en: "Start a business.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1836", jp: "店", r: "みせ", en: "store, shop", ex: "好きな店。", ex_en: "Favorite shop.", efreq: 9, gfreq: 9, pre: 6 },
+  { id: "v1837", jp: "店員", r: "てんいん", en: "shop clerk", ex: "店員に聞く。", ex_en: "Ask the clerk.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "v1838", jp: "客", r: "きゃく", en: "customer, guest", ex: "店の客。", ex_en: "Shop customer.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v1839", jp: "お客様", r: "おきゃくさま", en: "customer (polite)", ex: "お客様第一。", ex_en: "Customer first.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "v1840", jp: "サービス", r: "サービス", en: "service", ex: "サービスがいい。", ex_en: "Service is good.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "v1841", jp: "おもてなし", r: "おもてなし", en: "hospitality", ex: "日本のおもてなし。", ex_en: "Japanese hospitality.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1842", jp: "歓迎", r: "かんげい", en: "welcome", ex: "歓迎パーティー。", ex_en: "Welcome party.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1843", jp: "招待", r: "しょうたい", en: "invitation (formal)", ex: "招待を受ける。", ex_en: "Accept an invitation.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "v1844", jp: "送別", r: "そうべつ", en: "farewell, send-off", ex: "送別会。", ex_en: "Farewell party.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1845", jp: "別れ", r: "わかれ", en: "parting, farewell", ex: "悲しい別れ。", ex_en: "A sad farewell.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1846", jp: "出会い", r: "であい", en: "encounter, meeting", ex: "運命の出会い。", ex_en: "A fated encounter.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "v1847", jp: "再会", r: "さいかい", en: "reunion", ex: "十年ぶりの再会。", ex_en: "Reunion after 10 years.", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "v1848", jp: "縁", r: "えん", en: "fate, connection", ex: "縁がある。", ex_en: "There's a connection.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1849", jp: "運命", r: "うんめい", en: "destiny, fate", ex: "運命の人。", ex_en: "Destined person.", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "v1850", jp: "幸運", r: "こううん", en: "good luck", ex: "幸運を祈る。", ex_en: "Wish good luck.", efreq: 5, gfreq: 6, pre: 3 },
 ];
 
 const KANJI = [
@@ -3384,6 +3885,206 @@ const KANJI = [
   { id: "k118", jp: "後", on: "ゴ", kun: "あと", meaning: "after", comp: "彳 + 幺 + 夂", mnem: "Steps trailing after.", efreq: 10, gfreq: 10, pre: 7 },
   { id: "k119", jp: "前", on: "ゼン", kun: "まえ", meaning: "before", comp: "stand-alone", mnem: "A figure stepping forward.", efreq: 10, gfreq: 10, pre: 7 },
   { id: "k120", jp: "中", on: "チュウ", kun: "なか", meaning: "middle", comp: "stand-alone", mnem: "A line through the middle.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k121", jp: "駅", on: "エキ", kun: "—", meaning: "station", comp: "馬 horse + 尺 measure", mnem: "Where horse-power was measured before trains — the station.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k122", jp: "店", on: "テン", kun: "みせ", meaning: "shop, store", comp: "广 building + 占 fortune-tell", mnem: "A building where fortunes are made selling goods.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k123", jp: "売", on: "バイ", kun: "うる", meaning: "sell", comp: "士 + 冖 + 儿", mnem: "A scholar standing on legs under a cover — selling his services.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k124", jp: "買", on: "バイ", kun: "かう", meaning: "buy", comp: "罒 net + 貝 shell", mnem: "Casting a net for shells (old money) — buying things.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k125", jp: "品", on: "ヒン", kun: "しな", meaning: "product, item", comp: "三つの口 = three mouths", mnem: "Three mouths talking — discussing the quality of the product.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k126", jp: "物", on: "ブツ", kun: "もの", meaning: "thing", comp: "牛 cow + 勿 don't", mnem: "Don't kill the cow — it's a precious thing.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k127", jp: "車", on: "シャ", kun: "くるま", meaning: "car, wheel", comp: "Pictograph: chariot top-down", mnem: "Top-down view of a chariot — wheels and axles.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "k128", jp: "道", on: "ドウ", kun: "みち", meaning: "road, way", comp: "辶 walk + 首 head", mnem: "Walking with your head set on a path — the way.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k129", jp: "歩", on: "ホ", kun: "あるく", meaning: "walk", comp: "止 stop + 少 little", mnem: "Stop, take a little step — walking.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k130", jp: "走", on: "ソウ", kun: "はしる", meaning: "run", comp: "土 earth + 足 foot", mnem: "Feet pounding the earth — running.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k131", jp: "立", on: "リツ", kun: "たつ", meaning: "stand", comp: "Pictograph: person on ground", mnem: "A person standing upright on the ground.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k132", jp: "座", on: "ザ", kun: "すわる", meaning: "sit", comp: "广 house + 坐 two people on earth", mnem: "Two people sitting under a roof — having a seat.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k133", jp: "起", on: "キ", kun: "おきる", meaning: "wake up, rise", comp: "走 run + 己 self", mnem: "Self getting up to run — rising up.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k134", jp: "寝", on: "シン", kun: "ねる", meaning: "sleep", comp: "宀 roof + 爿 bed + 又 hand", mnem: "Under a roof, in bed, hand under cheek — sleeping.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k135", jp: "食", on: "ショク", kun: "たべる", meaning: "eat", comp: "Pictograph: covered food bowl", mnem: "A bowl of food with a cover lifted — eating.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "k136", jp: "飲", on: "イン", kun: "のむ", meaning: "drink", comp: "食 food + 欠 lack/yawn", mnem: "Mouth open like a yawn for food/drink — drinking.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k137", jp: "肉", on: "ニク", kun: "—", meaning: "meat", comp: "Pictograph: cuts of meat", mnem: "Looks like striped cuts of meat.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k138", jp: "魚", on: "ギョ", kun: "さかな", meaning: "fish", comp: "Pictograph: fish with tail", mnem: "Pictograph: head, body, fins, tail — a fish.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k139", jp: "野", on: "ヤ", kun: "の", meaning: "field", comp: "里 village + 予 beforehand", mnem: "Land set aside (predetermined) by the village — a field.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k140", jp: "菜", on: "サイ", kun: "—", meaning: "vegetable", comp: "艹 grass + 采 pick", mnem: "Picking from grass-like plants — vegetables.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k141", jp: "果", on: "カ", kun: "—", meaning: "fruit, result", comp: "Pictograph: fruit on a tree", mnem: "A fruit hanging on a tree — also a result that ripens.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k142", jp: "茶", on: "チャ", kun: "—", meaning: "tea", comp: "艹 grass + 余 surplus + 木 tree", mnem: "Surplus leaves of a tree (grassy) — make tea.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k143", jp: "酒", on: "シュ", kun: "さけ", meaning: "sake, alcohol", comp: "氵 water + 酉 wine jar", mnem: "Water in a wine jar — alcohol.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k144", jp: "味", on: "ミ", kun: "あじ", meaning: "taste, flavor", comp: "口 mouth + 未 not-yet", mnem: "Mouth meeting something not-yet-known — tasting it.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k145", jp: "塩", on: "エン", kun: "しお", meaning: "salt", comp: "土 earth + 監 watch", mnem: "Watching the earth (sea-flats) make salt.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k146", jp: "糖", on: "トウ", kun: "—", meaning: "sugar", comp: "米 rice + 唐 Tang", mnem: "Rice from Tang dynasty refined — sugar.", efreq: 5, gfreq: 6, pre: 2 },
+  { id: "k147", jp: "油", on: "ユ", kun: "あぶら", meaning: "oil", comp: "氵 water + 由 reason/cause", mnem: "Water-like substance from a cause (oily plants) — oil.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k148", jp: "粉", on: "フン", kun: "こ", meaning: "powder, flour", comp: "米 rice + 分 divide", mnem: "Rice divided into tiny pieces — powder.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "k149", jp: "皿", on: "サラ", kun: "—", meaning: "plate, dish", comp: "Pictograph: bowl/dish", mnem: "Pictograph: a dish on a stand.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k150", jp: "箱", on: "ハコ", kun: "—", meaning: "box", comp: "竹 bamboo + 相 mutual", mnem: "A bamboo container — a box.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k151", jp: "空", on: "クウ", kun: "そら", meaning: "sky, empty", comp: "穴 hole + 工 work", mnem: "An empty hole worked into the heavens — the sky.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k152", jp: "雲", on: "ウン", kun: "くも", meaning: "cloud", comp: "雨 rain + 云 say", mnem: "Rain-bringers that 'say' weather — clouds.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k153", jp: "雪", on: "セツ", kun: "ゆき", meaning: "snow", comp: "雨 rain + 彐 broom", mnem: "Frozen rain sweeping the ground — snow.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k154", jp: "雨", on: "ウ", kun: "あめ", meaning: "rain", comp: "Pictograph: drops from cloud", mnem: "Drops falling from a cloud — pictographically rain.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k155", jp: "風", on: "フウ", kun: "かぜ", meaning: "wind", comp: "几 wind-frame + 虫 insect", mnem: "Insects blown about inside a frame — the wind.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k156", jp: "雷", on: "ライ", kun: "かみなり", meaning: "thunder", comp: "雨 rain + 田 field", mnem: "Rain over the field — thunder.", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "k157", jp: "海", on: "カイ", kun: "うみ", meaning: "sea", comp: "氵 water + 毎 every", mnem: "Every water collected together — the sea.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k158", jp: "湖", on: "コ", kun: "みずうみ", meaning: "lake", comp: "氵 water + 胡 ancient", mnem: "An ancient body of water — a lake.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k159", jp: "池", on: "チ", kun: "いけ", meaning: "pond", comp: "氵 water + 也 also", mnem: "A small water-place 'also' — a pond.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k160", jp: "川", on: "セン", kun: "かわ", meaning: "river", comp: "Pictograph: three water lines", mnem: "Three flowing lines — a river.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k161", jp: "山", on: "サン", kun: "やま", meaning: "mountain", comp: "Pictograph: 3 peaks", mnem: "Three peaks rising — a mountain.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k162", jp: "島", on: "トウ", kun: "しま", meaning: "island", comp: "鳥 bird + 山 mountain", mnem: "A mountain where birds gather (in the sea) — an island.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k163", jp: "森", on: "シン", kun: "もり", meaning: "forest", comp: "三つの木 = three trees", mnem: "Three trees together — a forest.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k164", jp: "林", on: "リン", kun: "はやし", meaning: "woods", comp: "二つの木 = two trees", mnem: "Two trees — a small woods.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k165", jp: "木", on: "モク", kun: "き", meaning: "tree, wood", comp: "Pictograph: tree with branches", mnem: "A tree with branches and roots.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "k166", jp: "草", on: "ソウ", kun: "くさ", meaning: "grass", comp: "艹 grass + 早 early", mnem: "Early-growing plants on the ground — grass.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k167", jp: "花", on: "カ", kun: "はな", meaning: "flower", comp: "艹 grass + 化 change", mnem: "Grass that changes (blooms) — a flower.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k168", jp: "葉", on: "ヨウ", kun: "は", meaning: "leaf", comp: "艹 grass + 世 generation + 木 tree", mnem: "Generations of grass on a tree — leaves.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k169", jp: "根", on: "コン", kun: "ね", meaning: "root", comp: "木 tree + 艮 firm", mnem: "The firm part of a tree — its roots.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k170", jp: "育", on: "イク", kun: "そだてる", meaning: "raise, grow", comp: "亠 + 月 flesh", mnem: "Nurturing flesh from above — raising a child.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k171", jp: "土", on: "ド", kun: "つち", meaning: "earth, soil", comp: "Pictograph: cross on ground", mnem: "A cross planted in the ground — earth.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k172", jp: "石", on: "セキ", kun: "いし", meaning: "stone", comp: "Pictograph: rock under cliff", mnem: "A rock falling from a cliff — a stone.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k173", jp: "金", on: "キン", kun: "かね", meaning: "metal, money, gold", comp: "Pictograph: ore in mountain", mnem: "A precious ore in the mountain — gold/money.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k174", jp: "銀", on: "ギン", kun: "—", meaning: "silver", comp: "金 metal + 艮 firm", mnem: "A firm metal — silver.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k175", jp: "鉄", on: "テツ", kun: "—", meaning: "iron", comp: "金 metal + 失 lose", mnem: "A metal so heavy you lose strength carrying it — iron.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k176", jp: "光", on: "コウ", kun: "ひかり", meaning: "light", comp: "Pictograph: glowing person", mnem: "A person shining out — light.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k177", jp: "色", on: "ショク", kun: "いろ", meaning: "color", comp: "Pictograph: person + seal", mnem: "Like a person and their characteristic mark — color.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k178", jp: "音", on: "オン", kun: "おと", meaning: "sound", comp: "立 stand + 日 sun", mnem: "Standing in the sun, sound rises — voice/sound.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k179", jp: "声", on: "セイ", kun: "こえ", meaning: "voice", comp: "Pictograph: hanging instrument", mnem: "Hanging stones that ring — a voice.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k180", jp: "気", on: "キ", kun: "—", meaning: "spirit, energy, air", comp: "Pictograph: rising vapor", mnem: "Rising vapor — the spirit/feeling/air.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "k181", jp: "人", on: "ジン", kun: "ひと", meaning: "person", comp: "Pictograph: standing person", mnem: "A standing person side-view.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k182", jp: "男", on: "ダン", kun: "おとこ", meaning: "man, male", comp: "田 field + 力 power", mnem: "Power working the fields — a man.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k183", jp: "女", on: "ジョ", kun: "おんな", meaning: "woman, female", comp: "Pictograph: kneeling figure", mnem: "A kneeling figure — woman.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k184", jp: "子", on: "シ", kun: "こ", meaning: "child", comp: "Pictograph: baby with arms", mnem: "A baby with arms outstretched — child.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k185", jp: "母", on: "ボ", kun: "はは", meaning: "mother", comp: "Pictograph: figure with breasts", mnem: "A nurturing figure — mother.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k186", jp: "父", on: "フ", kun: "ちち", meaning: "father", comp: "Pictograph: hand holding ax", mnem: "A figure holding tools — father.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k187", jp: "兄", on: "ケイ", kun: "あに", meaning: "older brother", comp: "口 mouth + 儿 legs", mnem: "A talking figure standing tall — older brother.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k188", jp: "弟", on: "テイ", kun: "おとうと", meaning: "younger brother", comp: "Pictograph: bound rope", mnem: "A bound rope-figure — the younger one.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k189", jp: "姉", on: "シ", kun: "あね", meaning: "older sister", comp: "女 woman + 市 market", mnem: "A woman who goes to the market — older sister.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k190", jp: "妹", on: "マイ", kun: "いもうと", meaning: "younger sister", comp: "女 woman + 未 not-yet", mnem: "A woman not-yet-grown — younger sister.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k191", jp: "友", on: "ユウ", kun: "とも", meaning: "friend", comp: "Pictograph: two hands together", mnem: "Two hands clasped — friends.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k192", jp: "夫", on: "フ", kun: "おっと", meaning: "husband", comp: "Pictograph: man with hat", mnem: "A grown man with headgear — husband.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k193", jp: "妻", on: "サイ", kun: "つま", meaning: "wife", comp: "Pictograph: woman with broom", mnem: "A woman holding a broom — wife.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k194", jp: "息", on: "ソク", kun: "—", meaning: "breath, son", comp: "自 self + 心 heart", mnem: "Breath comes from your own heart.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k195", jp: "娘", on: "ジョウ", kun: "むすめ", meaning: "daughter", comp: "女 woman + 良 good", mnem: "A good young woman — daughter.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k196", jp: "顔", on: "ガン", kun: "かお", meaning: "face", comp: "彦 elegant + 頁 head", mnem: "An elegantly arranged head — face.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k197", jp: "頭", on: "トウ", kun: "あたま", meaning: "head", comp: "豆 bean + 頁 head", mnem: "A bean-shaped head.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k198", jp: "髪", on: "ハツ", kun: "かみ", meaning: "hair", comp: "髟 long-hair + 友", mnem: "Long flowing hair on the head.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k199", jp: "産", on: "サン", kun: "うむ", meaning: "produce, birth", comp: "立 stand + 生 birth", mnem: "Standing to give birth — to produce.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k200", jp: "耳", on: "ジ", kun: "みみ", meaning: "ear", comp: "Pictograph: ear", mnem: "Pictograph: an ear.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k201", jp: "口", on: "コウ", kun: "くち", meaning: "mouth", comp: "Pictograph: open mouth", mnem: "Pictograph: an open mouth.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k202", jp: "鼻", on: "ビ", kun: "はな", meaning: "nose", comp: "Pictograph: nose", mnem: "Pictograph: nose with nostrils.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k203", jp: "歯", on: "シ", kun: "は", meaning: "tooth", comp: "止 stop + 歯-bottom", mnem: "Where chewing stops — the tooth.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k204", jp: "手", on: "シュ", kun: "て", meaning: "hand", comp: "Pictograph: open hand", mnem: "Pictograph: a five-fingered hand.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k205", jp: "足", on: "ソク", kun: "あし", meaning: "foot, leg", comp: "Pictograph: leg with knee", mnem: "Pictograph: a leg.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k206", jp: "指", on: "シ", kun: "ゆび", meaning: "finger", comp: "扌 hand + 旨 point", mnem: "The pointing part of the hand — finger.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k207", jp: "首", on: "シュ", kun: "くび", meaning: "neck, head", comp: "Pictograph: head on body", mnem: "Pictograph: head + neck region.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k208", jp: "心", on: "シン", kun: "こころ", meaning: "heart, mind", comp: "Pictograph: heart organ", mnem: "Pictograph: the heart.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "k209", jp: "体", on: "タイ", kun: "からだ", meaning: "body", comp: "亻 person + 本 origin", mnem: "A person's origin — their body.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k210", jp: "病", on: "ビョウ", kun: "やまい", meaning: "illness", comp: "疒 sickness + 丙 third", mnem: "A sickness mark — illness.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k211", jp: "週", on: "シュウ", kun: "—", meaning: "week", comp: "辶 walk + 周 cycle", mnem: "Walking the cycle — a week.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k212", jp: "月", on: "ゲツ", kun: "つき", meaning: "month, moon", comp: "Pictograph: crescent moon", mnem: "A crescent moon — also marks months.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k213", jp: "日", on: "ニチ", kun: "ひ", meaning: "day, sun", comp: "Pictograph: sun", mnem: "A round sun with a mark — day.", efreq: 10, gfreq: 10, pre: 8 },
+  { id: "k214", jp: "曜", on: "ヨウ", kun: "—", meaning: "weekday", comp: "日 sun + 翟 pheasant", mnem: "Sun feathered through the week.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k215", jp: "朝", on: "チョウ", kun: "あさ", meaning: "morning", comp: "十 sun-rising + 月 moon", mnem: "Sun rising as moon leaves — morning.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k216", jp: "昼", on: "チュウ", kun: "ひる", meaning: "noon, daytime", comp: "尺 measure + 日 sun", mnem: "Measuring the sun at its peak — noon.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k217", jp: "夜", on: "ヤ", kun: "よる", meaning: "night", comp: "亠 lid + 夕 evening", mnem: "Cover on the evening — night.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k218", jp: "晩", on: "バン", kun: "—", meaning: "evening, night", comp: "日 sun + 免 escape", mnem: "Sun escaping — evening.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k219", jp: "毎", on: "マイ", kun: "—", meaning: "every", comp: "Pictograph: mother + plant", mnem: "Mother with hair-tie — every (recurring).", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k220", jp: "違", on: "イ", kun: "ちがう", meaning: "differ, mistake", comp: "辶 walk + 韋 around", mnem: "Walking around (not on path) — differs.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k221", jp: "数", on: "スウ", kun: "かず", meaning: "number", comp: "婁 woman tied + 攵 hit", mnem: "Counting woman's actions — numbers.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k222", jp: "字", on: "ジ", kun: "—", meaning: "character, letter", comp: "宀 roof + 子 child", mnem: "Under the roof, child learns — characters.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k223", jp: "名", on: "メイ", kun: "な", meaning: "name", comp: "夕 evening + 口 mouth", mnem: "At evening, mouth calls — a name.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k224", jp: "拾", on: "シュウ", kun: "ひろう", meaning: "pick up", comp: "扌 hand + 合 join", mnem: "Hand joining ground — picking up.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k225", jp: "捨", on: "シャ", kun: "すてる", meaning: "throw away", comp: "扌 hand + 舎 inn", mnem: "Hand throwing out of the inn — discarding.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k226", jp: "上", on: "ジョウ", kun: "うえ", meaning: "up, above", comp: "Pictograph: line above another", mnem: "A line above the base — up.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k227", jp: "下", on: "カ", kun: "した", meaning: "down, below", comp: "Pictograph: line below another", mnem: "A line below the base — down.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k228", jp: "左", on: "サ", kun: "ひだり", meaning: "left", comp: "ナ + 工 work", mnem: "Hand at work on the left side.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k229", jp: "右", on: "ウ", kun: "みぎ", meaning: "right", comp: "ナ + 口 mouth", mnem: "Hand at the mouth (eating side) — right.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k230", jp: "内", on: "ナイ", kun: "うち", meaning: "inside", comp: "冂 enclosure + 入 enter", mnem: "Entering an enclosure — inside.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k231", jp: "外", on: "ガイ", kun: "そと", meaning: "outside", comp: "夕 evening + 卜 divination", mnem: "Evening divinations done outside.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k232", jp: "東", on: "トウ", kun: "ひがし", meaning: "east", comp: "日 sun + 木 tree", mnem: "Sun rising through a tree — east.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k233", jp: "西", on: "セイ", kun: "にし", meaning: "west", comp: "Pictograph: setting sun", mnem: "Sun setting — west.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k234", jp: "南", on: "ナン", kun: "みなみ", meaning: "south", comp: "Pictograph: tent-like", mnem: "A warmer tent — facing south.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k235", jp: "北", on: "ホク", kun: "きた", meaning: "north", comp: "Pictograph: two figures back-to-back", mnem: "Two figures back-to-back — opposite directions, north.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k236", jp: "近", on: "キン", kun: "ちかい", meaning: "near", comp: "辶 walk + 斤 ax", mnem: "Walking a small distance — near.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k237", jp: "遠", on: "エン", kun: "とおい", meaning: "far", comp: "辶 walk + 袁 long-robe", mnem: "Walking far in long robes — far.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k238", jp: "高", on: "コウ", kun: "たかい", meaning: "high, expensive", comp: "Pictograph: tall building", mnem: "A tall building — high.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k239", jp: "低", on: "テイ", kun: "ひくい", meaning: "low", comp: "亻 person + 氐 base", mnem: "Person at the base — low.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k240", jp: "広", on: "コウ", kun: "ひろい", meaning: "wide", comp: "广 building + ム", mnem: "Open building — wide.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k241", jp: "行", on: "コウ", kun: "いく", meaning: "go, do", comp: "Pictograph: crossroads", mnem: "A crossroads — going somewhere.", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "k242", jp: "探", on: "タン", kun: "さがす", meaning: "search", comp: "扌 hand + 罙 deep", mnem: "Hand reaching deep — searching.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k243", jp: "帰", on: "キ", kun: "かえる", meaning: "return", comp: "刀 + 巾 + 帚", mnem: "Sweeping things back — return home.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k244", jp: "出", on: "シュツ", kun: "でる", meaning: "exit, leave", comp: "Pictograph: foot leaving box", mnem: "A foot stepping out of a frame — exit.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k245", jp: "入", on: "ニュウ", kun: "はいる", meaning: "enter", comp: "Pictograph: branching point", mnem: "An entrance with two paths in.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k246", jp: "止", on: "シ", kun: "とまる", meaning: "stop", comp: "Pictograph: footprint", mnem: "A foot planted — stop.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k247", jp: "動", on: "ドウ", kun: "うごく", meaning: "move", comp: "重 heavy + 力 power", mnem: "Heavy with power — moving.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "k248", jp: "押", on: "オウ", kun: "おす", meaning: "push", comp: "扌 hand + 甲 shell", mnem: "Hand pressing a shell — pushing.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k249", jp: "休", on: "キュウ", kun: "やすむ", meaning: "rest", comp: "亻 person + 木 tree", mnem: "A person leaning on a tree — resting.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k250", jp: "安", on: "アン", kun: "やすい", meaning: "peace, cheap", comp: "宀 roof + 女 woman", mnem: "Woman under a roof — peaceful (or cheap to keep).", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k251", jp: "引", on: "イン", kun: "ひく", meaning: "pull", comp: "弓 bow + |", mnem: "Pulling a bowstring — to pull.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k252", jp: "着", on: "チャク", kun: "きる", meaning: "wear, arrive", comp: "羊 + 目", mnem: "Arriving and putting on — wear/arrive.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k253", jp: "言", on: "ゲン", kun: "いう", meaning: "say", comp: "立 stand + 口 mouth", mnem: "Standing mouth — saying.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "k254", jp: "話", on: "ワ", kun: "はなす", meaning: "talk", comp: "言 say + 舌 tongue", mnem: "Saying + tongue — speaking/talking.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k255", jp: "読", on: "ドク", kun: "よむ", meaning: "read", comp: "言 word + 売 sell", mnem: "Selling words aloud — reading.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k256", jp: "書", on: "ショ", kun: "かく", meaning: "write", comp: "聿 brush + 日", mnem: "Brush over paper — writing.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k257", jp: "教", on: "キョウ", kun: "おしえる", meaning: "teach", comp: "孝 filial + 攵 strike", mnem: "Striking children with knowledge — teaching.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "k258", jp: "学", on: "ガク", kun: "まなぶ", meaning: "study, learn", comp: "Pictograph: child + roof + lines", mnem: "Under the roof, child learning.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k259", jp: "校", on: "コウ", kun: "—", meaning: "school", comp: "木 tree + 交 cross", mnem: "Place where paths cross around a tree — school.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k260", jp: "図", on: "ズ", kun: "—", meaning: "diagram, map", comp: "口 + 啚", mnem: "Boxed lines — a diagram.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k261", jp: "画", on: "ガ", kun: "—", meaning: "picture, stroke", comp: "Pictograph: drawing with brush", mnem: "A picture or kanji stroke.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k262", jp: "写", on: "シャ", kun: "うつす", meaning: "copy, photograph", comp: "冖 cover + 与 give", mnem: "Giving a copy under cover — photo.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k263", jp: "切", on: "セツ", kun: "きる", meaning: "cut", comp: "七 seven + 刀 knife", mnem: "Sharp knife into seven pieces — cutting.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k264", jp: "開", on: "カイ", kun: "あく", meaning: "open", comp: "門 gate + 开 open-hands", mnem: "Hands opening the gate.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k265", jp: "閉", on: "ヘイ", kun: "しめる", meaning: "close, shut", comp: "門 gate + 才 talent", mnem: "Gate held closed — shut.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k266", jp: "速", on: "ソク", kun: "はやい", meaning: "fast", comp: "辶 walk + 束 bundle", mnem: "Walking with a bundle quickly — fast.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k267", jp: "遅", on: "チ", kun: "おそい", meaning: "slow, late", comp: "辶 walk + 犀 rhinoceros", mnem: "Walking like a rhinoceros — slow.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k268", jp: "持", on: "ジ", kun: "もつ", meaning: "hold, carry", comp: "扌 hand + 寺 temple", mnem: "Hand of the temple holding — carrying.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k269", jp: "渡", on: "ト", kun: "わたる", meaning: "cross", comp: "氵 water + 度 degree", mnem: "Crossing a measured water — bridge crossing.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k270", jp: "戻", on: "レイ", kun: "もどる", meaning: "return, give back", comp: "戸 door + 大 big", mnem: "Coming back through the big door — return.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k271", jp: "国", on: "コク", kun: "くに", meaning: "country", comp: "口 enclosure + 玉 jewel", mnem: "A precious thing inside borders — a country.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k272", jp: "県", on: "ケン", kun: "—", meaning: "prefecture", comp: "目 + 𠃊 + 小", mnem: "An eye over a small region — prefecture.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "k273", jp: "市", on: "シ", kun: "いち", meaning: "city, market", comp: "亠 + 巾", mnem: "Top of the market town — a city.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k274", jp: "町", on: "チョウ", kun: "まち", meaning: "town", comp: "田 field + 丁 nail", mnem: "Fields nailed together — a town.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k275", jp: "村", on: "ソン", kun: "むら", meaning: "village", comp: "木 tree + 寸 inch", mnem: "A tiny tree-cluster — a village.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k276", jp: "京", on: "キョウ", kun: "—", meaning: "capital", comp: "Pictograph: tall building", mnem: "A tall capital building.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k277", jp: "区", on: "ク", kun: "—", meaning: "ward, district", comp: "Pictograph: divided region", mnem: "A divided area — a ward.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k278", jp: "民", on: "ミン", kun: "—", meaning: "people, citizen", comp: "Pictograph: people", mnem: "The people.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "k279", jp: "様", on: "ヨウ", kun: "さま", meaning: "Mr./Mrs., manner", comp: "木 tree + 羊 sheep + 水", mnem: "A respected fixed-place — honorific 'sama'.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "k280", jp: "員", on: "イン", kun: "—", meaning: "member, employee", comp: "口 mouth + 貝 shell", mnem: "A counting mouth of the organization — member.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k281", jp: "客", on: "キャク", kun: "—", meaning: "guest, customer", comp: "宀 roof + 各 each", mnem: "Each person under the roof — a guest.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k282", jp: "主", on: "シュ", kun: "—", meaning: "main, master", comp: "Pictograph: master on dais", mnem: "The main figure on a stand — master.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "k283", jp: "公", on: "コウ", kun: "おおやけ", meaning: "public", comp: "八 divide + ム", mnem: "Equally divided — public.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "k284", jp: "政", on: "セイ", kun: "—", meaning: "politics, govern", comp: "正 correct + 攵 strike", mnem: "Striking things straight — government.", efreq: 5, gfreq: 8, pre: 3 },
+  { id: "k285", jp: "府", on: "フ", kun: "—", meaning: "government office", comp: "广 building + 付 attach", mnem: "A building where things attach — government office.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "k286", jp: "界", on: "カイ", kun: "—", meaning: "world, boundary", comp: "田 field + 介 between", mnem: "Fields between us — the world.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k287", jp: "寄", on: "キ", kun: "よる", meaning: "approach, drop by", comp: "宀 roof + 奇 strange", mnem: "Stopping by a strange roof — approach.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k288", jp: "者", on: "シャ", kun: "もの", meaning: "person, one who", comp: "Pictograph: cooked person?", mnem: "A doer — 'one who'.", efreq: 7, gfreq: 9, pre: 5 },
+  { id: "k289", jp: "代", on: "ダイ", kun: "かわる", meaning: "substitute, era", comp: "亻 person + 弋 stake", mnem: "Person at a stake (relay-point) — replacement.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k290", jp: "等", on: "トウ", kun: "—", meaning: "equal, etc.", comp: "竹 bamboo + 寺 temple", mnem: "Bamboo at a temple — equal classification.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "k291", jp: "緊", on: "キン", kun: "—", meaning: "tense, tight", comp: "臤 + 糸 thread", mnem: "Threads pulled tight — tense.", efreq: 6, gfreq: 7, pre: 3 },
+  { id: "k292", jp: "急", on: "キュウ", kun: "いそぐ", meaning: "urgent, hurry", comp: "勹 wrap + 心 heart", mnem: "Heart wrapped tight — urgent.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k293", jp: "局", on: "キョク", kun: "—", meaning: "bureau, office", comp: "尸 corpse + 句 phrase", mnem: "An office where phrases are sorted — bureau.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k294", jp: "所", on: "ショ", kun: "ところ", meaning: "place", comp: "戸 door + 斤 ax", mnem: "A place defined by a door — a location.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k295", jp: "央", on: "オウ", kun: "—", meaning: "center", comp: "Pictograph: figure in middle", mnem: "A figure central in the field.", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "k296", jp: "落", on: "ラク", kun: "おちる", meaning: "fall", comp: "艹 grass + 洛 river-name", mnem: "Leaves of grass falling — fall.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k297", jp: "性", on: "セイ", kun: "—", meaning: "nature, gender", comp: "忄 heart + 生 birth", mnem: "Born-with-heart — nature/gender.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "k298", jp: "格", on: "カク", kun: "—", meaning: "status, rank", comp: "木 tree + 各 each", mnem: "Each tree's rank — status.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "k299", jp: "残", on: "ザン", kun: "のこる", meaning: "remain", comp: "歹 bone + 戔 wound", mnem: "Wounded bones remaining — remainder.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k300", jp: "例", on: "レイ", kun: "—", meaning: "example", comp: "亻 person + 列 row", mnem: "A person in a row — an example.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k301", jp: "活", on: "カツ", kun: "—", meaning: "life, activity", comp: "氵 water + 舌 tongue", mnem: "Water and tongue — alive and active.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k302", jp: "生", on: "セイ", kun: "いきる", meaning: "life, born", comp: "Pictograph: plant from ground", mnem: "A sprout — life.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k303", jp: "死", on: "シ", kun: "しぬ", meaning: "death", comp: "歹 bone + 匕 person-fall", mnem: "A figure falling beside a bone — death.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k304", jp: "試", on: "シ", kun: "ためす", meaning: "try, test", comp: "言 word + 式 ceremony", mnem: "Speaking the ceremonial words — testing.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k305", jp: "好", on: "コウ", kun: "すき", meaning: "like, fond", comp: "女 woman + 子 child", mnem: "A woman with a child — love/like.", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "k306", jp: "嫌", on: "ケン", kun: "きらい", meaning: "dislike", comp: "女 + 兼", mnem: "A woman holding back — dislike.", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "k307", jp: "愛", on: "アイ", kun: "—", meaning: "love", comp: "Pictograph: heart with hand", mnem: "Holding a heart — love.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k308", jp: "幸", on: "コウ", kun: "しあわせ", meaning: "happiness", comp: "Pictograph: handcuffs?", mnem: "Surviving the cuffs — fortune/happiness.", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "k309", jp: "悪", on: "アク", kun: "わるい", meaning: "bad, evil", comp: "亜 + 心 heart", mnem: "A second-rate heart — evil/bad.", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "k310", jp: "良", on: "リョウ", kun: "よい", meaning: "good", comp: "Pictograph: grain", mnem: "Good rice — good.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k311", jp: "正", on: "セイ", kun: "ただしい", meaning: "correct", comp: "Pictograph: stop at the line", mnem: "Stopping at the correct line — correct.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k312", jp: "反", on: "ハン", kun: "—", meaning: "anti, reverse", comp: "厂 cliff + 又 hand", mnem: "Hand turned against the cliff — reverse.", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "k313", jp: "過", on: "カ", kun: "すぎる", meaning: "pass, exceed", comp: "辶 walk + 咼 misshapen", mnem: "Walking past — exceeding.", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "k314", jp: "私", on: "シ", kun: "わたし", meaning: "I, private", comp: "禾 rice + ム self", mnem: "My own rice — I/private.", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "k315", jp: "自", on: "ジ", kun: "—", meaning: "self", comp: "Pictograph: nose", mnem: "Pointing to one's nose — self.", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "k316", jp: "分", on: "ブン", kun: "わかる", meaning: "part, understand", comp: "八 divide + 刀 knife", mnem: "Knife dividing — understanding parts.", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "k317", jp: "暮", on: "ボ", kun: "くらす", meaning: "live, dusk", comp: "莫 + 日 sun", mnem: "Sun going down — dusk/daily life.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k318", jp: "並", on: "ヘイ", kun: "ならぶ", meaning: "line up", comp: "Pictograph: two立 standing", mnem: "Two people standing in a row — lining up.", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "k319", jp: "計", on: "ケイ", kun: "はかる", meaning: "plan, measure", comp: "言 word + 十 ten", mnem: "Counting words — calculate/plan.", efreq: 7, gfreq: 8, pre: 4 },
+  { id: "k320", jp: "願", on: "ガン", kun: "ねがう", meaning: "wish, request", comp: "原 origin + 頁 head", mnem: "Original wish in your head.", efreq: 7, gfreq: 7, pre: 4 },
 ];
 
 const GRAMMAR = [
@@ -3447,6 +4148,106 @@ const GRAMMAR = [
   { id: "g58", jp: "〜から〜にかけて", meaning: "from ... through", explanation: "Range in time or space.", ex: "春から夏にかけて花が咲く。", ex_en: "Flowers bloom from spring through summer.", mnem: "from-one-end hooked to other end", efreq: 6, gfreq: 6, pre: 3 },
   { id: "g59", jp: "〜ながらも", meaning: "although / while still", explanation: "Contrast — doing despite.", ex: "遅くなりながらも参加した。", ex_en: "Despite running late, I participated.", mnem: "while doing… BUT contrast", efreq: 5, gfreq: 5, pre: 2 },
   { id: "g60", jp: "〜ものだ", meaning: "it's natural that / used to", explanation: "General truth or nostalgic past.", ex: "昔はよく海に行ったものだ。", ex_en: "We used to go to the sea often back then.", mnem: "MONO = the thing as a general truth / used to", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g61", jp: "〜うえに", meaning: "moreover / on top of", explanation: "Adds a second related point — 'and on top of that'.", ex: "雨が降っているうえに、寒い。", ex_en: "It's raining, and on top of that, cold.", mnem: "UE = up-on top of: extra info stacked on", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g62", jp: "〜うえで", meaning: "after doing / in the process of", explanation: "After verb-た or noun の: 'after doing X' (necessary basis).", ex: "確認したうえで、決めます。", ex_en: "I'll decide after confirming.", mnem: "UE-DE = up-on the basis of doing X first", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g63", jp: "〜うえは", meaning: "now that / since", explanation: "Since (decision/condition) is set, must follow through.", ex: "やると決めたうえは、最後までやる。", ex_en: "Now that I've decided to do it, I'll see it through.", mnem: "UE-HA = up-on this commitment, must follow", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g64", jp: "〜せいか", meaning: "perhaps because of", explanation: "Softer than せいで — possible (negative) cause.", ex: "疲れたせいか、眠れない。", ex_en: "Perhaps because I'm tired, I can't sleep.", mnem: "SEI-KA = fault-maybe → perhaps because", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g65", jp: "〜だけに", meaning: "precisely because / especially because", explanation: "Reinforces that effect is strong BECAUSE of the cause.", ex: "練習しただけに、上手だ。", ex_en: "It's precisely because she practiced that she's good.", mnem: "DAKE-NI = just-because: pinpoint cause for strong effect", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g66", jp: "〜だけあって", meaning: "as expected of / fitting that", explanation: "Outcome matches expectations from a notable cause.", ex: "プロだけあって、上手い。", ex_en: "As expected of a pro, he's skilled.", mnem: "DAKE-ATTE = just-being: lives up to expectations", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g67", jp: "〜あまり", meaning: "so much that / out of", explanation: "Excessive emotion/state causes the result.", ex: "驚きのあまり、声が出なかった。", ex_en: "Out of surprise, I couldn't speak.", mnem: "AMARI = too-much: extreme emotion overflows", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g68", jp: "〜ばかりに", meaning: "simply because (to my regret)", explanation: "Trivial cause leads to bad outcome — regretful tone.", ex: "知らなかったばかりに、損をした。", ex_en: "Simply because I didn't know, I lost out.", mnem: "BAKARI-NI = just-because: a small thing caused regret", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g69", jp: "〜から〜にかけて", meaning: "from X through Y (span)", explanation: "Range across time or place.", ex: "東京から大阪にかけて雪が降る。", ex_en: "It's snowing from Tokyo through Osaka.", mnem: "KARA-KAKETE = from→reaching: range across", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g70", jp: "〜にあたって", meaning: "on the occasion of / when (formal)", explanation: "At the time of a notable event/start.", ex: "出発にあたって、注意点を確認する。", ex_en: "Upon departure, check the precautions.", mnem: "ATATTE = hitting-the-moment of an event", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g71", jp: "〜さえ", meaning: "even / as long as", explanation: "Emphasizes the minimum: 'even X' or surprising inclusion.", ex: "子供さえ知っている。", ex_en: "Even a child knows.", mnem: "SAE = say-even → even X (minimum)", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g72", jp: "〜さえ〜ば", meaning: "if only / as long as", explanation: "Sufficient condition: 'as long as X, then Y'.", ex: "あなたさえいれば幸せだ。", ex_en: "As long as you're here, I'm happy.", mnem: "SAE-BA = if-only-this-one-thing", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g73", jp: "〜なら", meaning: "if it's the case of / as for", explanation: "Topic/conditional — 'if we're talking about'.", ex: "日本語ならできる。", ex_en: "If it's Japanese, I can do it.", mnem: "NARA = no-other-area: in this domain, yes", efreq: 8, gfreq: 9, pre: 7 },
+  { id: "g74", jp: "〜たら", meaning: "when / if (sequential)", explanation: "Past form + ら — when X happens, then Y.", ex: "雨が降ったら、中止だ。", ex_en: "If it rains, it's canceled.", mnem: "TA-RA = ta-(done)-ra: after this happens, then", efreq: 9, gfreq: 9, pre: 8 },
+  { id: "g75", jp: "〜と", meaning: "whenever / if (automatic)", explanation: "Two events always linked — natural consequence.", ex: "ボタンを押すと、開く。", ex_en: "When you press the button, it opens.", mnem: "TO = together: A and then automatically B", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "g76", jp: "〜ば", meaning: "if (formal conditional)", explanation: "Hypothetical with ば form — 'if X, then Y'.", ex: "時間があれば、行きます。", ex_en: "If I have time, I'll go.", mnem: "BA = base/if-base: if this base holds", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "g77", jp: "〜ばよかった", meaning: "should have done", explanation: "Regret about past action — 'I should have'.", ex: "もっと早く来ればよかった。", ex_en: "I should have come earlier.", mnem: "BA-YOKATTA = if-good-was: would have been good if", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g78", jp: "〜とすれば / 〜とすると", meaning: "supposing / if we assume", explanation: "Hypothetical for argument.", ex: "もし当選するとすれば、何をする?", ex_en: "If we suppose you win, what will you do?", mnem: "TO-SUREBA = as-if-doing: assume this", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g79", jp: "〜としても", meaning: "even if / even assuming", explanation: "Concedes a hypothetical — 'even if X'.", ex: "本当だとしても、信じない。", ex_en: "Even if it's true, I won't believe it.", mnem: "TO-SHITE-MO = as-doing-but: even if so", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g80", jp: "〜にしても", meaning: "even if / even though", explanation: "Concedes either a real or hypothetical situation.", ex: "難しいにしても、やってみる。", ex_en: "Even if it's hard, I'll try.", mnem: "NI-SHITE-MO = at-doing-but: even granted this", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g81", jp: "〜しか〜ない", meaning: "only / nothing but", explanation: "Strong limiting — 'only X (nothing else)'.", ex: "千円しかない。", ex_en: "I only have 1000 yen.", mnem: "SHIKA-NAI = nothing-but-this", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "g82", jp: "〜だけ", meaning: "only / just", explanation: "Limit — softer than しか, just stating quantity/scope.", ex: "一回だけ会った。", ex_en: "I met him just once.", mnem: "DAKE = the-only-extent of this", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "g83", jp: "〜ほど", meaning: "to the extent of / as much as", explanation: "Degree comparison.", ex: "死ぬほど疲れた。", ex_en: "Tired to the point of death.", mnem: "HODO = extent/degree marker", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g84", jp: "〜くらい / 〜ぐらい", meaning: "about / to the degree of", explanation: "Approximate or 'at least this much'.", ex: "泣くくらい嬉しかった。", ex_en: "I was happy enough to cry.", mnem: "KURAI = about-this-degree", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g85", jp: "〜ばかりか", meaning: "not only / besides", explanation: "Stronger than だけでなく — emphasizes 'on top of that'.", ex: "彼は頭がいいばかりか、優しい。", ex_en: "He's not only smart but also kind.", mnem: "BAKARI-KA = just-this-and-more", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g86", jp: "〜どころか", meaning: "far from / let alone", explanation: "Reality is opposite/exceeds expectation — strong contrast.", ex: "簡単どころか、難しい。", ex_en: "Far from easy, it's difficult.", mnem: "DOKO-KORO = where? — beyond that point", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g87", jp: "〜どころではない", meaning: "no time / no situation for", explanation: "Strongly rejects something is possible/appropriate now.", ex: "今、遊ぶどころではない。", ex_en: "Now's no time to play.", mnem: "DOKO-RO-DENAI = no place/time for it", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g88", jp: "〜にすぎない", meaning: "no more than / merely", explanation: "Plays down — 'merely', 'just'.", ex: "ただの偶然にすぎない。", ex_en: "It's no more than coincidence.", mnem: "SUGI-NAI = not-exceeding: just this much", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g89", jp: "〜わけがない", meaning: "no way / can't possibly", explanation: "Strong denial — 'there's no reason it would be so'.", ex: "そんなことあるわけがない。", ex_en: "There's no way that's true.", mnem: "WAKE-GA-NAI = no reason for it", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g90", jp: "〜わけではない", meaning: "it's not that / not necessarily", explanation: "Soft denial — 'it's not exactly the case that'.", ex: "嫌いなわけではない。", ex_en: "It's not that I hate it.", mnem: "WAKE-DE-WA-NAI = not the case that", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g91", jp: "〜わけにはいかない", meaning: "can't (for social reasons)", explanation: "Can't do X due to obligation/circumstance.", ex: "今、休むわけにはいかない。", ex_en: "I can't just take a break now.", mnem: "WAKE = reason — can't, in good reason", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g92", jp: "〜はずがない", meaning: "there's no way / can't be", explanation: "Logical impossibility.", ex: "彼が嘘をつくはずがない。", ex_en: "There's no way he'd lie.", mnem: "HAZU-GA-NAI = no expectation can hold", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g93", jp: "〜たびに", meaning: "every time / whenever", explanation: "Each time X happens, Y also happens.", ex: "会うたびに笑う。", ex_en: "Every time we meet, we laugh.", mnem: "TABI = trip/occasion: each time", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g94", jp: "〜たとたん", meaning: "the moment / as soon as", explanation: "Sudden, unexpected event immediately after.", ex: "ドアを開けたとたん、犬が飛び出した。", ex_en: "The moment I opened the door, the dog jumped out.", mnem: "TOTAN = the-instant moment", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g95", jp: "〜つつ", meaning: "while / although", explanation: "Two simultaneous actions, or contrast.", ex: "悪いと知りつつ、やった。", ex_en: "I did it knowing it was wrong.", mnem: "TSU-TSU = side-by-side: doing both", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g96", jp: "〜つつある", meaning: "is currently / in the process of", explanation: "Gradual progress toward a state.", ex: "状況が改善しつつある。", ex_en: "The situation is gradually improving.", mnem: "TSU-TSU-ARU = is-side-by-side: in motion", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g97", jp: "〜最中に", meaning: "in the middle of / right when", explanation: "Mid-action when something else happens.", ex: "食事の最中に電話が鳴った。", ex_en: "The phone rang right in the middle of dinner.", mnem: "SAI-CHU = peak-middle", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g98", jp: "〜間に", meaning: "while / during", explanation: "During the period that X is happening.", ex: "寝ている間に泥棒が入った。", ex_en: "While I was sleeping, a thief came in.", mnem: "AIDA = the gap/interval", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g99", jp: "〜間", meaning: "during / throughout", explanation: "Throughout the period — continuous.", ex: "夏休みの間、旅行した。", ex_en: "I traveled throughout summer break.", mnem: "AIDA = the whole stretch", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g100", jp: "〜までに", meaning: "by (deadline)", explanation: "Deadline — must finish by this time.", ex: "五時までに帰る。", ex_en: "I'll be back by 5.", mnem: "MADE-NI = at-the-by-time", efreq: 8, gfreq: 8, pre: 5 },
+  { id: "g101", jp: "〜のうちに", meaning: "while still / before it changes", explanation: "Do X while the favorable state still holds.", ex: "若いうちに勉強する。", ex_en: "Study while you're still young.", mnem: "UCHI-NI = inside-of: while still in this state", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g102", jp: "〜てから", meaning: "after (in sequence)", explanation: "After doing X, then Y.", ex: "宿題をしてから、寝る。", ex_en: "After doing homework, I sleep.", mnem: "TE-KARA = doing-then-from: after that", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "g103", jp: "〜べき", meaning: "should / ought to", explanation: "Strong recommendation — moral or logical 'should'.", ex: "もっと努力すべきだ。", ex_en: "You should try harder.", mnem: "BEKI = must-be-key: the right thing to do", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g104", jp: "〜べきではない", meaning: "shouldn't / ought not", explanation: "Negative of べき — strong recommendation against.", ex: "嘘をつくべきではない。", ex_en: "You shouldn't lie.", mnem: "BEKI-DE-WA-NAI = not-the-right-key", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g105", jp: "〜ほうがいい", meaning: "had better / it's better to", explanation: "Recommendation — 'X is the better choice'.", ex: "休んだほうがいい。", ex_en: "You'd better rest.", mnem: "HOU = direction: lean toward this option", efreq: 8, gfreq: 9, pre: 6 },
+  { id: "g106", jp: "〜ほかない", meaning: "have no choice but", explanation: "No alternative — must do X.", ex: "やるほかない。", ex_en: "I have no choice but to do it.", mnem: "HOKA-NAI = no-other-option", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g107", jp: "〜しかない", meaning: "no choice but / only", explanation: "Same as ほかない — limited option.", ex: "あきらめるしかない。", ex_en: "I have no choice but to give up.", mnem: "SHIKA-NAI = nothing but this", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "g108", jp: "〜ことだ", meaning: "should / it's important to (advice)", explanation: "Giving advice — 'the thing is to do X'.", ex: "毎日練習することだ。", ex_en: "The thing is to practice every day.", mnem: "KOTO-DA = the-thing-to-do is", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g109", jp: "〜ことはない", meaning: "no need to / there's no need", explanation: "Reassurance — no need to worry/do X.", ex: "心配することはない。", ex_en: "There's no need to worry.", mnem: "KOTO-WA-NAI = the-thing isn't needed", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g110", jp: "〜に決まっている", meaning: "definitely / for sure", explanation: "Strong certainty — 'must be the case'.", ex: "彼が来るに決まっている。", ex_en: "He's definitely coming.", mnem: "KIMATTE-IRU = decided-is: settled fact", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g111", jp: "〜に違いない", meaning: "must be / no doubt", explanation: "Strong inference — 'must be true'.", ex: "彼は犯人に違いない。", ex_en: "He must be the criminal.", mnem: "CHIGAI-NAI = no-difference: no doubt", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g112", jp: "〜かもしれない", meaning: "might / maybe", explanation: "Possibility (review of N5/N4).", ex: "雨が降るかもしれない。", ex_en: "It might rain.", mnem: "KAMO = duck-uncertain → might be", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "g113", jp: "〜って", meaning: "(casual) called / said (that)", explanation: "Casual quotation marker — like という.", ex: "田中って人、知ってる?", ex_en: "Do you know the person called Tanaka?", mnem: "TTE = casual-quote: what was said/called", efreq: 8, gfreq: 7, pre: 5 },
+  { id: "g114", jp: "〜という", meaning: "called / that (formal)", explanation: "Naming or quoting — 'called X' or 'that X'.", ex: "山田という人が来た。", ex_en: "A person called Yamada came.", mnem: "TO-IU = as-said: named/called", efreq: 9, gfreq: 9, pre: 7 },
+  { id: "g115", jp: "〜ということ", meaning: "the fact that / it means that", explanation: "Nominalizes a clause — 'the thing that X'.", ex: "出席するということです。", ex_en: "It means he will attend.", mnem: "TO-IU-KOTO = the-fact-of-saying", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g116", jp: "〜ということだ", meaning: "I hear / it is said", explanation: "Reports information — second-hand info.", ex: "明日は休みということだ。", ex_en: "I hear tomorrow's a day off.", mnem: "KOTO-DA = the fact is/that's the word", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g117", jp: "〜と言われている", meaning: "is said to be", explanation: "Common belief or saying.", ex: "富士山は美しいと言われている。", ex_en: "Mt. Fuji is said to be beautiful.", mnem: "IWARE-TE-IRU = is-being-said", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g118", jp: "〜と思われる", meaning: "is thought to / it seems", explanation: "Indirect/passive opinion (formal).", ex: "成功すると思われる。", ex_en: "It is thought that it will succeed.", mnem: "OMOWARE-RU = is-thought-to-be", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g119", jp: "〜かのよう", meaning: "as if / as though", explanation: "Pretending — appears to be but isn't.", ex: "知らないかのように振る舞う。", ex_en: "He acts as if he doesn't know.", mnem: "KA-NO-YOU = like-it-is-but: pretense", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g120", jp: "〜げ", meaning: "looks / seems (suffix)", explanation: "Adjective + げ — 'looks/seems X'.", ex: "悲しげな顔。", ex_en: "A sad-looking face.", mnem: "GE = giving-off the appearance of", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g121", jp: "〜に比べて", meaning: "compared to", explanation: "Direct comparison.", ex: "去年に比べて、暑い。", ex_en: "Compared to last year, it's hot.", mnem: "KURABETE = comparing", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g122", jp: "〜のに対して", meaning: "in contrast to", explanation: "Contrast — two opposing facts/groups.", ex: "兄は明るいのに対して、弟は静かだ。", ex_en: "While the older brother is cheerful, the younger is quiet.", mnem: "TAI = facing: facing the opposite way", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g123", jp: "〜反面", meaning: "on the other hand / while", explanation: "Two sides of same thing — pro/con.", ex: "便利な反面、危険だ。", ex_en: "While convenient, it's dangerous.", mnem: "HAN-MEN = opposite-face: the flip side", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g124", jp: "〜一方で", meaning: "on the one hand / while", explanation: "Two parallel facts, often contrasting.", ex: "勉強する一方で、働く。", ex_en: "I work while also studying.", mnem: "IPPOU = one-side: meanwhile on this side", efreq: 6, gfreq: 8, pre: 5 },
+  { id: "g125", jp: "〜にしては", meaning: "for / considering", explanation: "Outcome differs from expectation based on X.", ex: "初心者にしては上手だ。", ex_en: "For a beginner, he's good.", mnem: "NI-SHITE-WA = given that: against expectation", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g126", jp: "〜にもかかわらず", meaning: "despite / in spite of", explanation: "Strong concession — 'even though X'.", ex: "雨にもかかわらず、来てくれた。", ex_en: "Despite the rain, they came.", mnem: "KAKAWARAZU = unaffected by: despite", efreq: 5, gfreq: 7, pre: 4 },
+  { id: "g127", jp: "〜にかかわらず", meaning: "regardless of", explanation: "Outcome same regardless of variation.", ex: "天気にかかわらず、行く。", ex_en: "I'll go regardless of weather.", mnem: "KAKAWARAZU = unconnected to: regardless", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g128", jp: "〜とともに", meaning: "together with / as", explanation: "Two things happen together or change together.", ex: "年を取るとともに、体力が落ちる。", ex_en: "Strength declines as one ages.", mnem: "TOMO-NI = with-together", efreq: 6, gfreq: 8, pre: 5 },
+  { id: "g129", jp: "〜につれて", meaning: "as / in proportion to", explanation: "Gradual change in tandem.", ex: "年が経つにつれて、変わる。", ex_en: "It changes as the years go by.", mnem: "TSURETE = leading-along with", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g130", jp: "〜に応じて", meaning: "according to / in response to", explanation: "Adjusting based on circumstance.", ex: "希望に応じて選ぶ。", ex_en: "Choose according to your wishes.", mnem: "OUJI-TE = responding-to", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g131", jp: "〜に加えて", meaning: "in addition to", explanation: "Adds another element.", ex: "英語に加えて、中国語も話す。", ex_en: "In addition to English, I also speak Chinese.", mnem: "KUWAETE = adding-on", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g132", jp: "〜のみならず", meaning: "not only ... but also (formal)", explanation: "Formal version of だけでなく.", ex: "彼は親切のみならず、賢い。", ex_en: "He's not only kind but smart.", mnem: "NOMI-NARAZU = not-only-this", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g133", jp: "〜を始め", meaning: "starting with / for example", explanation: "Highlights the leading example.", ex: "東京を始め、多くの都市で。", ex_en: "In many cities, starting with Tokyo.", mnem: "HAJIME = first/start: starting from", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g134", jp: "〜を中心に", meaning: "centering on / mainly", explanation: "Focus around a central point.", ex: "若者を中心に流行する。", ex_en: "It's popular mainly among young people.", mnem: "CHUSHIN = center: revolving around", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g135", jp: "〜を通して / 〜を通じて", meaning: "through / via", explanation: "Means or duration — 'through X'.", ex: "経験を通して学ぶ。", ex_en: "Learn through experience.", mnem: "TSUUSHITE = passing-through", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g136", jp: "〜にわたって", meaning: "spanning / over (range)", explanation: "Range of time/space — extensive coverage.", ex: "三日にわたって雨が降った。", ex_en: "It rained over three days.", mnem: "WATATTE = crossing-spanning", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g137", jp: "〜にかけて", meaning: "over (time/range)", explanation: "Extending across a period or area.", ex: "夏から秋にかけて、紅葉する。", ex_en: "Leaves change color from summer through autumn.", mnem: "KAKETE = reaching-across", efreq: 5, gfreq: 7, pre: 3 },
+  { id: "g138", jp: "〜やら〜やら", meaning: "things like / and what not", explanation: "Lists items casually — '... and so on'.", ex: "宿題やら掃除やら忙しい。", ex_en: "I'm busy with homework, cleaning, and so on.", mnem: "YARA = whatever/and-such", efreq: 4, gfreq: 5, pre: 2 },
+  { id: "g139", jp: "〜とか〜とか", meaning: "things like X and Y", explanation: "Casual listing — examples.", ex: "りんごとかバナナとか好きだ。", ex_en: "I like apples and bananas and such.", mnem: "TOKA = such-as", efreq: 7, gfreq: 7, pre: 4 },
+  { id: "g140", jp: "〜だの〜だの", meaning: "things like / what with", explanation: "Listing with negative/complaining tone.", ex: "暑いだの寒いだの、文句が多い。", ex_en: "Hot, cold — lots of complaints.", mnem: "DA-NO = that-thing and: complaint list", efreq: 3, gfreq: 5, pre: 1 },
+  { id: "g141", jp: "〜たまま", meaning: "left as / still in state", explanation: "Past form + まま — left in that state.", ex: "靴を履いたまま入った。", ex_en: "He came in with his shoes still on.", mnem: "TA-MAMA = done-and-left-that-way", efreq: 7, gfreq: 7, pre: 5 },
+  { id: "g142", jp: "〜っぱなし", meaning: "leaving as is / continuously", explanation: "Negligently left in some state.", ex: "電気をつけっぱなしだ。", ex_en: "The light is left on.", mnem: "PPANASHI = left-as-released", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g143", jp: "〜きる", meaning: "to do completely / finish", explanation: "Verb stem + きる — finish doing it all.", ex: "全部読みきる。", ex_en: "Finish reading it all.", mnem: "KIRU = cut-through to completion", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g144", jp: "〜きれない", meaning: "can't fully / can't manage to", explanation: "Negative of きる — can't finish.", ex: "食べきれない。", ex_en: "I can't eat it all.", mnem: "KIRE-NAI = can't-cut-through", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g145", jp: "〜ようがない", meaning: "no way to / cannot possibly", explanation: "No method exists to do X.", ex: "連絡しようがない。", ex_en: "There's no way to contact him.", mnem: "YOU-GA-NAI = no-way-exists", efreq: 5, gfreq: 6, pre: 3 },
+  { id: "g146", jp: "〜得ない", meaning: "cannot / impossible (formal)", explanation: "あり得ない and similar — impossible.", ex: "あり得ない話。", ex_en: "An impossible story.", mnem: "ENAI = cannot-obtain: impossible", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g147", jp: "〜得る", meaning: "can / possible (formal)", explanation: "Formal — 'can/might happen'.", ex: "起こり得る事故。", ex_en: "An accident that could happen.", mnem: "ERU = can-obtain: possible", efreq: 4, gfreq: 6, pre: 2 },
+  { id: "g148", jp: "〜ようとする", meaning: "try to / be about to", explanation: "Attempt or imminent action.", ex: "出かけようとした時、電話が鳴った。", ex_en: "Just as I was about to leave, the phone rang.", mnem: "YOU-TO-SURU = trying-to-volitionally", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g149", jp: "〜つもり", meaning: "intention to / planning to", explanation: "Volitional intent.", ex: "明日行くつもりだ。", ex_en: "I intend to go tomorrow.", mnem: "TSUMORI = the plan/intention", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "g150", jp: "〜ないつもり", meaning: "do not intend to", explanation: "Negative — not planning to.", ex: "行かないつもりだ。", ex_en: "I don't plan to go.", mnem: "NAI-TSUMORI = no-plan-to", efreq: 6, gfreq: 7, pre: 4 },
+  { id: "g151", jp: "お/ご〜になる", meaning: "honorific form (others)", explanation: "Respectful form: subject is someone respected.", ex: "先生がお話しになる。", ex_en: "The teacher speaks.", mnem: "O-NI-NARU = honored-becomes-doing", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g152", jp: "お/ご〜する", meaning: "humble form (self)", explanation: "Humble form: speaker doing for someone respected.", ex: "私がお持ちします。", ex_en: "I'll carry it (humbly).", mnem: "O-SURU = humbly-doing", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g153", jp: "〜させていただく", meaning: "humbly do / let me do (humble)", explanation: "Asking permission while being humble.", ex: "発表させていただきます。", ex_en: "Allow me to present.", mnem: "SASETE-ITADAKU = let-me-do-humbly", efreq: 6, gfreq: 8, pre: 4 },
+  { id: "g154", jp: "〜ていただく", meaning: "have someone do (humble)", explanation: "Receiving an action from someone respected.", ex: "先生に教えていただく。", ex_en: "Have the teacher teach me.", mnem: "ITADAKU = humbly-receive", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g155", jp: "〜てくださる", meaning: "do for me (honorific)", explanation: "Honorific: someone respected does for me.", ex: "先生が教えてくださる。", ex_en: "The teacher kindly teaches.", mnem: "KUDASARU = honored-gives-down", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g156", jp: "〜ようと思う", meaning: "I think I'll / I'm going to", explanation: "Volitional + think — soft intent.", ex: "日本へ行こうと思う。", ex_en: "I'm thinking of going to Japan.", mnem: "YOU-TO-OMOU = think-let's-do", efreq: 8, gfreq: 8, pre: 6 },
+  { id: "g157", jp: "〜たがる", meaning: "shows want (3rd person)", explanation: "Used for others' desires — '(they) want to'.", ex: "弟は遊びたがる。", ex_en: "My little brother wants to play.", mnem: "TAGARU = showing-want-to (others)", efreq: 6, gfreq: 6, pre: 3 },
+  { id: "g158", jp: "〜てほしい", meaning: "want (someone) to", explanation: "Wanting another person to do something.", ex: "手伝ってほしい。", ex_en: "I want you to help me.", mnem: "HOSHII = want-the-thing of you doing", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g159", jp: "〜ように〜", meaning: "so that / in order to", explanation: "Purpose with non-volitional verbs.", ex: "聞こえるように大きな声で話す。", ex_en: "Speak loudly so it can be heard.", mnem: "YOU-NI = in-the-manner-that", efreq: 7, gfreq: 8, pre: 5 },
+  { id: "g160", jp: "〜ように願う / 祈る", meaning: "wish/pray that", explanation: "Hoping for a state (often religious/formal).", ex: "成功しますように。", ex_en: "(I pray that) you succeed.", mnem: "YOU-NI = in-the-way-of: wish", efreq: 5, gfreq: 6, pre: 3 },
 ];
 
 const READINGS = [
@@ -4625,9 +5426,37 @@ function renderDashboard() {
     }, "Reset"),
   ]);
 
+  // Inu-sensei dashboard greeting — context-aware mood and tip
+  let senseiMood = "calm";
+  let senseiTip = "";
+  if (proj.daysLeft <= 7) {
+    senseiMood = "determined";
+    senseiTip = "Final stretch — focus on weak items, keep the streak alive.";
+  } else if (streak >= 7) {
+    senseiMood = "proud";
+    senseiTip = streak + " days strong! Your discipline shows.";
+  } else if (todayTotal === 0 && (state.cards && Object.keys(state.cards).length > 0)) {
+    senseiMood = "happy";
+    senseiTip = "All caught up for today! A rested mind learns deeper.";
+  } else if (proj.projectedMasteryPct < 65) {
+    senseiMood = "worried";
+    senseiTip = "We need to pick up the pace, my pup. One session at a time.";
+  } else if (todayTotal > 20) {
+    senseiMood = "determined";
+    senseiTip = "Big day ahead — but you've trained for this. Begin.";
+  } else {
+    senseiMood = "calm";
+    senseiTip = "A good day to learn. Tap your section, then begin.";
+  }
+  const senseiDashboard = h("div", { class: "sensei-dashboard" }, [
+    inuSensei(senseiMood, 60),
+    h("div", { class: "sensei-dashboard-text" }, senseiTip),
+  ]);
+
   return shell([
     header(proj.daysLeft + " DAYS TO EXAM", "今日の計画", right),
     topBanner,
+    senseiDashboard,
     sectionSelector,
     todayCard,
     readingCard,
@@ -5042,19 +5871,243 @@ function renderReading() {
 }
 
 /* ============================================================
-   SCREEN: MATCH GAME (flip-to-pair memory game)
+   SCREEN: MATCH GAME (4-col mixed grid + staged progression + Inu-sensei)
    ============================================================ */
 
+// ----- Inu-sensei (犬先生): SVG mascot in 5 expressions -----
+// Returns an SVG DOM element scaled to size px
+function inuSensei(expression, size) {
+  if (!size) size = 120;
+  // Body & head are constant across expressions
+  let svgInner = '';
+  // Shadow + body + belly + head
+  svgInner += '<ellipse cx="60" cy="108" rx="28" ry="3" fill="#1A1A1A" opacity="0.08"/>';
+  svgInner += '<ellipse cx="60" cy="90" rx="22" ry="14" fill="#E8D5B7" stroke="#1A1A1A" stroke-width="1.5"/>';
+  svgInner += '<ellipse cx="60" cy="93" rx="14" ry="8" fill="#F2E4D2"/>';
+  svgInner += '<circle cx="60" cy="56" r="28" fill="#E8D5B7" stroke="#1A1A1A" stroke-width="1.5"/>';
+
+  // Ears (vary by mood)
+  if (expression === "happy" || expression === "determined") {
+    // perked up
+    svgInner += '<path d="M 38 38 Q 30 28 32 50 Q 38 52 42 44 Z" fill="#C9A876" stroke="#1A1A1A" stroke-width="1.5"/>';
+    svgInner += '<path d="M 82 38 Q 90 28 88 50 Q 82 52 78 44 Z" fill="#C9A876" stroke="#1A1A1A" stroke-width="1.5"/>';
+  } else if (expression === "proud") {
+    // puffed up
+    svgInner += '<path d="M 38 38 Q 28 30 26 54 Q 32 56 40 50 Z" fill="#C9A876" stroke="#1A1A1A" stroke-width="1.5"/>';
+    svgInner += '<path d="M 82 38 Q 92 30 94 54 Q 88 56 80 50 Z" fill="#C9A876" stroke="#1A1A1A" stroke-width="1.5"/>';
+  } else if (expression === "worried") {
+    // droopy
+    svgInner += '<path d="M 38 44 Q 26 50 28 68 Q 36 70 42 60 Z" fill="#C9A876" stroke="#1A1A1A" stroke-width="1.5"/>';
+    svgInner += '<path d="M 82 44 Q 94 50 92 68 Q 84 70 78 60 Z" fill="#C9A876" stroke="#1A1A1A" stroke-width="1.5"/>';
+  } else {
+    // calm: floppy default
+    svgInner += '<path d="M 38 42 Q 28 38 26 56 Q 28 64 38 60 Z" fill="#C9A876" stroke="#1A1A1A" stroke-width="1.5"/>';
+    svgInner += '<path d="M 82 42 Q 92 38 94 56 Q 92 64 82 60 Z" fill="#C9A876" stroke="#1A1A1A" stroke-width="1.5"/>';
+  }
+
+  // Hachimaki headband (constant)
+  svgInner += '<path d="M 35 44 Q 60 38 85 44 L 85 50 Q 60 44 35 50 Z" fill="#B33A3A" stroke="#1A1A1A" stroke-width="1"/>';
+  svgInner += '<circle cx="32" cy="47" r="3" fill="#B33A3A" stroke="#1A1A1A" stroke-width="0.8"/>';
+  svgInner += '<path d="M 29 47 L 24 44 M 29 47 L 24 50" stroke="#B33A3A" stroke-width="2" stroke-linecap="round"/>';
+
+  // Snout + nose (constant)
+  svgInner += '<ellipse cx="60" cy="68" rx="14" ry="10" fill="#F2E4D2" stroke="#1A1A1A" stroke-width="1.2"/>';
+  svgInner += '<ellipse cx="60" cy="63" rx="3.5" ry="2.5" fill="#1A1A1A"/>';
+
+  // Mouth & eyes (vary by mood)
+  if (expression === "happy") {
+    svgInner += '<path d="M 54 70 Q 60 78 66 70 Z" fill="#B33A3A" stroke="#1A1A1A" stroke-width="1.5" stroke-linejoin="round"/>';
+    svgInner += '<path d="M 47 55 Q 52 50 57 55" stroke="#1A1A1A" stroke-width="1.8" fill="none" stroke-linecap="round"/>';
+    svgInner += '<path d="M 63 55 Q 68 50 73 55" stroke="#1A1A1A" stroke-width="1.8" fill="none" stroke-linecap="round"/>';
+  } else if (expression === "determined") {
+    svgInner += '<path d="M 56 71 Q 60 75 64 71" stroke="#1A1A1A" stroke-width="1.8" fill="none" stroke-linecap="round"/>';
+    svgInner += '<circle cx="52" cy="55" r="2.5" fill="#1A1A1A"/>';
+    svgInner += '<circle cx="68" cy="55" r="2.5" fill="#1A1A1A"/>';
+    svgInner += '<path d="M 46 49 L 56 51" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>';
+    svgInner += '<path d="M 64 51 L 74 49" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>';
+  } else if (expression === "proud") {
+    svgInner += '<path d="M 52 70 Q 60 76 68 70" stroke="#1A1A1A" stroke-width="1.8" fill="none" stroke-linecap="round"/>';
+    svgInner += '<g transform="translate(52,55)"><path d="M 0 -4 L 1 -1 L 4 0 L 1 1 L 0 4 L -1 1 L -4 0 L -1 -1 Z" fill="#C47E1F" stroke="#1A1A1A" stroke-width="0.5"/></g>';
+    svgInner += '<g transform="translate(68,55)"><path d="M 0 -4 L 1 -1 L 4 0 L 1 1 L 0 4 L -1 1 L -4 0 L -1 -1 Z" fill="#C47E1F" stroke="#1A1A1A" stroke-width="0.5"/></g>';
+  } else if (expression === "worried") {
+    svgInner += '<path d="M 56 73 Q 60 70 64 73" stroke="#1A1A1A" stroke-width="1.5" fill="none" stroke-linecap="round"/>';
+    svgInner += '<path d="M 47 56 Q 52 53 56 57" stroke="#1A1A1A" stroke-width="1.5" fill="none" stroke-linecap="round"/>';
+    svgInner += '<path d="M 64 57 Q 68 53 73 56" stroke="#1A1A1A" stroke-width="1.5" fill="none" stroke-linecap="round"/>';
+    svgInner += '<ellipse cx="50" cy="61" rx="1.5" ry="2.5" fill="#7BA7BC" opacity="0.7"/>';
+  } else {
+    // calm: zen closed eyes
+    svgInner += '<path d="M 56 70 Q 60 74 64 70" stroke="#1A1A1A" stroke-width="1.5" fill="none" stroke-linecap="round"/>';
+    svgInner += '<path d="M 48 55 Q 52 52 56 55" stroke="#1A1A1A" stroke-width="1.5" fill="none" stroke-linecap="round"/>';
+    svgInner += '<path d="M 64 55 Q 68 52 72 55" stroke="#1A1A1A" stroke-width="1.5" fill="none" stroke-linecap="round"/>';
+  }
+
+  // Paws (constant)
+  svgInner += '<ellipse cx="48" cy="98" rx="6" ry="5" fill="#E8D5B7" stroke="#1A1A1A" stroke-width="1.2"/>';
+  svgInner += '<ellipse cx="72" cy="98" rx="6" ry="5" fill="#E8D5B7" stroke="#1A1A1A" stroke-width="1.2"/>';
+
+  return h("div", {
+    class: "inu-sensei",
+    style: "width:" + size + "px;height:" + size + "px;display:inline-block;",
+    html: '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">' + svgInner + '</svg>',
+  });
+}
+
+// ----- Stages -----
+const STAGES = [
+  { id: 1, pairs: 6, label: "Stage 1", jp: "初級", en: "Beginner", desc: "6 pairs — gentle warmup" },
+  { id: 2, pairs: 8, label: "Stage 2", jp: "中級", en: "Intermediate", desc: "8 pairs — standard challenge" },
+  { id: 3, pairs: 10, label: "Stage 3", jp: "上級", en: "Advanced", desc: "10 pairs — push yourself" },
+  { id: 4, pairs: 12, label: "Stage 4", jp: "達人", en: "Master", desc: "12 pairs — for sensei-level only" },
+];
+
+// ----- Inu-sensei dialogue pool -----
+// Each line has Japanese (with reading) and English. Picked randomly per situation.
+const SENSEI_LINES = {
+  // Shown before starting a stage
+  intro: [
+    { jp: "頑張ろう!", reading: "がんばろう!", en: "Let's give it our best!" },
+    { jp: "準備はいいか?", reading: "じゅんびはいいか?", en: "Ready? Take a breath." },
+    { jp: "落ち着いて。", reading: "おちついて。", en: "Stay calm. You've got this." },
+    { jp: "一歩ずつ。", reading: "いっぽずつ。", en: "One step at a time." },
+    { jp: "集中だ。", reading: "しゅうちゅうだ。", en: "Focus, my pup." },
+  ],
+  // Shown when a stage is cleared
+  clear: [
+    { jp: "よくやった!", reading: "よくやった!", en: "Well done!" },
+    { jp: "素晴らしい!", reading: "すばらしい!", en: "Magnificent!" },
+    { jp: "見事だ!", reading: "みごとだ!", en: "Splendid work!" },
+    { jp: "さすがだ。", reading: "さすがだ。", en: "Just as I expected from you." },
+    { jp: "成長したな。", reading: "せいちょうしたな。", en: "You've grown stronger." },
+  ],
+  // Shown when ALL stages cleared
+  allClear: [
+    { jp: "君は達人だ!", reading: "きみはたつじんだ!", en: "You are a true master now!" },
+    { jp: "誇りに思う。", reading: "ほこりにおもう。", en: "I am proud of you, my student." },
+    { jp: "次は本番だ。", reading: "つぎはほんばんだ。", en: "Now... the real exam awaits." },
+  ],
+  // Shown when struggling (low accuracy)
+  struggling: [
+    { jp: "焦らないで。", reading: "あせらないで。", en: "Don't rush. Breathe." },
+    { jp: "もう一度。", reading: "もういちど。", en: "Try once more. I believe in you." },
+    { jp: "失敗は学びだ。", reading: "しっぱいはまなびだ。", en: "Failure is a teacher too." },
+  ],
+};
+
+function pickSenseiLine(category) {
+  const pool = SENSEI_LINES[category] || SENSEI_LINES.intro;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+// ----- Stage progress state -----
+// Stored as state.stageProgress[section][stageId] = {bestScore, bestTime, cleared: true}
+function getStageProgress(section, stageId) {
+  if (!state.stageProgress) state.stageProgress = {};
+  if (!state.stageProgress[section]) state.stageProgress[section] = {};
+  return state.stageProgress[section][stageId] || null;
+}
+function setStageProgress(section, stageId, data) {
+  if (!state.stageProgress) state.stageProgress = {};
+  if (!state.stageProgress[section]) state.stageProgress[section] = {};
+  const existing = state.stageProgress[section][stageId] || {};
+  state.stageProgress[section][stageId] = {
+    cleared: true,
+    bestScore: Math.max(existing.bestScore || 0, data.score || 0),
+    bestTime: existing.bestTime ? Math.min(existing.bestTime, data.time || 999) : (data.time || 999),
+    clears: (existing.clears || 0) + 1,
+  };
+  saveState();
+}
+function isStageUnlocked(section, stageId) {
+  if (stageId === 1) return true; // Stage 1 always open
+  const prev = getStageProgress(section, stageId - 1);
+  return prev && prev.cleared;
+}
+
+function renderStageSelect(section) {
+  const introLine = pickSenseiLine("intro");
+  const sectionLabel = section.toUpperCase();
+
+  // Determine sensei mood: proud if all clear, calm otherwise
+  const allCleared = STAGES.every(function (s) {
+    const p = getStageProgress(section, s.id);
+    return p && p.cleared;
+  });
+  const mood = allCleared ? "proud" : "calm";
+
+  const stageCards = STAGES.map(function (stage) {
+    const progress = getStageProgress(section, stage.id);
+    const unlocked = isStageUnlocked(section, stage.id);
+    const cleared = progress && progress.cleared;
+
+    const cls = "stage-card mono"
+      + (cleared ? " cleared" : "")
+      + (!unlocked ? " locked" : "");
+
+    const stats = cleared ? h("div", { class: "stage-stats" }, [
+      h("span", null, "BEST " + progress.bestScore + "pt"),
+      h("span", null, "·"),
+      h("span", null, progress.bestTime + "s"),
+      progress.clears > 1 ? h("span", { class: "stage-clears" }, "×" + progress.clears) : null,
+    ]) : null;
+
+    return h("button", {
+      class: cls,
+      disabled: !unlocked,
+      onClick: !unlocked ? null : function () {
+        viewState = { stageId: stage.id, gameStarted: false };
+        render();
+      },
+    }, [
+      h("div", { class: "stage-row" }, [
+        h("div", { class: "stage-label-block" }, [
+          h("div", { class: "stage-name" }, stage.label),
+          h("div", { class: "stage-jp jp" }, stage.jp + " · " + stage.en),
+        ]),
+        h("div", { class: "stage-meta" }, [
+          h("div", { class: "stage-pairs" }, stage.pairs + " pairs"),
+          cleared ? h("div", { class: "stage-checkmark" }, "✓") : null,
+          !unlocked ? h("div", { class: "stage-lock" }, "🔒") : null,
+        ]),
+      ]),
+      h("div", { class: "stage-desc" }, stage.desc),
+      stats,
+    ]);
+  });
+
+  return shell([
+    backRow("← Dashboard", function () {
+      viewState = {};
+      setView("dashboard");
+    }),
+    header("Match Game · " + sectionLabel, "ペア合わせ"),
+    h("div", { class: "sensei-block" }, [
+      inuSensei(mood, 100),
+      h("div", { class: "sensei-bubble" }, [
+        h("div", { class: "sensei-jp jp" }, introLine.jp),
+        introLine.reading ? h("div", { class: "sensei-reading jp" }, introLine.reading) : null,
+        h("div", { class: "sensei-en" }, introLine.en),
+      ]),
+    ]),
+    h("div", { class: "stage-select-heading mono" }, "Choose a stage"),
+    h("div", { class: "stage-grid" }, stageCards),
+  ]);
+}
+
 function renderMatch() {
+  const section = state.section || "vocab";
+
+  // -------- STAGE SELECT SCREEN --------
+  // Shown if no specific stage selected yet
+  if (!viewState.stageId && !viewState.gameStarted) {
+    return renderStageSelect(section);
+  }
+
   // -------- Setup new game on first render --------
   if (!viewState.gameStarted) {
-    // Pair counts chosen so they fit cleanly into a 4-column grid:
-    //   6 pairs = 12 tiles = 3 rows × 4 cols
-    //   8 pairs = 16 tiles = 4 × 4
-    //  10 pairs = 20 tiles = 5 × 4
-    //  12 pairs = 24 tiles = 6 × 4
-    const sizeOptions = [6, 8, 10, 12];
-    const desiredPairs = viewState.size || 8;
+    // Stage determines pair count
+    const stage = STAGES.find(function (s) { return s.id === viewState.stageId; }) || STAGES[1];
+    const desiredPairs = stage.pairs;
+    viewState.stage = stage;
 
     const sectionPool = filterBySection(allItems(), state.section || "all");
     const cards = state.cards || {};
@@ -5147,7 +6200,6 @@ function renderMatch() {
     viewState.startTime = Date.now();
     viewState.elapsedAtFinish = null;
     viewState.feedback = null;
-    viewState.sizeOptions = sizeOptions;
     viewState.desiredPairs = desiredPairs;
     viewState.lockUntil = 0;
     viewState.combo = 0;
@@ -5169,20 +6221,47 @@ function renderMatch() {
       viewState.newRecord = true;
     }
     state.matchGamesPlayed = (state.matchGamesPlayed || 0) + 1;
+    // Record stage progress (per-section, per-stage)
+    if (viewState.stage) {
+      setStageProgress(section, viewState.stage.id, {
+        score: score,
+        time: viewState.elapsedAtFinish,
+      });
+      // Pick a sensei line for the win
+      if (viewState.stage.id === STAGES[STAGES.length - 1].id) {
+        viewState.senseiLine = pickSenseiLine("allClear");
+        viewState.senseiMood = "proud";
+      } else {
+        viewState.senseiLine = pickSenseiLine("clear");
+        viewState.senseiMood = "happy";
+      }
+    }
     saveState();
   }
 
   // -------- WIN SCREEN --------
   if (allMatched) {
+    const stage = viewState.stage;
+    const nextStage = stage ? STAGES.find(function (s) { return s.id === stage.id + 1; }) : null;
+    const sLine = viewState.senseiLine || pickSenseiLine("clear");
+    const sMood = viewState.senseiMood || "happy";
+
     return shell([
-      header("Match Game", "完成!"),
+      header("Stage Cleared!", stage ? stage.jp + " 完成!" : "完成!"),
       h("div", { class: "card surface border match-win" }, [
         viewState.newRecord ? h("div", { class: "match-new-record mono" }, "★ NEW BEST") : null,
-        h("div", { class: "match-trophy" }, "🏆"),
+        h("div", { class: "sensei-block" }, [
+          inuSensei(sMood, 110),
+          h("div", { class: "sensei-bubble" }, [
+            h("div", { class: "sensei-jp jp" }, sLine.jp),
+            sLine.reading ? h("div", { class: "sensei-reading jp" }, sLine.reading) : null,
+            h("div", { class: "sensei-en" }, sLine.en),
+          ]),
+        ]),
         h("div", { class: "match-stats" }, [
           h("div", null, [
             h("div", { class: "stat-num" }, String(viewState.matches)),
-            h("div", { class: "stat-label mono" }, "MATCHES"),
+            h("div", { class: "stat-label mono" }, "PAIRS"),
           ]),
           h("div", null, [
             h("div", { class: "stat-num" }, viewState.elapsedAtFinish + "s"),
@@ -5200,22 +6279,34 @@ function renderMatch() {
         ]) : null,
         h("div", { class: "match-score-big" }, String(viewState.gameScore)),
         h("div", { class: "match-score-label mono" }, "SCORE"),
-        h("button", {
+        nextStage ? h("button", {
           class: "btn-primary mono full",
           style: "margin-top:20px",
           onClick: function () {
-            viewState = { gameStarted: false, size: viewState.desiredPairs };
+            const nextId = nextStage.id;
+            viewState = { stageId: nextId, gameStarted: false };
             render();
           },
-        }, "Play again →"),
+        }, "Next stage: " + nextStage.label + " →") : h("div", {
+          class: "all-clear-banner mono",
+          style: "margin-top:20px;text-align:center;padding:14px;background:#FFF3E0;border:1.5px solid #C47E1F;color:#C47E1F;",
+        }, "★ ALL STAGES CLEARED ★"),
         h("button", {
           class: "btn-secondary mono full",
           style: "margin-top:8px",
           onClick: function () {
-            viewState = {};
-            setView("dashboard");
+            viewState = { stageId: stage ? stage.id : 1, gameStarted: false };
+            render();
           },
-        }, "Back to Dashboard"),
+        }, "Replay " + (stage ? stage.label : "this stage")),
+        h("button", {
+          class: "footer-link mono",
+          style: "margin-top:12px;display:block;width:100%;",
+          onClick: function () {
+            viewState = {};
+            render();
+          },
+        }, "← Stage select"),
       ]),
     ]);
   }
@@ -5354,41 +6445,29 @@ function renderMatch() {
     combo >= 2 ? h("div", { class: "combo-badge" }, "🔥 " + combo + " IN A ROW") : null,
   ]);
 
-  const showDifficulty = viewState.attempts === 0 && viewState.matches === 0;
-  const difficultyRow = showDifficulty ? h("div", { class: "match-difficulty" },
-    [h("span", { class: "match-diff-label mono" }, "PAIRS:")].concat(
-      viewState.sizeOptions.map(function (n) {
-        return h("button", {
-          class: "match-diff-btn mono" + (viewState.desiredPairs === n ? " active" : ""),
-          onClick: function () {
-            viewState = { gameStarted: false, size: n };
-            render();
-          },
-        }, String(n));
-      })
-    )
-  ) : null;
-
   // Apply awaiting-class to grid: if a tile is selected, opposite-face tiles glow subtly
   let gridCls = "pair-grid-4";
   if (viewState.selected && viewState.selected.face === "jp") gridCls += " awaiting-en";
   else if (viewState.selected && viewState.selected.face === "en") gridCls += " awaiting-jp";
 
+  // Header shows section + stage label
+  const stageLabel = viewState.stage ? " · " + viewState.stage.label : "";
+
   return shell([
-    backRow("← Dashboard", function () {
+    backRow("← Stage select", function () {
       viewState = {};
-      setView("dashboard");
+      render();
     }),
-    header("Match Game · " + (state.section || "all").toUpperCase(), "ペア合わせ"),
+    header("Match Game · " + (state.section || "all").toUpperCase() + stageLabel, "ペア合わせ"),
     h("div", { class: "match-blurb-row" }, "Tap a Japanese word, then its English meaning."),
     stats,
-    difficultyRow,
     h("div", { class: gridCls }, tileEls),
     h("div", { class: "match-footer-row" }, [
       h("button", {
         class: "footer-link mono",
         onClick: function () {
-          viewState = { gameStarted: false, size: viewState.desiredPairs };
+          const stageId = viewState.stage ? viewState.stage.id : 1;
+          viewState = { stageId: stageId, gameStarted: false };
           render();
         },
       }, "↻ New deal"),
