@@ -956,6 +956,35 @@ input { font-family: inherit; }
   margin-bottom: 16px;
   line-height: 1.5;
 }
+.resumed-banner {
+  background: #F0EDDC;
+  border: 1.5px solid #D4B36C;
+  color: #8A5715;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: 4px;
+}
+.resumed-banner-fresh {
+  background: transparent;
+  border: 1px solid #D4B36C;
+  color: #8A5715;
+  font-family: inherit;
+  font-size: 10px;
+  padding: 4px 10px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  border-radius: 3px;
+}
+.resumed-banner-fresh:hover {
+  background: #D4B36C;
+  color: white;
+}
 .match-stats-bar {
   display: flex;
   justify-content: center;
@@ -6345,6 +6374,35 @@ function isStageUnlocked(section, stageId) {
   return prev && prev.cleared;
 }
 
+// ----- In-progress game save/restore -----
+// Called after every tap to persist game state. Restored on app reopen.
+function saveMatchInProgress(section, stageId) {
+  if (!viewState.gameStarted || !viewState.gameCards) return;
+  // Compute elapsed seconds so the timer "pauses" when the tab is closed
+  const elapsedSec = Math.round((Date.now() - viewState.startTime) / 1000);
+  // Strip item objects down to just itemId (re-hydrated on restore from corpus)
+  const slimCards = viewState.gameCards.map(function (c) {
+    return { pairId: c.pairId, face: c.face, itemId: c.item.id, id: c.id };
+  });
+  if (!state.matchInProgress) state.matchInProgress = {};
+  state.matchInProgress[section + ":" + stageId] = {
+    stageId: stageId,
+    gameCards: slimCards,
+    matched: viewState.matched || {},
+    attempts: viewState.attempts || 0,
+    misses: viewState.misses || 0,
+    bestCombo: viewState.bestCombo || 0,
+    elapsedSec: elapsedSec,
+  };
+  saveState();
+}
+
+function clearMatchInProgress(section, stageId) {
+  if (!state.matchInProgress) return;
+  delete state.matchInProgress[section + ":" + stageId];
+  saveState();
+}
+
 function renderStageSelect(section) {
   const introLine = pickSenseiLine("intro");
   const sectionLabel = section.toUpperCase();
@@ -6489,13 +6547,55 @@ function renderMatch() {
     state.lastStageId[section] = stage.id;
     saveState();
 
-    // Initialize trial counters
-    viewState.misses = 0;
-    viewState.trialFailedReason = null;
+    // ---- Try to restore an in-progress game ----
+    // saved key includes section + stageId so different stages don't collide
+    const saveKey = section + ":" + stage.id;
+    const savedGame = (state.matchInProgress && state.matchInProgress[saveKey]) || null;
+    let restored = false;
 
-    const sectionPool = filterBySection(allItems(), state.section || "all");
-    const cards = state.cards || {};
-    const learnedItems = sectionPool.filter(function (i) { return cards[i.id]; });
+    if (savedGame && savedGame.stageId === stage.id && Array.isArray(savedGame.gameCards)
+        && savedGame.gameCards.length === desiredPairs * 2) {
+      try {
+        // Re-hydrate item references from current corpus (item objects in saved data are stale)
+        const allItemsById = {};
+        allItems().forEach(function (it) { allItemsById[it.id] = it; });
+        const hydrated = savedGame.gameCards.map(function (c) {
+          const fullItem = allItemsById[c.itemId];
+          if (!fullItem) return null; // item no longer exists
+          return { pairId: c.pairId, face: c.face, item: fullItem, id: c.id };
+        });
+        if (hydrated.every(function (c) { return c !== null; })) {
+          // Successful hydration — restore the game
+          viewState.gameStarted = true;
+          viewState.gameCards = hydrated;
+          viewState.selected = null;
+          viewState.matched = savedGame.matched || {};
+          viewState.attempts = savedGame.attempts || 0;
+          viewState.matches = Object.keys(viewState.matched).length;
+          viewState.misses = savedGame.misses || 0;
+          viewState.totalPairs = desiredPairs;
+          viewState.elapsedAtFinish = null;
+          viewState.feedback = null;
+          viewState.desiredPairs = desiredPairs;
+          viewState.lockUntil = 0;
+          viewState.combo = 0; // combo always resets when leaving
+          viewState.bestCombo = savedGame.bestCombo || 0;
+          // Compute start time so that elapsedSec(startTime, now) == savedGame.elapsedSec
+          viewState.startTime = Date.now() - (savedGame.elapsedSec || 0) * 1000;
+          viewState.resumed = true; // for one-time UI banner
+          restored = true;
+        }
+      } catch (e) {
+        // Hydration failed — fall through to fresh deal
+        console.warn("Failed to restore saved game:", e);
+      }
+    }
+
+    if (!restored) {
+      // ---- Fresh new game setup ----
+      const sectionPool = filterBySection(allItems(), state.section || "all");
+      const cards = state.cards || {};
+      const learnedItems = sectionPool.filter(function (i) { return cards[i.id]; });
 
     // Build the candidate pool, preferring learned items + high-priority unseen.
     // Pool must be substantially larger than the recently-seen window so we can
@@ -6588,6 +6688,9 @@ function renderMatch() {
     viewState.lockUntil = 0;
     viewState.combo = 0;
     viewState.bestCombo = 0;
+    viewState.misses = 0;
+    viewState.trialFailedReason = null;
+    } // close if (!restored)
   }
 
   // -------- Win check --------
@@ -6605,6 +6708,11 @@ function renderMatch() {
       viewState.newRecord = true;
     }
     state.matchGamesPlayed = (state.matchGamesPlayed || 0) + 1;
+
+    // Clear saved in-progress game — this run is complete
+    if (viewState.stage) {
+      clearMatchInProgress(section, viewState.stage.id);
+    }
 
     // ---- Trial evaluation ----
     let stars = 1; // Always earn 1 star for clearing the puzzle
@@ -6784,6 +6892,8 @@ function renderMatch() {
   function handleTap(card) {
     if (Date.now() < viewState.lockUntil) return;
     if (viewState.matched[card.pairId]) return;
+    // First interaction dismisses the "resumed" banner
+    viewState.resumed = false;
 
     const sel = viewState.selected;
     if (!sel) {
@@ -6849,6 +6959,10 @@ function renderMatch() {
           render({ preserveScroll: true });
         }, 700);
       }
+    }
+    // Save in-progress state after every interaction (so closing the tab preserves state)
+    if (viewState.stage) {
+      saveMatchInProgress(section, viewState.stage.id);
     }
     // Preserve scroll on all in-game taps so the user stays where they are
     render({ preserveScroll: true });
@@ -6954,6 +7068,18 @@ function renderMatch() {
       render();
     }),
     header("Match Game · " + (state.section || "all").toUpperCase() + stageLabel, "ペア合わせ"),
+    viewState.resumed ? h("div", { class: "resumed-banner mono" }, [
+      h("span", null, "↻ Resumed from your last session"),
+      h("button", {
+        class: "resumed-banner-fresh",
+        onClick: function () {
+          const stageId = viewState.stage ? viewState.stage.id : 1;
+          clearMatchInProgress(section, stageId);
+          viewState = { stageId: stageId, gameStarted: false };
+          render();
+        },
+      }, "× Start fresh"),
+    ]) : null,
     h("div", { class: "match-blurb-row" }, "Tap any tile, then its pair — Japanese or English, either direction."),
     stats,
     h("div", { class: gridCls }, tileEls),
@@ -6962,6 +7088,8 @@ function renderMatch() {
         class: "footer-link mono",
         onClick: function () {
           const stageId = viewState.stage ? viewState.stage.id : 1;
+          // User explicitly wants a fresh deal — discard any in-progress save
+          clearMatchInProgress(section, stageId);
           viewState = { stageId: stageId, gameStarted: false };
           render();
         },
