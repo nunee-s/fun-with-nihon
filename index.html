@@ -1207,6 +1207,84 @@ input { font-family: inherit; }
   margin-left: auto;
 }
 
+/* Trial stages — golden tint */
+.stage-card.trial {
+  background: #FAF1DE;
+  border-color: #D4B36C;
+}
+.stage-card.trial:hover:not(:disabled) {
+  border-color: #C47E1F;
+  box-shadow: 0 3px 8px rgba(196, 126, 31, 0.2);
+}
+.stage-card.trial.cleared {
+  background: #F0EDDC;
+  border-color: #A89866;
+}
+.stage-icon {
+  font-size: 14px;
+  margin-right: 2px;
+}
+
+/* Endless stages — deep ink + sage */
+.stage-card.endless {
+  background: #EDE7D8;
+  border-color: #8B8178;
+  border-style: dashed;
+}
+.stage-card.endless:hover:not(:disabled) {
+  border-color: #1A1A1A;
+  border-style: solid;
+}
+.stage-card.endless.cleared {
+  background: #E4EEE2;
+  border-style: solid;
+  border-color: #5A7850;
+}
+
+/* "Next stage locked" preview */
+.stage-card.next-preview {
+  border-style: dashed;
+  opacity: 0.7;
+}
+
+/* Star display */
+.stage-stars {
+  display: flex;
+  gap: 1px;
+  font-size: 14px;
+  line-height: 1;
+}
+.stage-stars .star.earned { color: #C47E1F; }
+.stage-stars .star.empty { color: #C8C2B5; }
+
+/* Trial result banner on win screen */
+.trial-result {
+  margin: 8px 0 12px 0;
+  padding: 10px 14px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+.trial-result.passed {
+  background: #F0EDDC;
+  border: 1.5px solid #C47E1F;
+  color: #8A5715;
+}
+.trial-result.failed {
+  background: #EFEAD9;
+  border: 1.5px solid #C8C2B5;
+  color: #8B8178;
+}
+.trial-result-icon {
+  font-size: 16px;
+  letter-spacing: -2px;
+}
+.trial-result-text { flex: 1; }
+
 /* ====== PAIR MATCH GRID (4-column, mixed JP+EN, square tiles) ====== */
 .pair-grid-4 {
   display: grid;
@@ -6089,7 +6167,43 @@ const STAGES = [
   { id: 2, pairs: 8, label: "Stage 2", jp: "中級", en: "Intermediate", desc: "8 pairs — standard challenge" },
   { id: 3, pairs: 10, label: "Stage 3", jp: "上級", en: "Advanced", desc: "10 pairs — push yourself" },
   { id: 4, pairs: 12, label: "Stage 4", jp: "達人", en: "Master", desc: "12 pairs — for sensei-level only" },
+  // Trial stages — same 12 pairs but with bonus objectives. Failing the objective never blocks progress.
+  { id: 5, pairs: 12, label: "Stage 5", jp: "速度の試練", en: "Speed Trial", desc: "Clear in under 60 seconds", icon: "⚡", trial: { type: "speed", limit: 60 } },
+  { id: 6, pairs: 12, label: "Stage 6", jp: "正確の試練", en: "Accuracy Trial", desc: "Max 3 mistakes allowed", icon: "✨", trial: { type: "perfect", maxMiss: 3 } },
+  { id: 7, pairs: 12, label: "Stage 7", jp: "連撃の試練", en: "Combo Trial", desc: "Land a 5-combo streak", icon: "🔥", trial: { type: "combo", minCombo: 5 } },
+  { id: 8, pairs: 12, label: "Stage 8", jp: "最終の試練", en: "Final Trial", desc: "All three: speed + accuracy + combo", icon: "⭐", trial: { type: "final", limit: 90, maxMiss: 4, minCombo: 4 } },
 ];
+
+// Get stage definition by ID. For id > 8, procedurally generate endless stages.
+function getStageById(id) {
+  if (id >= 1 && id <= STAGES.length) return STAGES[id - 1];
+  if (id > STAGES.length) {
+    // Endless mode — same 12-pair game, personal-best chasing
+    const endlessNum = id - STAGES.length;
+    return {
+      id: id,
+      pairs: 12,
+      label: "Stage " + id,
+      jp: "達人の道",
+      en: "Master's Path · " + endlessNum,
+      desc: "Endless practice — beat your best",
+      icon: "∞",
+      endless: true,
+    };
+  }
+  return STAGES[0];
+}
+
+// Highest stage user has unlocked in a section (for endless mode discovery)
+function getMaxUnlockedStage(section) {
+  const progress = (state.stageProgress && state.stageProgress[section]) || {};
+  let maxCleared = 0;
+  Object.keys(progress).forEach(function (id) {
+    if (progress[id].cleared) maxCleared = Math.max(maxCleared, parseInt(id, 10));
+  });
+  // Next stage is unlocked
+  return maxCleared + 1;
+}
 
 // ----- Inu-sensei dialogue pool -----
 // Each line has Japanese (with reading) and English. Picked randomly per situation.
@@ -6121,6 +6235,30 @@ const SENSEI_LINES = {
     { jp: "焦らないで。", reading: "あせらないで。", en: "Don't rush. Breathe." },
     { jp: "もう一度。", reading: "もういちど。", en: "Try once more. I believe in you." },
     { jp: "失敗は学びだ。", reading: "しっぱいはまなびだ。", en: "Failure is a teacher too." },
+  ],
+  // Trial passed (star earned)
+  trialPass: [
+    { jp: "試練を超えた!", reading: "しれんをこえた!", en: "You've passed the trial!" },
+    { jp: "完璧な仕事!", reading: "かんぺきなしごと!", en: "Flawless work!" },
+    { jp: "見事に応えたな。", reading: "みごとにこたえたな。", en: "You answered the challenge brilliantly." },
+  ],
+  // Trial failed but stage cleared (no blocker, just no star)
+  trialFail: [
+    { jp: "クリアした!でも...", reading: "クリアした!でも...", en: "You cleared it... but the trial slipped past." },
+    { jp: "ほぼだった。次は星を。", reading: "ほぼだった。つぎはほしを。", en: "So close. Next time, the star is yours." },
+    { jp: "学びは続く。", reading: "まなびはつづく。", en: "The lesson continues." },
+  ],
+  // Personal best beaten on an endless stage
+  newRecord: [
+    { jp: "新記録だ!", reading: "しんきろくだ!", en: "A new personal best!" },
+    { jp: "君は限界を超えた。", reading: "きみはげんかいをこえた。", en: "You've surpassed your own limit." },
+    { jp: "成長の証だ。", reading: "せいちょうのあかしだ。", en: "Proof of how far you've come." },
+  ],
+  // Endless mode (replaying same difficulty)
+  endless: [
+    { jp: "もう一度、頂を。", reading: "もういちど、いただきを。", en: "Once more, to the summit." },
+    { jp: "終わりなき道だ。", reading: "おわりなきみちだ。", en: "A path with no end." },
+    { jp: "繰り返しが力だ。", reading: "くりかえしがちからだ。", en: "Repetition is power." },
   ],
 };
 
@@ -6176,12 +6314,29 @@ function setStageProgress(section, stageId, data) {
   if (!state.stageProgress) state.stageProgress = {};
   if (!state.stageProgress[section]) state.stageProgress[section] = {};
   const existing = state.stageProgress[section][stageId] || {};
+
+  const newScore = Math.max(existing.bestScore || 0, data.score || 0);
+  const newTime = existing.bestTime ? Math.min(existing.bestTime, data.time || 999) : (data.time || 999);
+  const newCombo = Math.max(existing.bestCombo || 0, data.combo || 0);
+
+  // Star tracking: ★ for clearing puzzle, ★ extra for passing trial objective
+  const stars = Math.max(existing.stars || 0, data.stars || 1);
+
   state.stageProgress[section][stageId] = {
     cleared: true,
-    bestScore: Math.max(existing.bestScore || 0, data.score || 0),
-    bestTime: existing.bestTime ? Math.min(existing.bestTime, data.time || 999) : (data.time || 999),
+    bestScore: newScore,
+    bestTime: newTime,
+    bestCombo: newCombo,
+    stars: stars,
+    trialPassed: existing.trialPassed || data.trialPassed || false,
     clears: (existing.clears || 0) + 1,
   };
+
+  // Track whether this run set new personal records (for sensei reaction)
+  state.stageProgress[section][stageId]._newRecord =
+    (data.score && data.score > (existing.bestScore || 0)) ||
+    (data.time && (!existing.bestTime || data.time < existing.bestTime));
+
   saveState();
 }
 function isStageUnlocked(section, stageId) {
@@ -6201,19 +6356,41 @@ function renderStageSelect(section) {
   });
   const mood = allCleared ? "proud" : "calm";
 
-  const stageCards = STAGES.map(function (stage) {
+  // Build list of stage IDs to display: all named stages (1-8) plus any unlocked endless stages
+  const stageIds = STAGES.map(function (s) { return s.id; });
+  const maxUnlocked = getMaxUnlockedStage(section);
+  // If user has unlocked beyond Stage 8, show endless stages too
+  for (let i = STAGES.length + 1; i <= maxUnlocked; i++) {
+    stageIds.push(i);
+  }
+
+  const stageCards = stageIds.map(function (stageId) {
+    const stage = getStageById(stageId);
     const progress = getStageProgress(section, stage.id);
     const unlocked = isStageUnlocked(section, stage.id);
     const cleared = progress && progress.cleared;
 
     const cls = "stage-card mono"
       + (cleared ? " cleared" : "")
-      + (!unlocked ? " locked" : "");
+      + (!unlocked ? " locked" : "")
+      + (stage.trial ? " trial" : "")
+      + (stage.endless ? " endless" : "");
+
+    // Star display: 1 star for clear, 2 stars if trial passed
+    let starsEl = null;
+    if (cleared && stage.trial) {
+      const earned = progress.stars || 1;
+      starsEl = h("div", { class: "stage-stars" }, [
+        h("span", { class: "star earned" }, "★"),
+        earned >= 2 ? h("span", { class: "star earned" }, "★") : h("span", { class: "star empty" }, "☆"),
+      ]);
+    }
 
     const stats = cleared ? h("div", { class: "stage-stats" }, [
-      h("span", null, "BEST " + progress.bestScore + "pt"),
+      h("span", null, "BEST " + (progress.bestScore || 0) + "pt"),
       h("span", null, "·"),
-      h("span", null, progress.bestTime + "s"),
+      h("span", null, (progress.bestTime || 0) + "s"),
+      (progress.bestCombo || 0) >= 3 ? h("span", null, "· 🔥" + progress.bestCombo) : null,
       progress.clears > 1 ? h("span", { class: "stage-clears" }, "×" + progress.clears) : null,
     ]) : null;
 
@@ -6227,12 +6404,16 @@ function renderStageSelect(section) {
     }, [
       h("div", { class: "stage-row" }, [
         h("div", { class: "stage-label-block" }, [
-          h("div", { class: "stage-name" }, stage.label),
+          h("div", { class: "stage-name" }, [
+            stage.icon ? h("span", { class: "stage-icon" }, stage.icon + " ") : null,
+            stage.label,
+          ]),
           h("div", { class: "stage-jp jp" }, stage.jp + " · " + stage.en),
         ]),
         h("div", { class: "stage-meta" }, [
           h("div", { class: "stage-pairs" }, stage.pairs + " pairs"),
-          cleared ? h("div", { class: "stage-checkmark" }, "✓") : null,
+          starsEl,
+          (cleared && !stage.trial) ? h("div", { class: "stage-checkmark" }, "✓") : null,
           !unlocked ? h("div", { class: "stage-lock" }, "🔒") : null,
         ]),
       ]),
@@ -6240,6 +6421,28 @@ function renderStageSelect(section) {
       stats,
     ]);
   });
+
+  // If user just cleared the highest stage, show a "Stage N is next" preview card with prompt
+  const nextLockedId = maxUnlocked + 1;
+  if (maxUnlocked >= STAGES.length && nextLockedId > stageIds[stageIds.length - 1]) {
+    const nextStage = getStageById(nextLockedId);
+    stageCards.push(h("div", { class: "stage-card locked next-preview" }, [
+      h("div", { class: "stage-row" }, [
+        h("div", { class: "stage-label-block" }, [
+          h("div", { class: "stage-name" }, [
+            nextStage.icon ? h("span", { class: "stage-icon" }, nextStage.icon + " ") : null,
+            nextStage.label,
+          ]),
+          h("div", { class: "stage-jp jp" }, nextStage.jp + " · " + nextStage.en),
+        ]),
+        h("div", { class: "stage-meta" }, [
+          h("div", { class: "stage-pairs" }, nextStage.pairs + " pairs"),
+          h("div", { class: "stage-lock" }, "🔒"),
+        ]),
+      ]),
+      h("div", { class: "stage-desc" }, "Clear the previous stage to unlock"),
+    ]));
+  }
 
   return shell([
     backRow("← Dashboard", function () {
@@ -6264,17 +6467,31 @@ function renderMatch() {
   const section = state.section || "vocab";
 
   // -------- STAGE SELECT SCREEN --------
-  // Shown if no specific stage selected yet
+  // Show stage select only if user hasn't picked AND there's no last-played stage to resume
   if (!viewState.stageId && !viewState.gameStarted) {
-    return renderStageSelect(section);
+    // Check for a last-played stage to resume into
+    if (state.lastStageId && state.lastStageId[section] && !viewState._cameFromStageSelect) {
+      viewState.stageId = state.lastStageId[section];
+    } else {
+      return renderStageSelect(section);
+    }
   }
 
   // -------- Setup new game on first render --------
   if (!viewState.gameStarted) {
-    // Stage determines pair count
-    const stage = STAGES.find(function (s) { return s.id === viewState.stageId; }) || STAGES[1];
+    // Stage determines pair count — use getStageById for endless support
+    const stage = getStageById(viewState.stageId || 1);
     const desiredPairs = stage.pairs;
     viewState.stage = stage;
+
+    // Persist last-played stage for resume-on-return
+    if (!state.lastStageId) state.lastStageId = {};
+    state.lastStageId[section] = stage.id;
+    saveState();
+
+    // Initialize trial counters
+    viewState.misses = 0;
+    viewState.trialFailedReason = null;
 
     const sectionPool = filterBySection(allItems(), state.section || "all");
     const cards = state.cards || {};
@@ -6388,16 +6605,81 @@ function renderMatch() {
       viewState.newRecord = true;
     }
     state.matchGamesPlayed = (state.matchGamesPlayed || 0) + 1;
+
+    // ---- Trial evaluation ----
+    let stars = 1; // Always earn 1 star for clearing the puzzle
+    let trialPassed = false;
+    let trialFailReason = null;
+    const stage = viewState.stage;
+
+    if (stage && stage.trial) {
+      const trial = stage.trial;
+      const time = viewState.elapsedAtFinish;
+      const miss = viewState.misses || 0;
+      const combo = viewState.bestCombo || 0;
+
+      if (trial.type === "speed") {
+        trialPassed = time <= trial.limit;
+        if (!trialPassed) trialFailReason = "Time was " + time + "s (limit " + trial.limit + "s)";
+      } else if (trial.type === "perfect") {
+        trialPassed = miss <= trial.maxMiss;
+        if (!trialPassed) trialFailReason = miss + " misses (max " + trial.maxMiss + ")";
+      } else if (trial.type === "combo") {
+        trialPassed = combo >= trial.minCombo;
+        if (!trialPassed) trialFailReason = "Best combo: " + combo + " (need " + trial.minCombo + ")";
+      } else if (trial.type === "final") {
+        const okTime = time <= trial.limit;
+        const okMiss = miss <= trial.maxMiss;
+        const okCombo = combo >= trial.minCombo;
+        trialPassed = okTime && okMiss && okCombo;
+        if (!trialPassed) {
+          const reasons = [];
+          if (!okTime) reasons.push("time " + time + "s>" + trial.limit);
+          if (!okMiss) reasons.push("misses " + miss + ">" + trial.maxMiss);
+          if (!okCombo) reasons.push("combo " + combo + "<" + trial.minCombo);
+          trialFailReason = reasons.join(", ");
+        }
+      }
+      if (trialPassed) stars = 2;
+    }
+
+    viewState.gameStars = stars;
+    viewState.trialPassed = trialPassed;
+    viewState.trialFailReason = trialFailReason;
+
     // Record stage progress (per-section, per-stage)
-    if (viewState.stage) {
-      setStageProgress(section, viewState.stage.id, {
+    if (stage) {
+      const prevProgress = getStageProgress(section, stage.id);
+      const isFirstClear = !prevProgress || !prevProgress.cleared;
+
+      setStageProgress(section, stage.id, {
         score: score,
         time: viewState.elapsedAtFinish,
+        combo: viewState.bestCombo || 0,
+        stars: stars,
+        trialPassed: trialPassed,
       });
-      // Pick a sensei line for the win
-      if (viewState.stage.id === STAGES[STAGES.length - 1].id) {
-        viewState.senseiLine = pickSenseiLine("allClear");
+
+      // Pick sensei dialogue based on outcome
+      const justClearedProgress = getStageProgress(section, stage.id);
+      const beatRecord = justClearedProgress && justClearedProgress._newRecord;
+
+      if (stage.endless && beatRecord && !isFirstClear) {
+        viewState.senseiLine = pickSenseiLine("newRecord");
         viewState.senseiMood = "proud";
+      } else if (stage.endless) {
+        viewState.senseiLine = pickSenseiLine("endless");
+        viewState.senseiMood = "happy";
+      } else if (stage.trial && trialPassed) {
+        viewState.senseiLine = pickSenseiLine("trialPass");
+        viewState.senseiMood = "proud";
+      } else if (stage.trial && !trialPassed) {
+        viewState.senseiLine = pickSenseiLine("trialFail");
+        viewState.senseiMood = "calm";
+      } else if (stage.id === STAGES[STAGES.length - 1].id) {
+        // After Stage 8: not allClear anymore (endless beyond)
+        viewState.senseiLine = pickSenseiLine("clear");
+        viewState.senseiMood = "happy";
       } else {
         viewState.senseiLine = pickSenseiLine("clear");
         viewState.senseiMood = "happy";
@@ -6409,14 +6691,13 @@ function renderMatch() {
   // -------- WIN SCREEN --------
   if (allMatched) {
     const stage = viewState.stage;
-    const nextStage = stage ? STAGES.find(function (s) { return s.id === stage.id + 1; }) : null;
+    const nextStage = stage ? getStageById(stage.id + 1) : null;
     const sLine = viewState.senseiLine || pickSenseiLine("clear");
     const sMood = viewState.senseiMood || "happy";
 
-    // Fire confetti once per win (use viewState.confettiFired flag so re-renders don't repeat)
+    // Fire confetti once per win (bigger celebration if trial passed)
     if (!viewState.confettiFired) {
       viewState.confettiFired = true;
-      // Defer to next tick so DOM is ready
       setTimeout(fireConfetti, 100);
     }
 
@@ -6432,6 +6713,16 @@ function renderMatch() {
             h("div", { class: "sensei-en" }, sLine.en),
           ]),
         ]),
+        // Trial result banner (only for stages with trials)
+        (stage && stage.trial) ? h("div", {
+          class: "trial-result " + (viewState.trialPassed ? "passed" : "failed"),
+        }, [
+          h("span", { class: "trial-result-icon" }, viewState.trialPassed ? "★★" : "★☆"),
+          h("span", { class: "trial-result-text" },
+            (stage.icon || "") + " " + stage.en + ": " +
+            (viewState.trialPassed ? "PASSED" : "missed (" + (viewState.trialFailReason || "") + ")")
+          ),
+        ]) : null,
         h("div", { class: "match-stats" }, [
           h("div", null, [
             h("div", { class: "stat-num" }, String(viewState.matches)),
@@ -6453,6 +6744,7 @@ function renderMatch() {
         ]) : null,
         h("div", { class: "match-score-big" }, String(viewState.gameScore)),
         h("div", { class: "match-score-label mono" }, "SCORE"),
+        // Next stage button — always works (endless extends forever)
         nextStage ? h("button", {
           class: "btn-primary mono full",
           style: "margin-top:20px",
@@ -6461,10 +6753,7 @@ function renderMatch() {
             viewState = { stageId: nextId, gameStarted: false };
             render();
           },
-        }, "Next stage: " + nextStage.label + " →") : h("div", {
-          class: "all-clear-banner mono",
-          style: "margin-top:20px;text-align:center;padding:14px;background:#FFF3E0;border:1.5px solid #C47E1F;color:#C47E1F;",
-        }, "★ ALL STAGES CLEARED ★"),
+        }, "Next stage: " + nextStage.label + (nextStage.icon ? " " + nextStage.icon : "") + " →") : null,
         h("button", {
           class: "btn-secondary mono full",
           style: "margin-top:8px",
@@ -6477,7 +6766,8 @@ function renderMatch() {
           class: "footer-link mono",
           style: "margin-top:12px;display:block;width:100%;",
           onClick: function () {
-            viewState = {};
+            // Going to stage select clears the auto-resume so user sees overview
+            viewState = { _cameFromStageSelect: true };
             render();
           },
         }, "← Stage select"),
@@ -6550,6 +6840,7 @@ function renderMatch() {
       } else {
         // MISS
         viewState.combo = 0;
+        viewState.misses = (viewState.misses || 0) + 1;
         viewState.feedback = { missIds: [sel.id, card.id], result: "miss" };
         viewState.lockUntil = Date.now() + 700;
         setTimeout(function () {
@@ -6659,7 +6950,7 @@ function renderMatch() {
 
   return shell([
     backRow("← Stage select", function () {
-      viewState = {};
+      viewState = { _cameFromStageSelect: true };
       render();
     }),
     header("Match Game · " + (state.section || "all").toUpperCase() + stageLabel, "ペア合わせ"),
