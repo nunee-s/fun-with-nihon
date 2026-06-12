@@ -939,6 +939,619 @@ input { font-family: inherit; }
 /* Match game dashboard card */
 .match-card-accent { border-left: 3px solid #C47E1F; }
 .type-match-text { color: #C47E1F !important; }
+.exam-card-accent { border-left: 3px solid #4A6B8A; }
+.type-exam-text { color: #4A6B8A !important; }
+.mood-card-accent { border-left: 3px solid #C77B9C; }
+.type-mood-text { color: #C77B9C !important; }
+
+/* ====== MOOD TOOLS SCREEN — pastel & playful, distinct from rest of app ====== */
+
+/* Pastel color palette — each card gets a different soft color */
+.mood-bg-pink     { background: #FCE4EC; }
+.mood-bg-yellow   { background: #FFF8C9; }
+.mood-bg-blue     { background: #E3F2FD; }
+.mood-bg-purple   { background: #F3E5F5; }
+.mood-bg-mint     { background: #E0F2F1; }
+.mood-bg-orange   { background: #FFE0B2; }
+.mood-bg-red      { background: #FFEBEE; }
+.mood-bg-lavender { background: #EDE7F6; }
+.mood-bg-cream    { background: #FFF8E1; }
+.mood-bg-coral    { background: #FFCCBC; }
+
+.mood-header {
+  text-align: center;
+  padding: 24px 16px 20px 16px;
+}
+.mood-title {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #C77B9C;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.mood-title-icon {
+  display: inline-block;
+  font-size: 22px;
+  vertical-align: middle;
+}
+.mood-subtitle {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  color: #1A1A1A;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.mood-intro {
+  font-size: 13px;
+  color: #5C5346;
+  line-height: 1.5;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 14px 24px 14px;
+}
+
+.mood-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: flex-start;
+  padding: 18px 16px 16px 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  color: inherit;
+  font-family: inherit;
+  letter-spacing: normal;
+  min-height: 130px;
+  position: relative;
+  overflow: hidden;
+}
+.mood-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+.mood-card-emoji {
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.mood-card-jp {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #C77B9C;
+  letter-spacing: 0;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.mood-card-en {
+  font-family: 'Fraunces', serif;
+  font-size: 12px;
+  color: #C77B9C;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.3;
+  opacity: 0.85;
+}
+
+/* DETAIL VIEW */
+.mood-detail-wrap {
+  border-radius: 16px;
+  padding: 20px 18px;
+  margin: 0 14px 14px 14px;
+}
+.mood-detail-header {
+  text-align: center;
+  padding-bottom: 18px;
+  border-bottom: 1.5px dashed rgba(199, 123, 156, 0.3);
+  margin-bottom: 18px;
+}
+.mood-detail-emoji {
+  font-size: 52px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.mood-detail-jp {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1A1A1A;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.mood-detail-reading {
+  font-size: 14px;
+  color: #5C5346;
+  margin-bottom: 6px;
+}
+.mood-detail-en {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: #C77B9C;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.mood-detail-category {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: rgba(199, 123, 156, 0.15);
+  color: #C77B9C;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.mood-detail-section {
+  margin-bottom: 18px;
+}
+.mood-section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #5C5346;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.mood-section-body {
+  font-size: 13px;
+  color: #1A1A1A;
+  line-height: 1.6;
+}
+
+.mood-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mood-example {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.55);
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+.mood-example-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #C77B9C;
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.mood-example-content {
+  flex: 1;
+  min-width: 0;
+}
+.mood-example-scene {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #8B8178;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.mood-example-jp {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 15px;
+  color: #1A1A1A;
+  line-height: 1.5;
+  margin-bottom: 3px;
+  font-weight: 500;
+}
+.mood-example-en {
+  font-family: 'Fraunces', serif;
+  font-size: 12px;
+  color: #5C5346;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.mood-tip-section {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-top: 16px;
+}
+.mood-tip-body {
+  font-size: 12px;
+  color: #5C5346;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.mood-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 14px 24px 14px;
+}
+.mood-nav-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFF;
+  border: 1.5px solid #D9D0BC;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  color: #5C5346;
+  transition: all 0.15s;
+  min-width: 0;
+}
+.mood-nav-btn:hover {
+  border-color: #C77B9C;
+  background: #FFF5F8;
+}
+.mood-nav-prev { justify-content: flex-start; text-align: left; }
+.mood-nav-next { justify-content: flex-end; text-align: right; }
+.mood-nav-empty { flex: 1; }
+.mood-nav-emoji {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.mood-nav-arrow {
+  color: #C77B9C;
+  font-weight: bold;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.mood-nav-jp {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  color: #1A1A1A;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ====== EXAM PRACTICE SCREEN ====== */
+.exam-intro {
+  font-size: 13px;
+  color: #5C5346;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.exam-cat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.exam-cat-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  background: #F2E4D2;
+  border: 1.5px solid #D9C9B0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: inherit;
+  font-family: inherit;
+  letter-spacing: normal;
+}
+.exam-cat-card:hover:not(.locked) {
+  border-color: #4A6B8A;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(74, 107, 138, 0.15);
+}
+.exam-cat-card.locked {
+  background: #EFEAD9;
+  border-color: #C8C2B5;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.exam-cat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.exam-cat-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1A1A1A;
+  letter-spacing: 0.02em;
+}
+.exam-cat-jp {
+  font-size: 13px;
+  color: #5C5346;
+  margin-top: 2px;
+}
+.exam-cat-arrow {
+  font-size: 18px;
+  color: #4A6B8A;
+}
+.exam-cat-card.locked .exam-cat-arrow { color: #8B8178; }
+.exam-cat-desc {
+  font-size: 12px;
+  color: #5C5346;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Exam question screen */
+.exam-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: #5C5346;
+  letter-spacing: 0.1em;
+}
+.exam-progress-bar {
+  height: 4px;
+  background: #EFEAD9;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.exam-progress-fill {
+  height: 100%;
+  background: #4A6B8A;
+  transition: width 0.4s ease;
+}
+.exam-card {
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.exam-q-line {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #1A1A1A;
+  margin-bottom: 4px;
+}
+.exam-q-blank {
+  height: 8px;
+}
+.exam-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.exam-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  background: #F2E4D2;
+  border: 1.5px solid #D9C9B0;
+  border-radius: 4px;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: normal;
+  transition: all 0.12s;
+}
+.exam-option:hover:not(:disabled) {
+  border-color: #4A6B8A;
+  background: #F0EDDC;
+}
+.exam-option.selected {
+  background: #DDE6EE;
+  border-color: #4A6B8A;
+}
+.exam-option.correct {
+  background: #DDEBD4;
+  border-color: #5A7850;
+  color: #2A4A2A;
+  font-weight: 600;
+}
+.exam-option.incorrect {
+  background: #FBE8E5;
+  border-color: #B33A3A;
+  color: #6B2020;
+}
+.exam-option.dimmed {
+  opacity: 0.5;
+}
+.exam-option-letter {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #D9D0BC;
+  color: #1A1A1A;
+  font-weight: 600;
+  text-align: center;
+  line-height: 24px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.exam-option.correct .exam-option-letter {
+  background: #5A7850;
+  color: white;
+}
+.exam-option.incorrect .exam-option-letter {
+  background: #B33A3A;
+  color: white;
+}
+.exam-option-text { flex: 1; }
+.exam-option-check {
+  color: #5A7850;
+  font-size: 18px;
+  font-weight: bold;
+}
+.exam-option-x {
+  color: #B33A3A;
+  font-size: 18px;
+  font-weight: bold;
+}
+.exam-explanation {
+  padding: 12px 14px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.exam-explanation.correct-explain {
+  background: #E4EEE2;
+  border-left: 3px solid #5A7850;
+  color: #1A2A1A;
+}
+.exam-explanation.incorrect-explain {
+  background: #FBE8E5;
+  border-left: 3px solid #B33A3A;
+  color: #2A1A1A;
+}
+.exam-explanation-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.correct-explain .exam-explanation-label { color: #4A6B3A; }
+.incorrect-explain .exam-explanation-label { color: #8A3A3A; }
+.exam-explanation-text { color: inherit; }
+
+.exam-score-mini {
+  font-size: 11px;
+  color: #5C5346;
+  font-weight: 600;
+}
+
+/* Exam results screen */
+.exam-score-big {
+  text-align: center;
+  margin: 20px 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.exam-score-num {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  font-weight: 600;
+  color: #4A6B8A;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.exam-score-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #5C5346;
+  letter-spacing: 0.1em;
+}
+.exam-section-header {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #8B8178;
+  text-transform: uppercase;
+  margin: 24px 0 10px 0;
+}
+.exam-wrong-review {
+  margin-top: 8px;
+}
+.exam-wrong-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.exam-wrong-item {
+  background: #FBE8E5;
+  border: 1px solid #E6BCB8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.exam-wrong-summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  user-select: none;
+}
+.exam-wrong-summary:hover { background: #F8DCD7; }
+.exam-wrong-num {
+  background: #B33A3A;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+.exam-wrong-q {
+  flex: 1;
+  font-size: 13px;
+  color: #6B2020;
+}
+.exam-wrong-detail {
+  padding: 12px 14px;
+  background: #FFF8F6;
+  border-top: 1px solid #E6BCB8;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.exam-wrong-fullq {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #1A1A1A;
+  white-space: pre-line;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed #D9D0BC;
+}
+.exam-wrong-yours, .exam-wrong-correct {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 4px 0;
+}
+.exam-wrong-yours-label, .exam-wrong-correct-label {
+  font-weight: 700;
+}
+.exam-wrong-yours-label { color: #B33A3A; }
+.exam-wrong-correct-label { color: #5A7850; }
+.exam-wrong-yours-val, .exam-wrong-correct-val {
+  font-family: 'Fraunces', serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+.exam-wrong-explain {
+  font-size: 12px;
+  color: #5C5346;
+  line-height: 1.55;
+  white-space: pre-line;
+  padding-top: 6px;
+  border-top: 1px dashed #D9D0BC;
+}
 .match-blurb {
   font-size: 13px;
   color: #8B8178;
@@ -4655,6 +5268,264 @@ const READINGS = [
   },
 ];
 
+const MOOD_TOOLS = [
+  {
+    id: "mt1",
+    jp: "〜と思う",
+    reading: "とおもう",
+    en: "I think...",
+    emoji: "💭",
+    color: "pink",
+    category: "Hedging",
+    purpose: "Softens your opinion so you don't sound too forceful. Without it, statements can feel like declared facts.",
+    examples: [
+      { scene: "Casual chat about weather", jp: "明日は雨が降ると思う。", en: "I think it'll rain tomorrow." },
+      { scene: "Sharing an opinion at work", jp: "この計画はうまくいくと思います。", en: "I think this plan will work." },
+      { scene: "Politely disagreeing", jp: "私はそうじゃないと思います。", en: "I don't think so." },
+      { scene: "Reflecting on yourself", jp: "ちょっと食べすぎたと思う。", en: "I think I ate too much." },
+    ],
+    tip: "Attach to a complete sentence in plain form (e.g. 「行く」と思う). Add 〜ます at the end for polite register.",
+  },
+  {
+    id: "mt2",
+    jp: "〜かも",
+    reading: "かも",
+    en: "maybe / might",
+    emoji: "🤔",
+    color: "yellow",
+    category: "Hedging",
+    purpose: "Quick, casual 'maybe.' Used with friends to speculate without commitment. Sounds friendly, never used in formal writing.",
+    examples: [
+      { scene: "Texting a friend about plans", jp: "今日は遅れるかも。", en: "I might be late today." },
+      { scene: "Noticing how you feel", jp: "風邪ひいたかも。", en: "I might have caught a cold." },
+      { scene: "Casually suggesting food", jp: "コーヒーがいいかも。", en: "Coffee might be good." },
+      { scene: "Speculating with a friend", jp: "あの店、もう閉まったかも。", en: "That shop might be closed already." },
+    ],
+    tip: "Short for かもしれない. Drop politely in chat or with close friends only. In email/business, use the polite version.",
+  },
+  {
+    id: "mt3",
+    jp: "〜かもしれません",
+    reading: "かもしれません",
+    en: "maybe / might (polite)",
+    emoji: "☔",
+    color: "blue",
+    category: "Hedging",
+    purpose: "Polite hedge for uncertainty. Essential in business and customer service to avoid sounding too certain about something risky.",
+    examples: [
+      { scene: "Apologizing in advance at work", jp: "電車が遅れて、少し遅刻するかもしれません。", en: "The train is delayed, so I might be a bit late." },
+      { scene: "Customer service — out of stock", jp: "在庫がないかもしれません。確認します。", en: "It might be out of stock. Let me check." },
+      { scene: "Polite hedge on your own claim", jp: "私が間違っているかもしれません。", en: "I might be wrong (about this)." },
+      { scene: "Weather forecast tone", jp: "明日は雨が降るかもしれません。", en: "It may rain tomorrow." },
+    ],
+    tip: "The polite form to use in any setting where you're not extremely close to the listener. Plain form: かもしれない.",
+  },
+  {
+    id: "mt4",
+    jp: "〜でしょう",
+    reading: "でしょう",
+    en: "probably / right?",
+    emoji: "🌤",
+    color: "purple",
+    category: "Conjecture",
+    purpose: "Two uses: a softer 'probably' for predictions, or rising tone 'right?' to seek agreement gently. Common on news and in polite conversation.",
+    examples: [
+      { scene: "Weather forecast", jp: "明日は晴れるでしょう。", en: "It'll probably be sunny tomorrow." },
+      { scene: "Seeking agreement softly", jp: "今日の天気、いいでしょう?", en: "Nice weather today, right?" },
+      { scene: "Polite assumption about someone", jp: "お疲れでしょう?", en: "You must be tired, aren't you?" },
+      { scene: "Sharing a guess", jp: "彼はもう知っているでしょう。", en: "He probably already knows." },
+    ],
+    tip: "Rising tone = 'right?' / falling tone = 'probably.' Casual form: だろう. Female speakers often use でしょう with rising tone for warmth.",
+  },
+  {
+    id: "mt5",
+    jp: "〜みたい",
+    reading: "みたい",
+    en: "looks like / seems",
+    emoji: "👀",
+    color: "mint",
+    category: "Inference",
+    purpose: "Casual 'seems like' based on what you observe. Also used as a 'like a ___' simile. Friendlier than 〜ようだ.",
+    examples: [
+      { scene: "Looking out the window", jp: "雨が降ってきたみたい。", en: "Looks like it started raining." },
+      { scene: "Noticing a coworker's state", jp: "田中さん、忙しいみたい。", en: "Tanaka seems busy." },
+      { scene: "Tasting something", jp: "砂糖が入ってるみたい。", en: "It seems like there's sugar in this." },
+      { scene: "Simile (acting like)", jp: "君、子供みたい!", en: "You're acting like a kid!" },
+    ],
+    tip: "Attaches to nouns directly: 子供みたい. With verbs/adjectives, attach to plain form: 降るみたい / 忙しいみたい.",
+  },
+  {
+    id: "mt6",
+    jp: "〜らしい",
+    reading: "らしい",
+    en: "seems / I heard",
+    emoji: "🧐",
+    color: "orange",
+    category: "Hearsay & Inference",
+    purpose: "You heard something or inferred it from clues. Less direct than そうだ — feels like you're not 100% sure of the source either.",
+    examples: [
+      { scene: "Passing along news", jp: "二人、結婚するらしいよ。", en: "I heard those two are getting married." },
+      { scene: "Wet streets in morning", jp: "夜中に雨が降ったらしい。", en: "Seems like it rained overnight." },
+      { scene: "Talking about someone", jp: "山田さんは医者らしい。", en: "I hear Yamada is a doctor." },
+      { scene: "Describing a trait ('like a X')", jp: "彼は本当に学生らしい人だ。", en: "He's truly student-like (the archetype)." },
+    ],
+    tip: "Two meanings: (1) hearsay/inference, (2) characteristic of (like a true ___). Context tells which.",
+  },
+  {
+    id: "mt7",
+    jp: "〜そうです",
+    reading: "そうです",
+    en: "I heard... (polite)",
+    emoji: "📢",
+    color: "red",
+    category: "Hearsay",
+    purpose: "Polite hearsay — passing along news from a clear source. More formal than らしい. Common in business reporting.",
+    examples: [
+      { scene: "News update at work", jp: "来週から新しいルールが始まるそうです。", en: "Apparently new rules start next week." },
+      { scene: "Sharing weather news", jp: "明日は雪が降るそうです。", en: "I heard it'll snow tomorrow." },
+      { scene: "Reporting what colleague said", jp: "田中さんは出張中だそうです。", en: "Tanaka is on a business trip, I heard." },
+      { scene: "Citing a source", jp: "ニュースによると、株が上がるそうです。", en: "According to the news, stocks will rise." },
+    ],
+    tip: "Don't confuse with 〜そう (looks like) which uses verb-stem. Hearsay そうです attaches to the FULL plain form: 降るそうです NOT 降りそうです.",
+  },
+  {
+    id: "mt8",
+    jp: "〜って",
+    reading: "って",
+    en: "they said (super casual)",
+    emoji: "🗣",
+    color: "lavender",
+    category: "Quotation",
+    purpose: "The most casual quotation marker. Used constantly with friends to relay messages, opinions, or what someone said.",
+    examples: [
+      { scene: "Relaying news from a friend", jp: "田中さん、今日来ないって。", en: "Tanaka said he's not coming today." },
+      { scene: "Quoting what someone said", jp: "「行く」って言ってた。", en: "He said \"I'll go.\"" },
+      { scene: "Passing along a recommendation", jp: "あの店、美味しいって!", en: "(They said) that shop is great!" },
+      { scene: "Naming / topic marker", jp: "田中っていう人を知ってる?", en: "Do you know someone called Tanaka?" },
+    ],
+    tip: "Replaces と思う/と言う/という in casual speech. Never use in formal writing or business email.",
+  },
+  {
+    id: "mt9",
+    jp: "ね",
+    reading: "ね",
+    en: "soft \"right?\" / sharing",
+    emoji: "😊",
+    color: "cream",
+    category: "Particle",
+    purpose: "The friendliest particle. Adds warmth, seeks gentle agreement, builds rapport. Sentences feel cold without it.",
+    examples: [
+      { scene: "Commenting on weather together", jp: "今日は暑いね。", en: "It's hot today, isn't it?" },
+      { scene: "Soft confirmation", jp: "そうだね。", en: "Yeah, you're right." },
+      { scene: "Realization mid-conversation", jp: "あ、そうですね。", en: "Oh, that's right." },
+      { scene: "Friendly goodbye", jp: "じゃあね、また明日!", en: "See ya, until tomorrow!" },
+    ],
+    tip: "Use freely with anyone — it's neutral-friendly. Skipping ね makes you sound abrupt or detached, even in business.",
+  },
+  {
+    id: "mt10",
+    jp: "よ",
+    reading: "よ",
+    en: "I'm telling you / new info",
+    emoji: "❗",
+    color: "coral",
+    category: "Particle",
+    purpose: "Signals that you're giving the listener new information they didn't know. Can sound insistent or warning, depending on tone.",
+    examples: [
+      { scene: "Pointing out the time", jp: "もう8時だよ!", en: "It's already 8!" },
+      { scene: "Reassuring a worried friend", jp: "大丈夫だよ。", en: "It's fine, really." },
+      { scene: "Recommending food", jp: "これ、美味しいよ。食べてみて。", en: "This is good, try it." },
+      { scene: "Warning someone", jp: "そこ、危ないよ!", en: "Watch out, that's dangerous!" },
+    ],
+    tip: "Be careful with strangers — overuse can sound bossy. Combine with ね (→ よね) to soften it.",
+  },
+  {
+    id: "mt11",
+    jp: "よね",
+    reading: "よね",
+    en: "right? (confirmation)",
+    emoji: "🤝",
+    color: "blue",
+    category: "Particle",
+    purpose: "よ + ね. You're stating something AND asking the listener to confirm. Used when you're 90% sure but want to check.",
+    examples: [
+      { scene: "Confirming plans", jp: "明日来るよね?", en: "You're coming tomorrow, right?" },
+      { scene: "Mutual agreement on weather", jp: "今日、暑いよね。", en: "It's hot today, isn't it?" },
+      { scene: "Double-checking facts", jp: "会議は3時だよね?", en: "The meeting's at 3, right?" },
+      { scene: "Soft request for help", jp: "手伝ってくれるよね?", en: "You'll help me, right?" },
+    ],
+    tip: "Use when you want to confirm AND maintain warmth. Skipping ね (just よ) would sound demanding instead of asking.",
+  },
+  {
+    id: "mt12",
+    jp: "かな",
+    reading: "かな",
+    en: "I wonder...",
+    emoji: "🤷",
+    color: "mint",
+    category: "Hedging",
+    purpose: "Soft self-questioning, often spoken to yourself or as a polite indirect request. Female speakers may use かしら instead.",
+    examples: [
+      { scene: "Wondering out loud", jp: "雨、降るかな。", en: "I wonder if it'll rain." },
+      { scene: "Soft indirect request", jp: "ちょっと手伝ってくれるかな?", en: "I wonder if you could help me out a bit?" },
+      { scene: "Doubting what was said", jp: "本当にそうかな?", en: "Is that really so, I wonder?" },
+      { scene: "Wishful self-talk", jp: "うまくいくかな…。", en: "I wonder if this will work out..." },
+    ],
+    tip: "Sounds gentler than direct questions. Great for indirect requests — instead of 手伝って, try 手伝ってくれるかな?",
+  },
+  {
+    id: "mt13",
+    jp: "なんか",
+    reading: "なんか",
+    en: "kind of / like / something",
+    emoji: "🌀",
+    color: "yellow",
+    category: "Filler",
+    purpose: "Vague filler — like English 'kind of' or 'like.' Softens descriptions, adds hesitation, or lists examples vaguely.",
+    examples: [
+      { scene: "Describing a vague feeling", jp: "なんか、変な感じ。", en: "Something feels off." },
+      { scene: "Listing food casually", jp: "ピザとかパスタとかなんか。", en: "Pizza, pasta, or something like that." },
+      { scene: "Starting a story softly", jp: "なんかさ、聞いて!", en: "So like, listen to this!" },
+      { scene: "Hedging an emotion", jp: "なんか、疲れた…。", en: "I'm kinda tired..." },
+    ],
+    tip: "Casual ONLY. Overuse sounds unintelligent — sprinkle, don't pile up. Avoid in business speech.",
+  },
+  {
+    id: "mt14",
+    jp: "ちょっと",
+    reading: "ちょっと",
+    en: "a little / kind of",
+    emoji: "✋",
+    color: "pink",
+    category: "Softener",
+    purpose: "Means literally 'a little,' but used constantly as a softener — for requests, refusals, getting attention. Almost magic word politeness.",
+    examples: [
+      { scene: "Softening a request", jp: "ちょっと待ってください。", en: "Wait a moment, please." },
+      { scene: "Polite refusal", jp: "今日はちょっと難しいです…。", en: "Today's a bit difficult... (= no, but soft)" },
+      { scene: "Specifying small amount", jp: "ちょっとだけください。", en: "Just a little, please." },
+      { scene: "Getting attention", jp: "ちょっと、すみません!", en: "Excuse me, a moment!" },
+    ],
+    tip: "Saying ちょっと… and trailing off is a classic indirect 'no' in Japanese. Listen for it!",
+  },
+  {
+    id: "mt15",
+    jp: "やっぱり",
+    reading: "やっぱり",
+    en: "as I thought / after all",
+    emoji: "✔",
+    color: "purple",
+    category: "Reaction",
+    purpose: "Confirms what you suspected, recognizes an unchanging truth, or marks a decision change after consideration.",
+    examples: [
+      { scene: "Suspicion confirmed", jp: "やっぱりそうだった!", en: "I knew it!" },
+      { scene: "Changing your mind", jp: "やっぱりやめておく。", en: "I'll pass after all." },
+      { scene: "Recognizing a pattern", jp: "やっぱり君だね。", en: "It IS you (as I thought)." },
+      { scene: "Affirming a truth", jp: "やっぱり日本のラーメンは最高だ!", en: "Japanese ramen really is the best." },
+    ],
+    tip: "Casual: やっぱり. More casual: やっぱ. Polite: やはり. Very common in everyday speech.",
+  },
+];
+
 const DIAG_IDS = [
   "v4", "v9", "v62", "v101", "v136", "v214", "v294", "v316", "v338",
   "k5", "k47", "k63", "k75",
@@ -5079,6 +5950,8 @@ function render(opts) {
     else if (view === "study") view_el = renderStudy();
     else if (view === "reading") view_el = renderReading();
     else if (view === "match") view_el = renderMatch();
+    else if (view === "exam") view_el = renderExam();
+    else if (view === "moods") view_el = renderMoods();
     else if (view === "progress") view_el = renderProgress();
     else if (view === "browse") view_el = renderBrowse();
     else if (view === "dashboard") view_el = renderDashboard();
@@ -5612,6 +6485,22 @@ function renderDashboard() {
     }, "Play match game →"),
   ]);
 
+  // ----- Exam Practice card -----
+  const examBest = (state.examBestScores && state.examBestScores) || {};
+  const allBests = Object.keys(examBest).map(function (k) { return examBest[k]; });
+  const topExamBest = allBests.length > 0 ? Math.max.apply(null, allBests) : 0;
+  const examCard = h("div", { class: "card surface border exam-card-accent" }, [
+    h("div", { class: "card-label-row" }, [
+      h("div", { class: "card-label mono type-exam-text" }, "EXAM PRACTICE"),
+      h("div", { class: "card-counter mono" }, topExamBest > 0 ? "🎯 " + topExamBest + "% BEST" : "🎯 NEW"),
+    ]),
+    h("div", { class: "match-blurb" }, "JLPT-style 10-question MCQ · vocab / grammar / reading · explanations after each answer."),
+    h("button", {
+      class: "btn-secondary mono full",
+      onClick: function () { setView("exam"); },
+    }, "Start exam practice →"),
+  ]);
+
   const progressBar = h("div", { class: "progress-section" }, [
     h("div", { class: "progress-labels mono" }, [
       h("span", { class: "muted" }, "CORPUS MASTERY"),
@@ -5691,6 +6580,19 @@ function renderDashboard() {
     h("div", { class: "sensei-dashboard-text" }, senseiTip),
   ]);
 
+  // ----- Mood Tools card -----
+  const moodCard = h("div", { class: "card surface border mood-card-accent" }, [
+    h("div", { class: "card-label-row" }, [
+      h("div", { class: "card-label mono type-mood-text" }, "MOOD TOOLS"),
+      h("div", { class: "card-counter mono" }, "🎨 " + MOOD_TOOLS.length + " STICKERS"),
+    ]),
+    h("div", { class: "match-blurb" }, "Mood stickers for natural Japanese · soften your speech · sound friendlier."),
+    h("button", {
+      class: "btn-secondary mono full",
+      onClick: function () { setView("moods"); },
+    }, "Explore mood tools →"),
+  ]);
+
   return shell([
     header(proj.daysLeft + " DAYS TO EXAM", "今日の計画", right),
     topBanner,
@@ -5699,6 +6601,8 @@ function renderDashboard() {
     todayCard,
     readingCard,
     matchCard,
+    examCard,
+    moodCard,
     progressBar,
     breakdown,
     footer,
@@ -7096,6 +8000,612 @@ function renderMatch() {
       }, "↻ New deal"),
       h("div", { class: "spacer" }),
       h("span", { class: "mono muted" }, "⏱ " + elapsed + "s"),
+    ]),
+  ]);
+}
+
+/* ============================================================
+   SCREEN: EXAM PRACTICE (MCQ simulation — vocab / grammar / reading)
+   ============================================================ */
+
+// ----- Question generators -----
+// Each returns { q: string, options: [string×4], correct: number (0-3), explanation: string, item: original-item, subtype: "vocab"|"grammar"|"reading" }
+
+function shuffleArray(arr) {
+  const out = arr.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = out[i]; out[i] = out[j]; out[j] = tmp;
+  }
+  return out;
+}
+
+// VOCAB QUESTION: "What does this word mean?" — show JP, pick correct EN translation
+function generateVocabQuestion(usedIds) {
+  const pool = VOCAB.filter(function (v) { return !usedIds[v.id] && v.en && v.jp && v.r; });
+  if (pool.length < 4) return null;
+  const sorted = pool.slice().sort(function (a, b) { return (b.gfreq || 0) - (a.gfreq || 0); });
+  // Pick from top 60% by frequency for higher-quality questions
+  const topSlice = sorted.slice(0, Math.max(20, Math.floor(sorted.length * 0.6)));
+  const item = topSlice[Math.floor(Math.random() * topSlice.length)];
+
+  // Pick 3 distractors from items with similar frequency (so they're not obviously wrong)
+  const candidates = pool.filter(function (v) {
+    if (v.id === item.id) return false;
+    return Math.abs((v.gfreq || 0) - (item.gfreq || 0)) <= 3;
+  });
+  const distractorsPool = candidates.length >= 3 ? candidates : pool.filter(function (v) { return v.id !== item.id; });
+  const distractors = shuffleArray(distractorsPool).slice(0, 3);
+
+  // Use two question styles: meaning-based or fill-in-blank from example
+  const useFillIn = Math.random() < 0.5 && item.ex && item.ex_en;
+  let q, optsRaw, correctValue;
+
+  if (useFillIn) {
+    // "Choose the correct word for the blank" — replace the word in the JP example with ____
+    let blanked = item.ex;
+    // Try to substitute, dropping particle/inflection suffixes
+    const jpWord = item.jp;
+    if (blanked.indexOf(jpWord) !== -1) {
+      blanked = blanked.replace(jpWord, "____");
+      q = "次の文の____に入る言葉を選んでください。\n\n" + blanked;
+      optsRaw = [item.jp].concat(distractors.map(function (d) { return d.jp; }));
+      correctValue = item.jp;
+    } else {
+      // Word doesn't appear verbatim — fall back to meaning style
+      q = "「" + item.jp + "」(" + item.r + ") の意味は?";
+      optsRaw = [item.en].concat(distractors.map(function (d) { return d.en; }));
+      correctValue = item.en;
+    }
+  } else {
+    q = "「" + item.jp + "」(" + item.r + ") の意味は?";
+    optsRaw = [item.en].concat(distractors.map(function (d) { return d.en; }));
+    correctValue = item.en;
+  }
+
+  const shuffled = shuffleArray(optsRaw);
+  return {
+    q: q,
+    options: shuffled,
+    correct: shuffled.indexOf(correctValue),
+    explanation: item.jp + " (" + item.r + ") = " + item.en
+      + (item.ex && item.ex_en ? "\n\n例: " + item.ex + " — " + item.ex_en : ""),
+    item: item,
+    subtype: "vocab",
+  };
+}
+
+// GRAMMAR QUESTION: Choose correct pattern based on context
+function generateGrammarQuestion(usedIds) {
+  const pool = GRAMMAR.filter(function (g) { return !usedIds[g.id] && g.jp && g.meaning && g.ex; });
+  if (pool.length < 4) return null;
+  const item = pool[Math.floor(Math.random() * pool.length)];
+
+  // Distractors: other grammar patterns
+  const distractors = shuffleArray(pool.filter(function (g) { return g.id !== item.id; })).slice(0, 3);
+
+  // Question styles:
+  // A. "Which pattern means X?" — given English meaning, pick JP pattern
+  // B. "Choose the pattern for the blank" — example with the pattern blanked out
+  const useFillIn = Math.random() < 0.6 && item.ex;
+  let q, optsRaw, correctValue;
+
+  if (useFillIn) {
+    // Try blanking the pattern in the example. Pattern starts with 〜 — strip that.
+    const patternCore = item.jp.replace(/^〜/, "").replace(/〜/g, "").split("/")[0].trim();
+    let blanked = item.ex;
+    if (patternCore && blanked.indexOf(patternCore) !== -1) {
+      blanked = blanked.replace(patternCore, "____");
+      q = "次の文の____に入る文法を選んでください。\n\n" + blanked;
+      optsRaw = [item.jp].concat(distractors.map(function (d) { return d.jp; }));
+      correctValue = item.jp;
+    } else {
+      // Fall back to meaning style
+      q = "「" + item.meaning + "」を表す文法はどれですか。";
+      optsRaw = [item.jp].concat(distractors.map(function (d) { return d.jp; }));
+      correctValue = item.jp;
+    }
+  } else {
+    q = "「" + item.meaning + "」を表す文法はどれですか。";
+    optsRaw = [item.jp].concat(distractors.map(function (d) { return d.jp; }));
+    correctValue = item.jp;
+  }
+
+  const shuffled = shuffleArray(optsRaw);
+  return {
+    q: q,
+    options: shuffled,
+    correct: shuffled.indexOf(correctValue),
+    explanation: item.jp + " = " + item.meaning
+      + (item.explanation ? "\n\n" + item.explanation : "")
+      + (item.ex && item.ex_en ? "\n\n例: " + item.ex + " — " + item.ex_en : "")
+      + (item.mnem ? "\n\n💡 " + item.mnem : ""),
+    item: item,
+    subtype: "grammar",
+  };
+}
+
+// READING QUESTION: pull a question from one of the existing reading passages
+function generateReadingQuestion(usedIds) {
+  // usedIds tracks passage-question pairs as "rN_qK"
+  const allReadingQs = [];
+  READINGS.forEach(function (passage) {
+    passage.questions.forEach(function (q, qIdx) {
+      const key = passage.id + "_q" + qIdx;
+      if (!usedIds[key]) {
+        allReadingQs.push({ passage: passage, qIdx: qIdx, key: key });
+      }
+    });
+  });
+  if (allReadingQs.length === 0) return null;
+  const picked = allReadingQs[Math.floor(Math.random() * allReadingQs.length)];
+  const passage = picked.passage;
+  const rawQ = passage.questions[picked.qIdx];
+
+  return {
+    q: "【読解】\n\n" + passage.passage + "\n\n" + rawQ.q,
+    options: rawQ.options.slice(),
+    correct: rawQ.a,
+    explanation: "正解: " + rawQ.options[rawQ.a]
+      + "\n\nThis question is from the passage \"" + passage.title + " (" + passage.title_en + ")\". Re-read the relevant section to understand why this is the answer.",
+    item: { id: picked.key, kind: "reading" },
+    subtype: "reading",
+  };
+}
+
+// Generate N questions of the given category. Returns array (length may be < N if pool exhausted)
+function generateExamQuestions(category, count) {
+  if (!state.examUsedIds) state.examUsedIds = { vocab: {}, grammar: {}, reading: {} };
+  // Migration: if old structure missing keys, repair
+  ["vocab", "grammar", "reading"].forEach(function (k) {
+    if (!state.examUsedIds[k]) state.examUsedIds[k] = {};
+  });
+
+  const out = [];
+  const generators = {
+    vocab: generateVocabQuestion,
+    grammar: generateGrammarQuestion,
+    reading: generateReadingQuestion,
+  };
+
+  for (let i = 0; i < count; i++) {
+    let useCat = category;
+    if (category === "mixed") {
+      // Alternate categories for mixed mode
+      const cats = ["vocab", "grammar", "reading"];
+      useCat = cats[i % cats.length];
+    }
+    const fn = generators[useCat];
+    if (!fn) continue;
+    const q = fn(state.examUsedIds[useCat]);
+    if (!q) {
+      // Pool exhausted for this category — try resetting it (let the user have fresh questions again)
+      state.examUsedIds[useCat] = {};
+      const retry = fn(state.examUsedIds[useCat]);
+      if (!retry) break;
+      out.push(retry);
+      state.examUsedIds[useCat][retry.item.id] = true;
+    } else {
+      out.push(q);
+      state.examUsedIds[useCat][q.item.id] = true;
+    }
+  }
+  saveState();
+  return out;
+}
+
+// ----- Exam screen renders -----
+
+function renderExam() {
+  // Sub-views: picker, question, results
+  if (!viewState.examMode) {
+    return renderExamPicker();
+  }
+  if (viewState.examMode === "results") {
+    return renderExamResults();
+  }
+  return renderExamQuestion();
+}
+
+function renderExamPicker() {
+  const introLine = pickSenseiLine("intro");
+  const categories = [
+    { id: "vocab", jp: "語彙", en: "Vocabulary", desc: "Choose the right word — fill-in-blank or meaning" },
+    { id: "grammar", jp: "文法", en: "Grammar", desc: "Choose the right pattern in context" },
+    { id: "reading", jp: "読解", en: "Reading", desc: "Read a passage, answer comprehension MCQs" },
+    { id: "mixed", jp: "総合", en: "Mixed", desc: "All three sections rotated — closest to real exam" },
+  ];
+
+  const categoryCards = categories.map(function (cat) {
+    return h("button", {
+      class: "exam-cat-card mono",
+      onClick: function () {
+        viewState = { examMode: "playing", examCategory: cat.id, examQuestions: null };
+        render();
+      },
+    }, [
+      h("div", { class: "exam-cat-row" }, [
+        h("div", null, [
+          h("div", { class: "exam-cat-name" }, cat.en),
+          h("div", { class: "exam-cat-jp jp" }, cat.jp),
+        ]),
+        h("div", { class: "exam-cat-arrow" }, "→"),
+      ]),
+      h("div", { class: "exam-cat-desc" }, cat.desc),
+    ]);
+  });
+
+  const listeningCard = h("div", { class: "exam-cat-card mono locked" }, [
+    h("div", { class: "exam-cat-row" }, [
+      h("div", null, [
+        h("div", { class: "exam-cat-name" }, "Listening"),
+        h("div", { class: "exam-cat-jp jp" }, "聴解"),
+      ]),
+      h("div", { class: "exam-cat-arrow" }, "🔒"),
+    ]),
+    h("div", { class: "exam-cat-desc" }, "Coming later — requires audio recordings."),
+  ]);
+
+  return shell([
+    backRow("← Dashboard", function () {
+      viewState = {};
+      setView("dashboard");
+    }),
+    header("Exam Practice", "JLPT N3 模擬試験"),
+    h("div", { class: "sensei-block" }, [
+      inuSensei("calm", 100),
+      h("div", { class: "sensei-bubble" }, [
+        h("div", { class: "sensei-jp jp" }, "実戦練習だ。"),
+        h("div", { class: "sensei-reading jp" }, "じっせんれんしゅうだ。"),
+        h("div", { class: "sensei-en" }, "Real practice begins. Pick your section."),
+      ]),
+    ]),
+    h("div", { class: "exam-intro" }, "10 questions per round · JLPT-style multiple choice · explanations after each answer"),
+    h("div", { class: "stage-select-heading mono" }, "Choose a section"),
+    h("div", { class: "exam-cat-grid" }, categoryCards.concat([listeningCard])),
+  ]);
+}
+
+function renderExamQuestion() {
+  // First render: generate questions
+  if (!viewState.examQuestions) {
+    const qs = generateExamQuestions(viewState.examCategory, 10);
+    if (qs.length === 0) {
+      return shell([
+        backRow("← Exam home", function () {
+          viewState = {};
+          render();
+        }),
+        header("Exam Practice", "問題が足りません"),
+        h("div", { class: "card surface border", style: "text-align:center;padding:24px;" }, [
+          h("div", { class: "mono", style: "margin-bottom:12px;" }, "Not enough fresh items available."),
+          h("div", { class: "muted" }, "Try a different section or reset progress."),
+        ]),
+      ]);
+    }
+    viewState.examQuestions = qs;
+    viewState.examIdx = 0;
+    viewState.examAnswers = [];
+    viewState.examSelected = null;
+    viewState.examRevealed = false;
+  }
+
+  const idx = viewState.examIdx;
+  const total = viewState.examQuestions.length;
+  const q = viewState.examQuestions[idx];
+
+  // Question display — preserve newlines in q text
+  const qLines = q.q.split("\n");
+  const qEls = qLines.map(function (line) {
+    if (!line.trim()) return h("div", { class: "exam-q-blank" }, " ");
+    return h("div", { class: "exam-q-line jp" }, line);
+  });
+
+  const optionEls = q.options.map(function (opt, i) {
+    let cls = "exam-option mono";
+    if (viewState.examRevealed) {
+      if (i === q.correct) cls += " correct";
+      else if (i === viewState.examSelected) cls += " incorrect";
+      else cls += " dimmed";
+    } else if (i === viewState.examSelected) {
+      cls += " selected";
+    }
+    const letter = String.fromCharCode(65 + i); // A, B, C, D
+    return h("button", {
+      class: cls,
+      disabled: viewState.examRevealed,
+      onClick: viewState.examRevealed ? null : function () {
+        viewState.examSelected = i;
+        viewState.examRevealed = true;
+        // Record answer
+        viewState.examAnswers.push({
+          question: q,
+          selected: i,
+          correct: i === q.correct,
+        });
+        render({ preserveScroll: true });
+      },
+    }, [
+      h("span", { class: "exam-option-letter" }, letter),
+      h("span", { class: "exam-option-text" }, opt),
+      viewState.examRevealed && i === q.correct ? h("span", { class: "exam-option-check" }, "✓") : null,
+      viewState.examRevealed && i === viewState.examSelected && i !== q.correct ? h("span", { class: "exam-option-x" }, "✗") : null,
+    ]);
+  });
+
+  const explainEl = viewState.examRevealed ? h("div", {
+    class: "exam-explanation " + (viewState.examSelected === q.correct ? "correct-explain" : "incorrect-explain"),
+  }, [
+    h("div", { class: "exam-explanation-label mono" },
+      viewState.examSelected === q.correct ? "✓ CORRECT" : "✗ INCORRECT — see explanation"),
+    h("div", { class: "exam-explanation-text jp" }, q.explanation),
+  ]) : null;
+
+  const nextBtnText = idx + 1 >= total ? "See results →" : "Next question →";
+  const continueBtn = viewState.examRevealed ? h("button", {
+    class: "btn-primary mono full",
+    style: "margin-top:16px",
+    onClick: function () {
+      if (idx + 1 >= total) {
+        viewState.examMode = "results";
+      } else {
+        viewState.examIdx++;
+        viewState.examSelected = null;
+        viewState.examRevealed = false;
+      }
+      render();
+    },
+  }, nextBtnText) : null;
+
+  return shell([
+    backRow("← Exit exam", function () {
+      if (viewState.examAnswers && viewState.examAnswers.length > 0) {
+        // Confirm? Use a simple inline approach since we don't have a modal
+        if (!confirm("Quit this exam? Your progress will be lost.")) return;
+      }
+      viewState = {};
+      render();
+    }),
+    h("div", { class: "exam-header-row" }, [
+      h("div", { class: "exam-progress-label mono" },
+        "Question " + (idx + 1) + " of " + total + " · " + viewState.examCategory.toUpperCase()),
+      h("div", { class: "exam-score-mini mono" },
+        viewState.examAnswers.filter(function (a) { return a.correct; }).length + " / " + viewState.examAnswers.length + " correct"),
+    ]),
+    h("div", { class: "exam-progress-bar" }, [
+      h("div", {
+        class: "exam-progress-fill",
+        style: "width:" + Math.round((idx / total) * 100) + "%;",
+      }, ""),
+    ]),
+    h("div", { class: "card surface border exam-card" }, qEls),
+    h("div", { class: "exam-options" }, optionEls),
+    explainEl,
+    continueBtn,
+  ]);
+}
+
+function renderExamResults() {
+  const answers = viewState.examAnswers || [];
+  const total = answers.length;
+  const correct = answers.filter(function (a) { return a.correct; }).length;
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+  const wrong = answers.filter(function (a) { return !a.correct; });
+
+  // Track best score per category
+  if (!state.examBestScores) state.examBestScores = {};
+  const catKey = viewState.examCategory || "mixed";
+  const prevBest = state.examBestScores[catKey] || 0;
+  const newBest = pct > prevBest;
+  if (newBest) {
+    state.examBestScores[catKey] = pct;
+    saveState();
+  }
+
+  // Sensei mood based on score
+  let mood, line;
+  if (pct >= 80) {
+    mood = "proud";
+    line = { jp: "見事だ!合格レベルだ。", reading: "みごとだ!ごうかくれべるだ。", en: "Magnificent! Pass-level performance." };
+  } else if (pct >= 60) {
+    mood = "happy";
+    line = { jp: "悪くない。続けよう。", reading: "わるくない。つづけよう。", en: "Not bad. Keep going." };
+  } else if (pct >= 40) {
+    mood = "determined";
+    line = { jp: "もう一歩だ。", reading: "もういっぽだ。", en: "One more push. You're getting there." };
+  } else {
+    mood = "worried";
+    line = { jp: "復習が必要だな。", reading: "ふくしゅうがひつようだな。", en: "We need more review. No shame in trying again." };
+  }
+
+  const wrongReview = wrong.length === 0 ? null : h("div", { class: "exam-wrong-review" }, [
+    h("div", { class: "exam-section-header mono" }, "REVIEW INCORRECT ANSWERS"),
+    h("div", { class: "exam-wrong-list" }, wrong.map(function (a, idx) {
+      return h("details", { class: "exam-wrong-item" }, [
+        h("summary", { class: "exam-wrong-summary" }, [
+          h("span", { class: "exam-wrong-num mono" }, "Q" + (answers.indexOf(a) + 1)),
+          h("span", { class: "exam-wrong-q jp" }, a.question.q.split("\n")[0].substring(0, 50) + (a.question.q.length > 50 ? "..." : "")),
+        ]),
+        h("div", { class: "exam-wrong-detail" }, [
+          h("div", { class: "exam-wrong-fullq jp" }, a.question.q),
+          h("div", { class: "exam-wrong-yours mono" }, [
+            h("span", { class: "exam-wrong-yours-label" }, "Your answer: "),
+            h("span", { class: "exam-wrong-yours-val" }, a.question.options[a.selected]),
+          ]),
+          h("div", { class: "exam-wrong-correct mono" }, [
+            h("span", { class: "exam-wrong-correct-label" }, "Correct: "),
+            h("span", { class: "exam-wrong-correct-val" }, a.question.options[a.question.correct]),
+          ]),
+          h("div", { class: "exam-wrong-explain jp" }, a.question.explanation),
+        ]),
+      ]);
+    })),
+  ]);
+
+  return shell([
+    header("Exam Complete!", viewState.examCategory.toUpperCase()),
+    h("div", { class: "card surface border match-win" }, [
+      newBest ? h("div", { class: "match-new-record mono" }, "★ NEW PERSONAL BEST") : null,
+      h("div", { class: "sensei-block" }, [
+        inuSensei(mood, 110),
+        h("div", { class: "sensei-bubble" }, [
+          h("div", { class: "sensei-jp jp" }, line.jp),
+          h("div", { class: "sensei-reading jp" }, line.reading),
+          h("div", { class: "sensei-en" }, line.en),
+        ]),
+      ]),
+      h("div", { class: "exam-score-big" }, [
+        h("span", { class: "exam-score-num" }, correct + "/" + total),
+        h("span", { class: "exam-score-pct" }, pct + "%"),
+      ]),
+      h("button", {
+        class: "btn-primary mono full",
+        style: "margin-top:16px",
+        onClick: function () {
+          // Continue with 10 more, same category, NO repeats
+          viewState = { examMode: "playing", examCategory: catKey, examQuestions: null };
+          render();
+        },
+      }, "Continue · 10 more →"),
+      h("button", {
+        class: "btn-secondary mono full",
+        style: "margin-top:8px",
+        onClick: function () {
+          viewState = {};
+          render();
+        },
+      }, "Pick different section"),
+      h("button", {
+        class: "footer-link mono",
+        style: "margin-top:8px;display:block;width:100%;",
+        onClick: function () {
+          viewState = {};
+          setView("dashboard");
+        },
+      }, "← Back to dashboard"),
+    ]),
+    wrongReview,
+  ]);
+}
+
+/* ============================================================
+   SCREEN: MOOD TOOLS (pastel cards, real-life usage)
+   ============================================================ */
+
+function renderMoods() {
+  if (viewState.moodId) {
+    return renderMoodDetail(viewState.moodId);
+  }
+  return renderMoodsGrid();
+}
+
+function renderMoodsGrid() {
+  const cardEls = MOOD_TOOLS.map(function (m) {
+    return h("button", {
+      class: "mood-card mood-bg-" + m.color,
+      onClick: function () {
+        viewState = { moodId: m.id };
+        render();
+      },
+    }, [
+      h("div", { class: "mood-card-emoji" }, m.emoji),
+      h("div", { class: "mood-card-jp" }, m.jp),
+      h("div", { class: "mood-card-en" }, m.en),
+    ]);
+  });
+
+  return shell([
+    backRow("← Dashboard", function () {
+      viewState = {};
+      setView("dashboard");
+    }),
+    h("div", { class: "mood-header" }, [
+      h("h1", { class: "mood-title" }, [
+        "Japanese Mood Tools ",
+        h("span", { class: "mood-title-icon" }, "✂"),
+      ]),
+      h("div", { class: "mood-subtitle" }, "Mood Stickers for Natural Japanese"),
+      h("div", { class: "mood-intro" }, "These tools help you sound softer, friendlier, and more natural. Tap each card to explore!"),
+    ]),
+    h("div", { class: "mood-grid" }, cardEls),
+  ]);
+}
+
+function renderMoodDetail(moodId) {
+  const m = MOOD_TOOLS.find(function (mt) { return mt.id === moodId; });
+  if (!m) {
+    return shell([
+      backRow("← Mood tools", function () {
+        viewState = {};
+        render();
+      }),
+      h("div", null, "Not found"),
+    ]);
+  }
+
+  // Navigation: find prev/next in MOOD_TOOLS
+  const idx = MOOD_TOOLS.findIndex(function (mt) { return mt.id === moodId; });
+  const prev = idx > 0 ? MOOD_TOOLS[idx - 1] : null;
+  const next = idx < MOOD_TOOLS.length - 1 ? MOOD_TOOLS[idx + 1] : null;
+
+  return shell([
+    backRow("← Mood tools", function () {
+      viewState = {};
+      render();
+    }),
+    h("div", { class: "mood-detail-wrap mood-bg-" + m.color }, [
+      h("div", { class: "mood-detail-header" }, [
+        h("div", { class: "mood-detail-emoji" }, m.emoji),
+        h("div", { class: "mood-detail-jp" }, m.jp),
+        h("div", { class: "mood-detail-reading" }, m.reading),
+        h("div", { class: "mood-detail-en" }, m.en),
+        h("div", { class: "mood-detail-category" }, m.category),
+      ]),
+      h("div", { class: "mood-detail-section" }, [
+        h("div", { class: "mood-section-label" }, "WHAT IT DOES"),
+        h("div", { class: "mood-section-body" }, m.purpose),
+      ]),
+      h("div", { class: "mood-detail-section" }, [
+        h("div", { class: "mood-section-label" }, "TRY IT IN REAL LIFE"),
+        h("div", { class: "mood-examples" }, m.examples.map(function (ex, i) {
+          return h("div", { class: "mood-example" }, [
+            h("div", { class: "mood-example-num" }, String(i + 1)),
+            h("div", { class: "mood-example-content" }, [
+              h("div", { class: "mood-example-scene" }, ex.scene),
+              h("div", { class: "mood-example-jp" }, ex.jp),
+              h("div", { class: "mood-example-en" }, ex.en),
+            ]),
+          ]);
+        })),
+      ]),
+      h("div", { class: "mood-detail-section mood-tip-section" }, [
+        h("div", { class: "mood-section-label" }, "💡 TIP"),
+        h("div", { class: "mood-section-body mood-tip-body" }, m.tip),
+      ]),
+    ]),
+    h("div", { class: "mood-nav" }, [
+      prev ? h("button", {
+        class: "mood-nav-btn mood-nav-prev",
+        onClick: function () {
+          viewState = { moodId: prev.id };
+          render();
+        },
+      }, [
+        h("span", { class: "mood-nav-arrow" }, "← "),
+        h("span", { class: "mood-nav-emoji" }, prev.emoji),
+        h("span", { class: "mood-nav-jp" }, prev.jp),
+      ]) : h("div", { class: "mood-nav-empty" }),
+      next ? h("button", {
+        class: "mood-nav-btn mood-nav-next",
+        onClick: function () {
+          viewState = { moodId: next.id };
+          render();
+        },
+      }, [
+        h("span", { class: "mood-nav-jp" }, next.jp),
+        h("span", { class: "mood-nav-emoji" }, next.emoji),
+        h("span", { class: "mood-nav-arrow" }, " →"),
+      ]) : h("div", { class: "mood-nav-empty" }),
     ]),
   ]);
 }
