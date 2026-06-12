@@ -944,173 +944,230 @@ input { font-family: inherit; }
 .mood-card-accent { border-left: 3px solid #C77B9C; }
 .type-mood-text { color: #C77B9C !important; }
 
-/* ====== MOOD TOOLS SCREEN — pastel & playful, distinct from rest of app ====== */
+/* ====== MOOD TOOLS — editorial style with soft color accents ====== */
 
-/* Pastel color palette — each card gets a different soft color */
-.mood-bg-pink     { background: #FCE4EC; }
-.mood-bg-yellow   { background: #FFF8C9; }
-.mood-bg-blue     { background: #E3F2FD; }
-.mood-bg-purple   { background: #F3E5F5; }
-.mood-bg-mint     { background: #E0F2F1; }
-.mood-bg-orange   { background: #FFE0B2; }
-.mood-bg-red      { background: #FFEBEE; }
-.mood-bg-lavender { background: #EDE7F6; }
-.mood-bg-cream    { background: #FFF8E1; }
-.mood-bg-coral    { background: #FFCCBC; }
+/* Soft pastel backgrounds (still distinguishable per tool, but desaturated to match app aesthetic) */
+.mood-bg-pink     { background: #F3D8DF; border-color: #E1B5C0; }
+.mood-bg-yellow   { background: #F2EDC4; border-color: #DCD296; }
+.mood-bg-blue     { background: #D8E3EE; border-color: #B6C7D9; }
+.mood-bg-purple   { background: #E5DCEA; border-color: #C9B9D2; }
+.mood-bg-mint     { background: #D4E5DD; border-color: #ADCBBE; }
+.mood-bg-orange   { background: #F0D8B3; border-color: #DCB983; }
+.mood-bg-red      { background: #F0D8D5; border-color: #DEB6B0; }
+.mood-bg-lavender { background: #DFD7E8; border-color: #BDB1CE; }
+.mood-bg-cream    { background: #F0E8C8; border-color: #D9CD98; }
+.mood-bg-coral    { background: #F0CFC2; border-color: #DCA88F; }
 
-.mood-header {
-  text-align: center;
-  padding: 24px 16px 20px 16px;
-}
-.mood-title {
-  font-family: 'Fraunces', serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: #C77B9C;
-  margin: 0 0 10px 0;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
-.mood-title-icon {
-  display: inline-block;
-  font-size: 22px;
-  vertical-align: middle;
-}
-.mood-subtitle {
-  font-family: 'Fraunces', serif;
-  font-size: 16px;
-  color: #1A1A1A;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-.mood-intro {
+/* Color tint just for header backgrounds — lighter version */
+.mood-tint-pink     { background: linear-gradient(180deg, #F3D8DF 0%, #F5F1E8 100%); }
+.mood-tint-yellow   { background: linear-gradient(180deg, #F2EDC4 0%, #F5F1E8 100%); }
+.mood-tint-blue     { background: linear-gradient(180deg, #D8E3EE 0%, #F5F1E8 100%); }
+.mood-tint-purple   { background: linear-gradient(180deg, #E5DCEA 0%, #F5F1E8 100%); }
+.mood-tint-mint     { background: linear-gradient(180deg, #D4E5DD 0%, #F5F1E8 100%); }
+.mood-tint-orange   { background: linear-gradient(180deg, #F0D8B3 0%, #F5F1E8 100%); }
+.mood-tint-red      { background: linear-gradient(180deg, #F0D8D5 0%, #F5F1E8 100%); }
+.mood-tint-lavender { background: linear-gradient(180deg, #DFD7E8 0%, #F5F1E8 100%); }
+.mood-tint-cream    { background: linear-gradient(180deg, #F0E8C8 0%, #F5F1E8 100%); }
+.mood-tint-coral    { background: linear-gradient(180deg, #F0CFC2 0%, #F5F1E8 100%); }
+
+/* Intro row + page meta */
+.mood-intro-row {
   font-size: 13px;
   color: #5C5346;
-  line-height: 1.5;
-  max-width: 320px;
-  margin: 0 auto;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 12px;
+  line-height: 1.55;
+  padding: 0 6px;
+}
+.mood-page-meta {
+  text-align: center;
+  font-size: 10px;
+  color: #8B8178;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
 }
 
+/* Grid of mood cards */
 .mood-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 0 14px 24px 14px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
-
 .mood-card {
   display: flex;
   flex-direction: column;
-  text-align: left;
   align-items: flex-start;
-  padding: 18px 16px 16px 16px;
-  border: none;
-  border-radius: 12px;
+  text-align: left;
+  padding: 14px 14px 12px 14px;
+  border: 1.5px solid;
+  border-radius: 4px;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform 0.12s, box-shadow 0.12s;
   color: inherit;
   font-family: inherit;
   letter-spacing: normal;
-  min-height: 130px;
+  min-height: 110px;
   position: relative;
   overflow: hidden;
 }
 .mood-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(26, 26, 26, 0.08);
 }
 .mood-card-emoji {
-  font-size: 32px;
+  font-size: 26px;
   line-height: 1;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
+.mood-card-body { flex: 1; }
 .mood-card-jp {
-  font-family: 'Fraunces', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: #C77B9C;
+  font-family: 'Fraunces', 'Noto Serif JP', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #1A1A1A;
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: 1.25;
   margin-bottom: 4px;
 }
 .mood-card-en {
   font-family: 'Fraunces', serif;
-  font-size: 12px;
-  color: #C77B9C;
-  font-weight: 500;
   font-style: italic;
-  line-height: 1.3;
-  opacity: 0.85;
+  font-size: 12px;
+  color: #5C5346;
+  line-height: 1.35;
+}
+.mood-card-cat {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: #8B8178;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(139, 129, 120, 0.35);
+  width: 100%;
+  text-transform: uppercase;
 }
 
-/* DETAIL VIEW */
-.mood-detail-wrap {
-  border-radius: 16px;
-  padding: 20px 18px;
-  margin: 0 14px 14px 14px;
+/* Pagination controls */
+.mood-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 0 24px 0;
+  margin-top: 8px;
+  border-top: 1px solid #D9D0BC;
 }
+.mood-page-btn {
+  background: transparent;
+  border: 1px solid #C8C2B5;
+  color: #5C5346;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  transition: all 0.12s;
+}
+.mood-page-btn:hover:not(.disabled) {
+  border-color: #1A1A1A;
+  color: #1A1A1A;
+}
+.mood-page-btn.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.mood-page-dots {
+  display: flex;
+  gap: 6px;
+}
+.mood-page-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #C8C2B5;
+  background: transparent;
+  cursor: pointer;
+  font-size: 11px;
+  color: #5C5346;
+  transition: all 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mood-page-dot:hover { border-color: #1A1A1A; color: #1A1A1A; }
+.mood-page-dot.active {
+  background: #1A1A1A;
+  color: white;
+  border-color: #1A1A1A;
+}
+
+/* Detail header (color-tinted) */
 .mood-detail-header {
-  text-align: center;
-  padding-bottom: 18px;
-  border-bottom: 1.5px dashed rgba(199, 123, 156, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 18px 24px 18px;
+  border-radius: 4px;
   margin-bottom: 18px;
+  border: 1px solid #D9D0BC;
 }
 .mood-detail-emoji {
-  font-size: 52px;
+  font-size: 56px;
   line-height: 1;
-  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+.mood-detail-meta {
+  flex: 1;
+  min-width: 0;
+}
+.mood-detail-cat {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #8B8178;
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
 .mood-detail-jp {
-  font-family: 'Fraunces', serif;
-  font-size: 32px;
-  font-weight: 700;
+  font-family: 'Fraunces', 'Noto Serif JP', serif;
+  font-size: 28px;
+  font-weight: 600;
   color: #1A1A1A;
   letter-spacing: -0.01em;
   line-height: 1.2;
-  margin-bottom: 4px;
+  margin: 0 0 4px 0;
 }
 .mood-detail-reading {
-  font-size: 14px;
+  font-size: 13px;
   color: #5C5346;
   margin-bottom: 6px;
 }
 .mood-detail-en {
   font-family: 'Fraunces', serif;
+  font-size: 14px;
+  color: #5C5346;
   font-style: italic;
-  font-size: 16px;
-  color: #C77B9C;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-.mood-detail-category {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  background: rgba(199, 123, 156, 0.15);
-  color: #C77B9C;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
+/* Sections in detail */
 .mood-detail-section {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 .mood-section-label {
-  font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.2em;
-  color: #5C5346;
+  color: #8B8178;
   font-weight: 700;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
 .mood-section-body {
-  font-size: 13px;
+  font-size: 14px;
   color: #1A1A1A;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .mood-examples {
@@ -1119,115 +1176,132 @@ input { font-family: inherit; }
   gap: 10px;
 }
 .mood-example {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  background: rgba(255, 255, 255, 0.55);
-  padding: 12px 14px;
-  border-radius: 10px;
+  padding: 14px 16px;
+  border-radius: 4px;
+  border: 1px solid;
 }
-.mood-example-num {
+.mood-example-scene {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #5C5346;
+  margin-bottom: 8px;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+.mood-example-num {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: #C77B9C;
+  background: #1A1A1A;
   color: white;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   flex-shrink: 0;
 }
-.mood-example-content {
-  flex: 1;
-  min-width: 0;
-}
-.mood-example-scene {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: #8B8178;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
 .mood-example-jp {
   font-family: 'Noto Serif JP', serif;
-  font-size: 15px;
+  font-size: 16px;
   color: #1A1A1A;
-  line-height: 1.5;
-  margin-bottom: 3px;
+  line-height: 2.1;  /* extra line-height so ruby furigana doesn't overlap */
+  margin-bottom: 6px;
   font-weight: 500;
 }
 .mood-example-en {
   font-family: 'Fraunces', serif;
-  font-size: 12px;
+  font-size: 13px;
   color: #5C5346;
-  line-height: 1.4;
+  line-height: 1.5;
   font-style: italic;
 }
 
 .mood-tip-section {
-  background: rgba(255, 255, 255, 0.6);
+  background: #F0EDDC;
+  border-left: 3px solid #C47E1F;
   padding: 14px 16px;
-  border-radius: 10px;
-  margin-top: 16px;
+  border-radius: 4px;
+  margin-top: 14px;
 }
 .mood-tip-body {
-  font-size: 12px;
+  font-size: 13px;
   color: #5C5346;
   line-height: 1.55;
   font-style: italic;
 }
 
+/* Ruby furigana styling */
+ruby {
+  ruby-position: over;
+}
+ruby rt {
+  font-size: 0.55em;
+  color: #5C5346;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: normal;
+  letter-spacing: 0;
+}
+
+/* Bottom prev/next nav */
 .mood-nav {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  padding: 0 14px 24px 14px;
+  padding: 14px 0 24px 0;
+  border-top: 1px solid #D9D0BC;
+  margin-top: 10px;
 }
 .mood-nav-btn {
   flex: 1;
   display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #FFF;
-  border: 1.5px solid #D9D0BC;
-  padding: 12px 14px;
-  border-radius: 10px;
+  flex-direction: column;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid #C8C2B5;
+  padding: 10px 12px;
+  border-radius: 4px;
   cursor: pointer;
   font-family: inherit;
-  font-size: 12px;
-  color: #5C5346;
-  transition: all 0.15s;
+  color: #1A1A1A;
+  transition: all 0.12s;
   min-width: 0;
+  text-align: left;
 }
-.mood-nav-btn:hover {
-  border-color: #C77B9C;
-  background: #FFF5F8;
-}
-.mood-nav-prev { justify-content: flex-start; text-align: left; }
-.mood-nav-next { justify-content: flex-end; text-align: right; }
+.mood-nav-btn:hover { border-color: #1A1A1A; }
+.mood-nav-prev { align-items: flex-start; }
+.mood-nav-next { align-items: flex-end; text-align: right; }
 .mood-nav-empty { flex: 1; }
-.mood-nav-emoji {
-  font-size: 16px;
-  flex-shrink: 0;
-}
 .mood-nav-arrow {
-  color: #C77B9C;
-  font-weight: bold;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: #8B8178;
+  text-transform: uppercase;
+}
+.mood-nav-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 14px;
+  width: 100%;
+}
+.mood-nav-prev .mood-nav-preview { justify-content: flex-start; }
+.mood-nav-next .mood-nav-preview { justify-content: flex-end; }
+.mood-nav-emoji {
+  font-size: 18px;
   flex-shrink: 0;
 }
 .mood-nav-jp {
-  font-family: 'Fraunces', serif;
+  font-family: 'Fraunces', 'Noto Serif JP', serif;
   font-weight: 600;
   color: #1A1A1A;
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
 /* ====== EXAM PRACTICE SCREEN ====== */
@@ -5271,7 +5345,7 @@ const READINGS = [
 const MOOD_TOOLS = [
   {
     id: "mt1",
-    jp: "〜と思う",
+    jp: "〜と思[おも]う",
     reading: "とおもう",
     en: "I think...",
     emoji: "💭",
@@ -5279,10 +5353,10 @@ const MOOD_TOOLS = [
     category: "Hedging",
     purpose: "Softens your opinion so you don't sound too forceful. Without it, statements can feel like declared facts.",
     examples: [
-      { scene: "Casual chat about weather", jp: "明日は雨が降ると思う。", en: "I think it'll rain tomorrow." },
-      { scene: "Sharing an opinion at work", jp: "この計画はうまくいくと思います。", en: "I think this plan will work." },
-      { scene: "Politely disagreeing", jp: "私はそうじゃないと思います。", en: "I don't think so." },
-      { scene: "Reflecting on yourself", jp: "ちょっと食べすぎたと思う。", en: "I think I ate too much." },
+      { scene: "Casual chat about weather", jp: "明日[あした]は雨[あめ]が降[ふ]ると思[おも]う。", en: "I think it'll rain tomorrow." },
+      { scene: "Sharing an opinion at work", jp: "この計画[けいかく]はうまくいくと思[おも]います。", en: "I think this plan will work." },
+      { scene: "Politely disagreeing", jp: "私[わたし]はそうじゃないと思[おも]います。", en: "I don't think so." },
+      { scene: "Reflecting on yourself", jp: "ちょっと食[た]べすぎたと思[おも]う。", en: "I think I ate too much." },
     ],
     tip: "Attach to a complete sentence in plain form (e.g. 「行く」と思う). Add 〜ます at the end for polite register.",
   },
@@ -5294,14 +5368,14 @@ const MOOD_TOOLS = [
     emoji: "🤔",
     color: "yellow",
     category: "Hedging",
-    purpose: "Quick, casual 'maybe.' Used with friends to speculate without commitment. Sounds friendly, never used in formal writing.",
+    purpose: "Quick, casual 'maybe.' Used with friends to speculate without commitment. Friendly tone — not for formal writing.",
     examples: [
-      { scene: "Texting a friend about plans", jp: "今日は遅れるかも。", en: "I might be late today." },
-      { scene: "Noticing how you feel", jp: "風邪ひいたかも。", en: "I might have caught a cold." },
+      { scene: "Texting a friend about plans", jp: "今日[きょう]は遅[おく]れるかも。", en: "I might be late today." },
+      { scene: "Noticing how you feel", jp: "風邪[かぜ]ひいたかも。", en: "I might have caught a cold." },
       { scene: "Casually suggesting food", jp: "コーヒーがいいかも。", en: "Coffee might be good." },
-      { scene: "Speculating with a friend", jp: "あの店、もう閉まったかも。", en: "That shop might be closed already." },
+      { scene: "Speculating with a friend", jp: "あの店[みせ]、もう閉[し]まったかも。", en: "That shop might be closed already." },
     ],
-    tip: "Short for かもしれない. Drop politely in chat or with close friends only. In email/business, use the polite version.",
+    tip: "Short for かもしれない. Drop in chat or with close friends only. In email/business, use the polite version.",
   },
   {
     id: "mt3",
@@ -5313,15 +5387,32 @@ const MOOD_TOOLS = [
     category: "Hedging",
     purpose: "Polite hedge for uncertainty. Essential in business and customer service to avoid sounding too certain about something risky.",
     examples: [
-      { scene: "Apologizing in advance at work", jp: "電車が遅れて、少し遅刻するかもしれません。", en: "The train is delayed, so I might be a bit late." },
-      { scene: "Customer service — out of stock", jp: "在庫がないかもしれません。確認します。", en: "It might be out of stock. Let me check." },
-      { scene: "Polite hedge on your own claim", jp: "私が間違っているかもしれません。", en: "I might be wrong (about this)." },
-      { scene: "Weather forecast tone", jp: "明日は雨が降るかもしれません。", en: "It may rain tomorrow." },
+      { scene: "Apologizing in advance at work", jp: "電車[でんしゃ]が遅[おく]れて、少[すこ]し遅刻[ちこく]するかもしれません。", en: "The train is delayed, so I might be a bit late." },
+      { scene: "Customer service — out of stock", jp: "在庫[ざいこ]がないかもしれません。確認[かくにん]します。", en: "It might be out of stock. Let me check." },
+      { scene: "Polite hedge on your own claim", jp: "私[わたし]が間違[まちが]っているかもしれません。", en: "I might be wrong about this." },
+      { scene: "Weather forecast tone", jp: "明日[あした]は雨[あめ]が降[ふ]るかもしれません。", en: "It may rain tomorrow." },
     ],
-    tip: "The polite form to use in any setting where you're not extremely close to the listener. Plain form: かもしれない.",
+    tip: "The polite form for any setting where you're not extremely close to the listener. Plain form: かもしれない.",
   },
   {
     id: "mt4",
+    jp: "〜だろう",
+    reading: "だろう",
+    en: "probably (casual)",
+    emoji: "🌫",
+    color: "lavender",
+    category: "Conjecture",
+    purpose: "Casual version of でしょう. Speculates about the future or unseen things. Often used by men in plain conversation.",
+    examples: [
+      { scene: "Predicting a friend's mood", jp: "彼[かれ]は怒[おこ]るだろう。", en: "He'll probably get angry." },
+      { scene: "Thinking aloud about work", jp: "明日[あした]は忙[いそが]しいだろう。", en: "Tomorrow will probably be busy." },
+      { scene: "Looking at dark clouds", jp: "雨[あめ]が降[ふ]るだろうな。", en: "It'll probably rain, I'd say." },
+      { scene: "Confident speculation", jp: "もうすぐ着[つ]くだろう。", en: "They'll probably arrive soon." },
+    ],
+    tip: "More common in male speech. Female speakers tend to prefer でしょう even casually. Add な or よ for nuance.",
+  },
+  {
+    id: "mt5",
     jp: "〜でしょう",
     reading: "でしょう",
     en: "probably / right?",
@@ -5330,49 +5421,151 @@ const MOOD_TOOLS = [
     category: "Conjecture",
     purpose: "Two uses: a softer 'probably' for predictions, or rising tone 'right?' to seek agreement gently. Common on news and in polite conversation.",
     examples: [
-      { scene: "Weather forecast", jp: "明日は晴れるでしょう。", en: "It'll probably be sunny tomorrow." },
-      { scene: "Seeking agreement softly", jp: "今日の天気、いいでしょう?", en: "Nice weather today, right?" },
-      { scene: "Polite assumption about someone", jp: "お疲れでしょう?", en: "You must be tired, aren't you?" },
-      { scene: "Sharing a guess", jp: "彼はもう知っているでしょう。", en: "He probably already knows." },
+      { scene: "Weather forecast", jp: "明日[あした]は晴[は]れるでしょう。", en: "It'll probably be sunny tomorrow." },
+      { scene: "Seeking agreement softly", jp: "今日[きょう]の天気[てんき]、いいでしょう?", en: "Nice weather today, right?" },
+      { scene: "Polite assumption about someone", jp: "お疲[つか]れでしょう?", en: "You must be tired, aren't you?" },
+      { scene: "Sharing a guess", jp: "彼[かれ]はもう知[し]っているでしょう。", en: "He probably already knows." },
     ],
-    tip: "Rising tone = 'right?' / falling tone = 'probably.' Casual form: だろう. Female speakers often use でしょう with rising tone for warmth.",
+    tip: "Rising tone = 'right?' / falling tone = 'probably.' Female speakers often use でしょう with rising tone for warmth.",
   },
   {
-    id: "mt5",
+    id: "mt6",
+    jp: "〜たぶん",
+    reading: "たぶん",
+    en: "probably / maybe",
+    emoji: "🎲",
+    color: "cream",
+    category: "Conjecture",
+    purpose: "Adverb placed at the start of a sentence — flags that what follows is your guess, not a confirmed fact. Often pairs with 〜と思う or 〜だろう.",
+    examples: [
+      { scene: "Estimating arrival time", jp: "たぶん30分[さんじゅっぷん]で着[つ]く。", en: "Probably we'll arrive in 30 min." },
+      { scene: "Guessing what's for lunch", jp: "たぶんカレーだと思[おも]う。", en: "I think it's probably curry." },
+      { scene: "Soft 'no' in disguise", jp: "たぶん行[い]けない。", en: "Probably can't go." },
+      { scene: "Polite estimate", jp: "たぶん大丈夫[だいじょうぶ]でしょう。", en: "It'll probably be fine." },
+    ],
+    tip: "Often combined with と思う or だろう for double-hedging: たぶん〜だと思う. Sounds natural, not redundant.",
+  },
+  {
+    id: "mt7",
+    jp: "〜はず",
+    reading: "はず",
+    en: "should be / supposed to",
+    emoji: "📐",
+    color: "blue",
+    category: "Conjecture",
+    purpose: "Expresses logical expectation — 'based on what I know, this should be true.' Stronger than たぶん but softer than 絶対 (definitely).",
+    examples: [
+      { scene: "Expecting an arrival", jp: "彼[かれ]はもう着[つ]いているはずだ。", en: "He should have arrived by now." },
+      { scene: "Confident reminder", jp: "鍵[かぎ]はここにあるはず。", en: "The key should be here." },
+      { scene: "Schedule check", jp: "会議[かいぎ]は3時[さんじ]のはずです。", en: "The meeting should be at 3." },
+      { scene: "Surprised it's not", jp: "うまくいくはずだったのに...", en: "It was supposed to work out..." },
+    ],
+    tip: "Use when you have reason to believe something. The negative はずがない means 'no way / can't possibly be'.",
+  },
+  {
+    id: "mt8",
+    jp: "〜かな",
+    reading: "かな",
+    en: "I wonder...",
+    emoji: "🤷",
+    color: "mint",
+    category: "Hedging",
+    purpose: "Soft self-questioning, often spoken to yourself or as a polite indirect request. Female speakers may use かしら instead.",
+    examples: [
+      { scene: "Wondering out loud", jp: "雨[あめ]、降[ふ]るかな。", en: "I wonder if it'll rain." },
+      { scene: "Soft indirect request", jp: "ちょっと手伝[てつだ]ってくれるかな?", en: "I wonder if you could help me out a bit?" },
+      { scene: "Doubting what was said", jp: "本当[ほんとう]にそうかな?", en: "Is that really so, I wonder?" },
+      { scene: "Wishful self-talk", jp: "うまくいくかな…。", en: "I wonder if this will work out..." },
+    ],
+    tip: "Sounds gentler than direct questions. Great for indirect requests — instead of 手伝って, try 手伝ってくれるかな?",
+  },
+  {
+    id: "mt9",
+    jp: "〜気[き]がする",
+    reading: "きがする",
+    en: "I get the feeling that...",
+    emoji: "🌬",
+    color: "mint",
+    category: "Inference",
+    purpose: "A gut feeling, not based on hard evidence. Softer than と思う because it admits the feeling might be unjustified.",
+    examples: [
+      { scene: "Vague hunch", jp: "今日[きょう]はいいことが起[お]きる気[き]がする。", en: "I get the feeling something good will happen today." },
+      { scene: "Sensing change", jp: "彼[かれ]、何[なに]か隠[かく]している気[き]がする。", en: "I feel like he's hiding something." },
+      { scene: "About a place", jp: "ここ、前[まえ]に来[き]た気[き]がする。", en: "I feel like I've been here before." },
+      { scene: "Self-criticism", jp: "また失敗[しっぱい]する気[き]がする…。", en: "I have a feeling I'll mess up again..." },
+    ],
+    tip: "Use 気がする when you want to share an intuition WITHOUT claiming to be sure. It admits the feeling could be wrong.",
+  },
+  {
+    id: "mt10",
     jp: "〜みたい",
     reading: "みたい",
     en: "looks like / seems",
     emoji: "👀",
-    color: "mint",
+    color: "yellow",
     category: "Inference",
-    purpose: "Casual 'seems like' based on what you observe. Also used as a 'like a ___' simile. Friendlier than 〜ようだ.",
+    purpose: "Casual 'seems like' based on what you observe. Also a 'like a ___' simile. Friendlier than 〜ようだ.",
     examples: [
-      { scene: "Looking out the window", jp: "雨が降ってきたみたい。", en: "Looks like it started raining." },
-      { scene: "Noticing a coworker's state", jp: "田中さん、忙しいみたい。", en: "Tanaka seems busy." },
-      { scene: "Tasting something", jp: "砂糖が入ってるみたい。", en: "It seems like there's sugar in this." },
-      { scene: "Simile (acting like)", jp: "君、子供みたい!", en: "You're acting like a kid!" },
+      { scene: "Looking out the window", jp: "雨[あめ]が降[ふ]ってきたみたい。", en: "Looks like it started raining." },
+      { scene: "Noticing a coworker's state", jp: "田中[たなか]さん、忙[いそが]しいみたい。", en: "Tanaka seems busy." },
+      { scene: "Tasting something", jp: "砂糖[さとう]が入[はい]ってるみたい。", en: "It seems like there's sugar in this." },
+      { scene: "Simile (acting like)", jp: "君[きみ]、子供[こども]みたい!", en: "You're acting like a kid!" },
     ],
     tip: "Attaches to nouns directly: 子供みたい. With verbs/adjectives, attach to plain form: 降るみたい / 忙しいみたい.",
   },
   {
-    id: "mt6",
+    id: "mt11",
     jp: "〜らしい",
     reading: "らしい",
     en: "seems / I heard",
     emoji: "🧐",
     color: "orange",
     category: "Hearsay & Inference",
-    purpose: "You heard something or inferred it from clues. Less direct than そうだ — feels like you're not 100% sure of the source either.",
+    purpose: "You heard something or inferred it from clues. Less direct than そうだ — feels like the source might be hearsay too.",
     examples: [
-      { scene: "Passing along news", jp: "二人、結婚するらしいよ。", en: "I heard those two are getting married." },
-      { scene: "Wet streets in morning", jp: "夜中に雨が降ったらしい。", en: "Seems like it rained overnight." },
-      { scene: "Talking about someone", jp: "山田さんは医者らしい。", en: "I hear Yamada is a doctor." },
-      { scene: "Describing a trait ('like a X')", jp: "彼は本当に学生らしい人だ。", en: "He's truly student-like (the archetype)." },
+      { scene: "Passing along news", jp: "二人[ふたり]、結婚[けっこん]するらしいよ。", en: "I heard those two are getting married." },
+      { scene: "Wet streets in morning", jp: "夜中[よなか]に雨[あめ]が降[ふ]ったらしい。", en: "Seems like it rained overnight." },
+      { scene: "Talking about someone", jp: "山田[やまだ]さんは医者[いしゃ]らしい。", en: "I hear Yamada is a doctor." },
+      { scene: "Describing a trait ('like a X')", jp: "彼[かれ]は本当[ほんとう]に学生[がくせい]らしい人[ひと]だ。", en: "He's truly student-like (the archetype)." },
     ],
     tip: "Two meanings: (1) hearsay/inference, (2) characteristic of (like a true ___). Context tells which.",
   },
   {
-    id: "mt7",
+    id: "mt12",
+    jp: "〜ようだ",
+    reading: "ようだ",
+    en: "it appears (formal)",
+    emoji: "🪞",
+    color: "purple",
+    category: "Inference",
+    purpose: "More formal version of 〜みたい. Used in writing, news, and polite speech. Suggests careful observation.",
+    examples: [
+      { scene: "News reporting tone", jp: "事故[じこ]があったようです。", en: "It appears there was an accident." },
+      { scene: "Polite observation", jp: "お客様[きゃくさま]はお疲[つか]れのようです。", en: "The customer appears tired." },
+      { scene: "Inferring from evidence", jp: "誰[だれ]もいないようだ。", en: "It appears no one is here." },
+      { scene: "Comparing (simile in writing)", jp: "彼[かれ]はまるで子供[こども]のようだ。", en: "He's just like a child." },
+    ],
+    tip: "Use ようだ for written/formal contexts, みたい for casual chat. Both mean the same thing.",
+  },
+  {
+    id: "mt13",
+    jp: "〜っぽい",
+    reading: "っぽい",
+    en: "kind of / -ish",
+    emoji: "🎨",
+    color: "coral",
+    category: "Inference",
+    purpose: "Adds a 'sort of' / '-ish' nuance to a noun or adjective. Very casual — used by younger speakers a lot.",
+    examples: [
+      { scene: "Describing someone's vibe", jp: "彼[かれ]、子供[こども]っぽい。", en: "He's kinda childish." },
+      { scene: "Color descriptions", jp: "白[しろ]っぽい色[いろ]だね。", en: "It's a whitish color." },
+      { scene: "Trait observation", jp: "今日[きょう]、忘[わす]れっぽい。", en: "I'm being kinda forgetful today." },
+      { scene: "Genre-style guess", jp: "アニメっぽい絵[え]だね。", en: "The art is anime-ish." },
+    ],
+    tip: "Casual ONLY. Attaches to nouns, i-adjective stems, or verb stems. Don't use in formal writing.",
+  },
+  {
+    id: "mt14",
     jp: "〜そうです",
     reading: "そうです",
     en: "I heard... (polite)",
@@ -5381,32 +5574,100 @@ const MOOD_TOOLS = [
     category: "Hearsay",
     purpose: "Polite hearsay — passing along news from a clear source. More formal than らしい. Common in business reporting.",
     examples: [
-      { scene: "News update at work", jp: "来週から新しいルールが始まるそうです。", en: "Apparently new rules start next week." },
-      { scene: "Sharing weather news", jp: "明日は雪が降るそうです。", en: "I heard it'll snow tomorrow." },
-      { scene: "Reporting what colleague said", jp: "田中さんは出張中だそうです。", en: "Tanaka is on a business trip, I heard." },
-      { scene: "Citing a source", jp: "ニュースによると、株が上がるそうです。", en: "According to the news, stocks will rise." },
+      { scene: "News update at work", jp: "来週[らいしゅう]から新[あたら]しいルールが始[はじ]まるそうです。", en: "Apparently new rules start next week." },
+      { scene: "Sharing weather news", jp: "明日[あした]は雪[ゆき]が降[ふ]るそうです。", en: "I heard it'll snow tomorrow." },
+      { scene: "Reporting what colleague said", jp: "田中[たなか]さんは出張中[しゅっちょうちゅう]だそうです。", en: "Tanaka is on a business trip, I heard." },
+      { scene: "Citing a source", jp: "ニュースによると、株[かぶ]が上[あ]がるそうです。", en: "According to the news, stocks will rise." },
     ],
     tip: "Don't confuse with 〜そう (looks like) which uses verb-stem. Hearsay そうです attaches to the FULL plain form: 降るそうです NOT 降りそうです.",
   },
   {
-    id: "mt8",
+    id: "mt15",
+    jp: "〜そうだよ",
+    reading: "そうだよ",
+    en: "I heard... (casual)",
+    emoji: "💬",
+    color: "mint",
+    category: "Hearsay",
+    purpose: "Casual hearsay shared with friends — same as そうです but with a friendly よ ending. Common in chats.",
+    examples: [
+      { scene: "Friend update", jp: "田中[たなか]、転職[てんしょく]するそうだよ。", en: "I heard Tanaka is changing jobs." },
+      { scene: "Sharing trivia", jp: "あの店[みせ]、来月[らいげつ]閉[し]まるそうだよ。", en: "I heard that shop is closing next month." },
+      { scene: "Group chat news", jp: "明日[あした]、雨[あめ]だそうだよ。", en: "Tomorrow's gonna rain, I hear." },
+      { scene: "Passing on advice", jp: "あのカフェ、コーヒー美味[おい]しいそうだよ。", en: "I heard that café has great coffee." },
+    ],
+    tip: "The casual register of そうです. Drop よ for even more casual: そうだ. Use with friends, not with bosses.",
+  },
+  {
+    id: "mt16",
     jp: "〜って",
     reading: "って",
     en: "they said (super casual)",
     emoji: "🗣",
     color: "lavender",
     category: "Quotation",
-    purpose: "The most casual quotation marker. Used constantly with friends to relay messages, opinions, or what someone said.",
+    purpose: "The most casual quotation marker. Constant use with friends to relay messages, opinions, or what someone said.",
     examples: [
-      { scene: "Relaying news from a friend", jp: "田中さん、今日来ないって。", en: "Tanaka said he's not coming today." },
-      { scene: "Quoting what someone said", jp: "「行く」って言ってた。", en: "He said \"I'll go.\"" },
-      { scene: "Passing along a recommendation", jp: "あの店、美味しいって!", en: "(They said) that shop is great!" },
-      { scene: "Naming / topic marker", jp: "田中っていう人を知ってる?", en: "Do you know someone called Tanaka?" },
+      { scene: "Relaying news from a friend", jp: "田中[たなか]さん、今日[きょう]来[こ]ないって。", en: "Tanaka said he's not coming today." },
+      { scene: "Quoting what someone said", jp: "「行[い]く」って言[い]ってた。", en: "He said \"I'll go.\"" },
+      { scene: "Passing along a recommendation", jp: "あの店[みせ]、美味[おい]しいって!", en: "(They said) that shop is great!" },
+      { scene: "Naming / topic marker", jp: "田中[たなか]っていう人[ひと]を知[し]ってる?", en: "Do you know someone called Tanaka?" },
     ],
-    tip: "Replaces と思う/と言う/という in casual speech. Never use in formal writing or business email.",
+    tip: "Replaces と思う / と言う / という in casual speech. Never use in formal writing or business email.",
   },
   {
-    id: "mt9",
+    id: "mt17",
+    jp: "〜って言[い]ってた",
+    reading: "っていってた",
+    en: "someone said...",
+    emoji: "🗨",
+    color: "cream",
+    category: "Quotation",
+    purpose: "Explicitly reports what a specific person said. Slightly more concrete than just って — useful when context isn't clear.",
+    examples: [
+      { scene: "Reporting to a third person", jp: "母[はは]が来[く]るって言[い]ってた。", en: "Mom said she's coming." },
+      { scene: "Defending yourself", jp: "先生[せんせい]がいいって言[い]ってたよ。", en: "The teacher said it was okay." },
+      { scene: "Sharing what was promised", jp: "彼[かれ]、絶対[ぜったい]来[く]るって言[い]ってた。", en: "He said he'd definitely come." },
+      { scene: "Recalling instructions", jp: "ここで待[ま]ってって言[い]ってたよね?", en: "She said to wait here, right?" },
+    ],
+    tip: "Past tense form of って言う (\"says\"). The 言ってた past form is super common in casual reports.",
+  },
+  {
+    id: "mt18",
+    jp: "〜によると",
+    reading: "によると",
+    en: "according to...",
+    emoji: "📰",
+    color: "blue",
+    category: "Quotation",
+    purpose: "Cites a specific source — a person, news, a study. Formal and clear. The standard way to attribute information.",
+    examples: [
+      { scene: "Citing the weather report", jp: "天気予報[てんきよほう]によると、明日[あした]は雨[あめ]です。", en: "According to the forecast, tomorrow will be rainy." },
+      { scene: "Quoting an expert", jp: "専門家[せんもんか]によると、危険[きけん]だそうです。", en: "According to experts, it's dangerous." },
+      { scene: "Citing a friend", jp: "山田[やまだ]さんによると、新店[しんてん]は美味[おい]しいらしい。", en: "According to Yamada, the new shop is great." },
+      { scene: "Citing a study", jp: "調査[ちょうさ]によると、人口[じんこう]が増[ふ]えている。", en: "According to the survey, the population is growing." },
+    ],
+    tip: "Often pairs with そうです or らしい for full citation: 〜によると〜そうです (\"according to X, [hearsay]\"). Standard journalistic structure.",
+  },
+  {
+    id: "mt19",
+    jp: "〜と言[い]われている",
+    reading: "といわれている",
+    en: "it is said that",
+    emoji: "📜",
+    color: "orange",
+    category: "Quotation",
+    purpose: "Reports common belief or wisdom — what people generally say. More formal than らしい; common in essays.",
+    examples: [
+      { scene: "Citing common belief", jp: "富士山[ふじさん]は美[うつく]しいと言[い]われている。", en: "Mt. Fuji is said to be beautiful." },
+      { scene: "Citing a saying", jp: "早起[はやお]きは三文[さんもん]の徳[とく]と言[い]われている。", en: "Early to rise brings rewards, it's said." },
+      { scene: "Sharing a stereotype", jp: "日本人[にほんじん]は静[しず]かだと言[い]われている。", en: "Japanese people are said to be quiet." },
+      { scene: "Reporting research consensus", jp: "コーヒーは健康[けんこう]にいいと言[い]われている。", en: "Coffee is said to be good for health." },
+    ],
+    tip: "Use for general truths and common beliefs. Often appears in essays, newspaper articles, and JLPT reading passages.",
+  },
+  {
+    id: "mt20",
     jp: "ね",
     reading: "ね",
     en: "soft \"right?\" / sharing",
@@ -5415,15 +5676,15 @@ const MOOD_TOOLS = [
     category: "Particle",
     purpose: "The friendliest particle. Adds warmth, seeks gentle agreement, builds rapport. Sentences feel cold without it.",
     examples: [
-      { scene: "Commenting on weather together", jp: "今日は暑いね。", en: "It's hot today, isn't it?" },
+      { scene: "Commenting on weather together", jp: "今日[きょう]は暑[あつ]いね。", en: "It's hot today, isn't it?" },
       { scene: "Soft confirmation", jp: "そうだね。", en: "Yeah, you're right." },
       { scene: "Realization mid-conversation", jp: "あ、そうですね。", en: "Oh, that's right." },
-      { scene: "Friendly goodbye", jp: "じゃあね、また明日!", en: "See ya, until tomorrow!" },
+      { scene: "Friendly goodbye", jp: "じゃあね、また明日[あした]!", en: "See ya, until tomorrow!" },
     ],
     tip: "Use freely with anyone — it's neutral-friendly. Skipping ね makes you sound abrupt or detached, even in business.",
   },
   {
-    id: "mt10",
+    id: "mt21",
     jp: "よ",
     reading: "よ",
     en: "I'm telling you / new info",
@@ -5432,15 +5693,15 @@ const MOOD_TOOLS = [
     category: "Particle",
     purpose: "Signals that you're giving the listener new information they didn't know. Can sound insistent or warning, depending on tone.",
     examples: [
-      { scene: "Pointing out the time", jp: "もう8時だよ!", en: "It's already 8!" },
-      { scene: "Reassuring a worried friend", jp: "大丈夫だよ。", en: "It's fine, really." },
-      { scene: "Recommending food", jp: "これ、美味しいよ。食べてみて。", en: "This is good, try it." },
-      { scene: "Warning someone", jp: "そこ、危ないよ!", en: "Watch out, that's dangerous!" },
+      { scene: "Pointing out the time", jp: "もう8時[はちじ]だよ!", en: "It's already 8!" },
+      { scene: "Reassuring a worried friend", jp: "大丈夫[だいじょうぶ]だよ。", en: "It's fine, really." },
+      { scene: "Recommending food", jp: "これ、美味[おい]しいよ。食[た]べてみて。", en: "This is good, try it." },
+      { scene: "Warning someone", jp: "そこ、危[あぶ]ないよ!", en: "Watch out, that's dangerous!" },
     ],
     tip: "Be careful with strangers — overuse can sound bossy. Combine with ね (→ よね) to soften it.",
   },
   {
-    id: "mt11",
+    id: "mt22",
     jp: "よね",
     reading: "よね",
     en: "right? (confirmation)",
@@ -5449,32 +5710,168 @@ const MOOD_TOOLS = [
     category: "Particle",
     purpose: "よ + ね. You're stating something AND asking the listener to confirm. Used when you're 90% sure but want to check.",
     examples: [
-      { scene: "Confirming plans", jp: "明日来るよね?", en: "You're coming tomorrow, right?" },
-      { scene: "Mutual agreement on weather", jp: "今日、暑いよね。", en: "It's hot today, isn't it?" },
-      { scene: "Double-checking facts", jp: "会議は3時だよね?", en: "The meeting's at 3, right?" },
-      { scene: "Soft request for help", jp: "手伝ってくれるよね?", en: "You'll help me, right?" },
+      { scene: "Confirming plans", jp: "明日[あした]来[く]るよね?", en: "You're coming tomorrow, right?" },
+      { scene: "Mutual agreement on weather", jp: "今日[きょう]、暑[あつ]いよね。", en: "It's hot today, isn't it?" },
+      { scene: "Double-checking facts", jp: "会議[かいぎ]は3時[さんじ]だよね?", en: "The meeting's at 3, right?" },
+      { scene: "Soft request for help", jp: "手伝[てつだ]ってくれるよね?", en: "You'll help me, right?" },
     ],
     tip: "Use when you want to confirm AND maintain warmth. Skipping ね (just よ) would sound demanding instead of asking.",
   },
   {
-    id: "mt12",
-    jp: "かな",
-    reading: "かな",
-    en: "I wonder...",
-    emoji: "🤷",
-    color: "mint",
-    category: "Hedging",
-    purpose: "Soft self-questioning, often spoken to yourself or as a polite indirect request. Female speakers may use かしら instead.",
+    id: "mt23",
+    jp: "な",
+    reading: "な",
+    en: "casual reflection (often male)",
+    emoji: "🤨",
+    color: "purple",
+    category: "Particle",
+    purpose: "Casual ね. Used in self-talk, reflection, or among male peers. Adds a contemplative or slightly assertive tone.",
     examples: [
-      { scene: "Wondering out loud", jp: "雨、降るかな。", en: "I wonder if it'll rain." },
-      { scene: "Soft indirect request", jp: "ちょっと手伝ってくれるかな?", en: "I wonder if you could help me out a bit?" },
-      { scene: "Doubting what was said", jp: "本当にそうかな?", en: "Is that really so, I wonder?" },
-      { scene: "Wishful self-talk", jp: "うまくいくかな…。", en: "I wonder if this will work out..." },
+      { scene: "Talking to yourself", jp: "そうだな…。", en: "Hmm, that's true..." },
+      { scene: "Casual comment among friends", jp: "暑[あつ]いな、今日[きょう]。", en: "It's hot today, huh." },
+      { scene: "Soft order (male)", jp: "ちゃんとしろな。", en: "Do it properly, alright?" },
+      { scene: "Realization", jp: "なるほどな。", en: "Ah, I see." },
     ],
-    tip: "Sounds gentler than direct questions. Great for indirect requests — instead of 手伝って, try 手伝ってくれるかな?",
+    tip: "More common in male speech. Female speakers tend to use ね. In writing, な suggests internal thought.",
   },
   {
-    id: "mt13",
+    id: "mt24",
+    jp: "なあ",
+    reading: "なあ",
+    en: "wistful / \"I wish\"",
+    emoji: "🌙",
+    color: "lavender",
+    category: "Particle",
+    purpose: "Drawn-out な. Expresses longing, admiration, or strong feeling. Often used when reflecting alone or making a wish.",
+    examples: [
+      { scene: "Wishing for something", jp: "お金[かね]があったらなあ。", en: "I wish I had money..." },
+      { scene: "Admiring scenery", jp: "きれいだなあ。", en: "How beautiful..." },
+      { scene: "Bittersweet memory", jp: "あの頃[ころ]は楽[たの]しかったなあ。", en: "Those were fun times..." },
+      { scene: "Wishful sigh", jp: "もっと時間[じかん]がほしいなあ。", en: "I really wish I had more time..." },
+    ],
+    tip: "Often spoken to oneself or among intimates. Adds an emotional, almost poetic quality to the sentence.",
+  },
+  {
+    id: "mt25",
+    jp: "かしら",
+    reading: "かしら",
+    en: "I wonder (feminine)",
+    emoji: "🌸",
+    color: "pink",
+    category: "Particle",
+    purpose: "Feminine version of かな. Soft, refined wondering — used mainly by older women or in literary speech.",
+    examples: [
+      { scene: "Wondering politely", jp: "今日[きょう]、雨[あめ]が降[ふ]るかしら。", en: "I wonder if it'll rain today." },
+      { scene: "Refined suggestion", jp: "お茶[ちゃ]でも飲[の]みましょうかしら。", en: "Shall we have some tea, I wonder?" },
+      { scene: "Gentle doubt", jp: "本当[ほんとう]かしら?", en: "Is that really so, I wonder?" },
+      { scene: "Self-talk", jp: "どこに置[お]いたかしら。", en: "Where did I put it, I wonder?" },
+    ],
+    tip: "Strongly feminine — male speakers should use かな. Common in older female speech and traditional literature.",
+  },
+  {
+    id: "mt26",
+    jp: "わ",
+    reading: "わ",
+    en: "feminine soft assertion",
+    emoji: "🍵",
+    color: "pink",
+    category: "Particle",
+    purpose: "Feminine sentence-ending that softens statements. Less harsh than よ. Traditional but still heard in polite female speech.",
+    examples: [
+      { scene: "Sharing a feeling", jp: "嬉[うれ]しいわ。", en: "I'm so happy." },
+      { scene: "Mild disagreement", jp: "違[ちが]うわ。", en: "That's not right." },
+      { scene: "Polite refusal", jp: "結構[けっこう]ですわ。", en: "No thank you (refined)." },
+      { scene: "Casual reaction", jp: "あら、素敵[すてき]だわ。", en: "Oh my, how lovely." },
+    ],
+    tip: "Strongly feminine — gives an elegant, refined feel. Kansai dialect uses わ differently (both genders).",
+  },
+  {
+    id: "mt27",
+    jp: "の",
+    reading: "の",
+    en: "soft explanatory ending",
+    emoji: "🍃",
+    color: "mint",
+    category: "Particle",
+    purpose: "Softly explains, asks, or shares feelings. Common in female speech and child speech. Adds a gentle, intimate tone.",
+    examples: [
+      { scene: "Soft explanation", jp: "実[じつ]は風邪[かぜ]をひいているの。", en: "Actually, I have a cold." },
+      { scene: "Gentle question", jp: "どうしたの?", en: "What happened?" },
+      { scene: "Sharing personal feelings", jp: "本当[ほんとう]に嬉[うれ]しいの。", en: "I'm really happy." },
+      { scene: "Child-style declaration", jp: "これ、好[す]きなの。", en: "I like this one." },
+    ],
+    tip: "の at end of sentence = soft explanation/question. Different from possessive の. Used by females, children, and in intimate speech.",
+  },
+  {
+    id: "mt28",
+    jp: "さ",
+    reading: "さ",
+    en: "casual \"you know...\"",
+    emoji: "👉",
+    color: "yellow",
+    category: "Particle",
+    purpose: "Casual conversational filler. Used to keep the listener's attention or soften assertions. Common in male and young-female speech.",
+    examples: [
+      { scene: "Starting a story", jp: "昨日[きのう]さ、面白[おもしろ]いことがあって…。", en: "So yesterday, you know, something funny happened..." },
+      { scene: "Casual opinion", jp: "それさ、ちょっと違[ちが]うと思[おも]う。", en: "That, you know, is a bit off, I think." },
+      { scene: "Filler in conversation", jp: "でもさ、無理[むり]だよ。", en: "But, you know, it's impossible." },
+      { scene: "Self-introduction casual", jp: "オレさ、田中[たなか]って言[い]うんだ。", en: "I'm, you know, Tanaka." },
+    ],
+    tip: "Sprinkle, don't overdo. Casual ONLY — never in business or formal speech. Sounds youthful.",
+  },
+  {
+    id: "mt29",
+    jp: "ぞ",
+    reading: "ぞ",
+    en: "strong masculine emphasis",
+    emoji: "💢",
+    color: "red",
+    category: "Particle",
+    purpose: "Strong assertive masculine ending. Used among male friends or for self-encouragement. Sounds rough — not for polite settings.",
+    examples: [
+      { scene: "Pumping yourself up", jp: "よし、頑張[がんば]るぞ!", en: "Alright, I'm gonna do my best!" },
+      { scene: "Warning friends", jp: "本気[ほんき]だぞ!", en: "I'm serious!" },
+      { scene: "Self-declaration", jp: "勝[か]つぞ!", en: "I'm gonna win!" },
+      { scene: "Heads up to buddies", jp: "ここからは危[あぶ]ないぞ。", en: "It gets dangerous from here." },
+    ],
+    tip: "Strongly masculine. Common in self-pep-talks or among close male friends. Avoid in mixed/formal contexts.",
+  },
+  {
+    id: "mt30",
+    jp: "ぜ",
+    reading: "ぜ",
+    en: "rough masculine emphasis",
+    emoji: "🔥",
+    color: "coral",
+    category: "Particle",
+    purpose: "Even rougher than ぞ. Conveys swagger, challenge, or playful boast. Anime and manga love this ending.",
+    examples: [
+      { scene: "Confident challenge", jp: "勝[か]ってみせるぜ。", en: "I'll win, just watch." },
+      { scene: "Friendly boast", jp: "今日[きょう]はおごるぜ!", en: "It's my treat today!" },
+      { scene: "Macho declaration", jp: "行[い]くぜ!", en: "Let's go!" },
+      { scene: "Anime-style speech", jp: "俺[おれ]は最強[さいきょう]だぜ!", en: "I'm the strongest!" },
+    ],
+    tip: "Even rougher than ぞ. Often heard in anime/manga and in young male speech. Use carefully — can sound aggressive.",
+  },
+  {
+    id: "mt31",
+    jp: "ちょっと",
+    reading: "ちょっと",
+    en: "a little / kind of",
+    emoji: "✋",
+    color: "pink",
+    category: "Softener",
+    purpose: "Literally 'a little,' but used constantly as a softener — for requests, refusals, getting attention. Almost magic word for politeness.",
+    examples: [
+      { scene: "Softening a request", jp: "ちょっと待[ま]ってください。", en: "Wait a moment, please." },
+      { scene: "Polite refusal", jp: "今日[きょう]はちょっと難[むずか]しいです…。", en: "Today's a bit difficult... (= no, softly)" },
+      { scene: "Specifying small amount", jp: "ちょっとだけください。", en: "Just a little, please." },
+      { scene: "Getting attention", jp: "ちょっと、すみません!", en: "Excuse me, a moment!" },
+    ],
+    tip: "Saying ちょっと… and trailing off is a classic indirect 'no' in Japanese. Listen for it!",
+  },
+  {
+    id: "mt32",
     jp: "なんか",
     reading: "なんか",
     en: "kind of / like / something",
@@ -5483,32 +5880,66 @@ const MOOD_TOOLS = [
     category: "Filler",
     purpose: "Vague filler — like English 'kind of' or 'like.' Softens descriptions, adds hesitation, or lists examples vaguely.",
     examples: [
-      { scene: "Describing a vague feeling", jp: "なんか、変な感じ。", en: "Something feels off." },
+      { scene: "Describing a vague feeling", jp: "なんか、変[へん]な感[かん]じ。", en: "Something feels off." },
       { scene: "Listing food casually", jp: "ピザとかパスタとかなんか。", en: "Pizza, pasta, or something like that." },
-      { scene: "Starting a story softly", jp: "なんかさ、聞いて!", en: "So like, listen to this!" },
-      { scene: "Hedging an emotion", jp: "なんか、疲れた…。", en: "I'm kinda tired..." },
+      { scene: "Starting a story softly", jp: "なんかさ、聞[き]いて!", en: "So like, listen to this!" },
+      { scene: "Hedging an emotion", jp: "なんか、疲[つか]れた…。", en: "I'm kinda tired..." },
     ],
     tip: "Casual ONLY. Overuse sounds unintelligent — sprinkle, don't pile up. Avoid in business speech.",
   },
   {
-    id: "mt14",
-    jp: "ちょっと",
-    reading: "ちょっと",
-    en: "a little / kind of",
-    emoji: "✋",
-    color: "pink",
-    category: "Softener",
-    purpose: "Means literally 'a little,' but used constantly as a softener — for requests, refusals, getting attention. Almost magic word politeness.",
+    id: "mt33",
+    jp: "まあ",
+    reading: "まあ",
+    en: "well... / I guess",
+    emoji: "🤷‍♀️",
+    color: "blue",
+    category: "Filler",
+    purpose: "Conversational opener that softens or qualifies what follows. Like English 'well...' or 'I mean...'.",
     examples: [
-      { scene: "Softening a request", jp: "ちょっと待ってください。", en: "Wait a moment, please." },
-      { scene: "Polite refusal", jp: "今日はちょっと難しいです…。", en: "Today's a bit difficult... (= no, but soft)" },
-      { scene: "Specifying small amount", jp: "ちょっとだけください。", en: "Just a little, please." },
-      { scene: "Getting attention", jp: "ちょっと、すみません!", en: "Excuse me, a moment!" },
+      { scene: "Lukewarm response", jp: "まあ、いいかな。", en: "Well, I guess that's okay." },
+      { scene: "Mild surprise", jp: "まあ、そんなこと言[い]わないで。", en: "Oh come on, don't say that." },
+      { scene: "Reflective acceptance", jp: "まあ、しょうがないね。", en: "Well, it can't be helped." },
+      { scene: "Gentle agreement", jp: "まあ、確[たし]かにそうだ。", en: "Well, that's true." },
     ],
-    tip: "Saying ちょっと… and trailing off is a classic indirect 'no' in Japanese. Listen for it!",
+    tip: "Pairs naturally with ね, よ, or sentence-end particles to soften further. The Japanese version of \"meh\" or \"well\".",
   },
   {
-    id: "mt15",
+    id: "mt34",
+    jp: "えーと",
+    reading: "えーと",
+    en: "um / uh (thinking)",
+    emoji: "💭",
+    color: "cream",
+    category: "Filler",
+    purpose: "Used while you think — buying time to find the right word. Japanese 'um.' Very common at the start of answers.",
+    examples: [
+      { scene: "Pausing before answering", jp: "えーと、3時[さんじ]から始[はじ]まります。", en: "Um, it starts from 3." },
+      { scene: "Polite thinking", jp: "えーと、それは難[むずか]しい質問[しつもん]ですね。", en: "Hmm, that's a tough question." },
+      { scene: "Soft start to a phone call", jp: "えーと、田中[たなか]ですけど。", en: "Uh, it's Tanaka." },
+      { scene: "Choosing words carefully", jp: "えーと、なんて言[い]えばいいかな…", en: "Hmm, how should I put it..." },
+    ],
+    tip: "Avoid overusing in formal speech — comes off as unsure. One えーと per turn is plenty.",
+  },
+  {
+    id: "mt35",
+    jp: "とりあえず",
+    reading: "とりあえず",
+    en: "for now / anyway",
+    emoji: "🚶",
+    color: "mint",
+    category: "Filler",
+    purpose: "Means 'first/for now/anyway.' Used to suggest a temporary or starting action. Common in business and casual speech.",
+    examples: [
+      { scene: "Restaurant ordering", jp: "とりあえずビール!", en: "Beer to start!" },
+      { scene: "Starting a plan", jp: "とりあえずやってみよう。", en: "Let's just try for now." },
+      { scene: "Pausing decision", jp: "とりあえず保留[ほりゅう]にしよう。", en: "Let's put it on hold for now." },
+      { scene: "Wrapping up", jp: "とりあえず、お疲[つか]れさまでした。", en: "Anyway, good work today." },
+    ],
+    tip: "The very famous \"とりあえずビール\" (\"Beer first!\") at Japanese izakayas — culturally iconic phrase.",
+  },
+  {
+    id: "mt36",
     jp: "やっぱり",
     reading: "やっぱり",
     en: "as I thought / after all",
@@ -5519,10 +5950,78 @@ const MOOD_TOOLS = [
     examples: [
       { scene: "Suspicion confirmed", jp: "やっぱりそうだった!", en: "I knew it!" },
       { scene: "Changing your mind", jp: "やっぱりやめておく。", en: "I'll pass after all." },
-      { scene: "Recognizing a pattern", jp: "やっぱり君だね。", en: "It IS you (as I thought)." },
-      { scene: "Affirming a truth", jp: "やっぱり日本のラーメンは最高だ!", en: "Japanese ramen really is the best." },
+      { scene: "Recognizing a pattern", jp: "やっぱり君[きみ]だね。", en: "It IS you (as I thought)." },
+      { scene: "Affirming a truth", jp: "やっぱり日本[にほん]のラーメンは最高[さいこう]だ!", en: "Japanese ramen really is the best!" },
     ],
     tip: "Casual: やっぱり. More casual: やっぱ. Polite: やはり. Very common in everyday speech.",
+  },
+  {
+    id: "mt37",
+    jp: "なるほど",
+    reading: "なるほど",
+    en: "I see / makes sense",
+    emoji: "💡",
+    color: "orange",
+    category: "Reaction",
+    purpose: "Signals understanding — \"ah, I get it now.\" Shows you're following the conversation. Polite enough for any setting.",
+    examples: [
+      { scene: "After an explanation", jp: "なるほど、そういうことか!", en: "Ah, I see what you mean!" },
+      { scene: "Polite acknowledgment", jp: "なるほど、勉強[べんきょう]になります。", en: "I see, that's good to know." },
+      { scene: "Sincere realization", jp: "なるほど、面白[おもしろ]い考[かんが]えだね。", en: "Hm, that's an interesting idea." },
+      { scene: "Casual chat", jp: "あ、なるほどね。", en: "Ah, I see." },
+    ],
+    tip: "Some Japanese people consider なるほど slightly condescending from younger to older — use そうですか with seniors instead.",
+  },
+  {
+    id: "mt38",
+    jp: "そっか",
+    reading: "そっか",
+    en: "oh, I see",
+    emoji: "🌟",
+    color: "yellow",
+    category: "Reaction",
+    purpose: "Casual realization — \"oh, right.\" Shorter form of そうか. Used among friends or after small understanding.",
+    examples: [
+      { scene: "Small realization", jp: "そっか、今日[きょう]は休[やす]みか。", en: "Oh right, it's a day off today." },
+      { scene: "Empathy with friend", jp: "そっか、大変[たいへん]だったね。", en: "Oh, that must have been tough." },
+      { scene: "Quick acknowledgment", jp: "そっか、わかった。", en: "Got it." },
+      { scene: "Reflective reply", jp: "そっか、そういう意味[いみ]ね。", en: "Ah, that's what it means." },
+    ],
+    tip: "More casual than そうですか. Use そっかそっか for stronger empathy. Don't use with bosses.",
+  },
+  {
+    id: "mt39",
+    jp: "へえ",
+    reading: "へえ",
+    en: "oh, really? / interesting",
+    emoji: "😮",
+    color: "blue",
+    category: "Reaction",
+    purpose: "Expresses surprise or interest at new info. Length and tone change the nuance — short へえ = mild interest, long へええ = real surprise.",
+    examples: [
+      { scene: "Mild interest", jp: "へえ、そうなんだ。", en: "Oh, really." },
+      { scene: "Genuine surprise", jp: "へえ!知[し]らなかった!", en: "Wow, I didn't know that!" },
+      { scene: "Listening politely", jp: "へえ、面白[おもしろ]い話[はなし]だね。", en: "Hmm, interesting story." },
+      { scene: "Slight disbelief", jp: "へえ…本当[ほんとう]に?", en: "Oh... really?" },
+    ],
+    tip: "Tone is everything. Flat へえ can sound dismissive — add energy for genuine interest. Pair with すごい for enthusiasm.",
+  },
+  {
+    id: "mt40",
+    jp: "まじ",
+    reading: "まじ",
+    en: "seriously? (slang)",
+    emoji: "😳",
+    color: "red",
+    category: "Reaction",
+    purpose: "Casual exclamation of surprise — \"seriously?\" or \"for real?\" Used by younger speakers. Very informal slang.",
+    examples: [
+      { scene: "Shocked at news", jp: "まじ?信[しん]じられない!", en: "Seriously? Unbelievable!" },
+      { scene: "Confirming a wild claim", jp: "まじで言[い]ってる?", en: "You're seriously saying that?" },
+      { scene: "Emphasis", jp: "まじ美味[おい]しい!", en: "It's seriously good!" },
+      { scene: "Disbelief", jp: "え、まじ…。", en: "Wait, seriously..." },
+    ],
+    tip: "Very casual slang — never use with seniors or in formal settings. The polite version is 本当ですか? (\"really?\").",
   },
 ];
 
@@ -8489,8 +8988,25 @@ function renderExamResults() {
 }
 
 /* ============================================================
-   SCREEN: MOOD TOOLS (pastel cards, real-life usage)
+   SCREEN: MOOD TOOLS — natural-Japanese nuance, color-coded
    ============================================================ */
+
+// Convert bracket-furigana syntax to <ruby> HTML
+// "明日[あした]は雨[あめ]が降[ふ]る" => "<ruby>明日<rt>あした</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>る"
+function rubyify(text) {
+  if (!text) return "";
+  // Escape any existing HTML, then convert the bracket syntax
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+  return escaped.replace(
+    /([\u4E00-\u9FFF\u3005]+)\[([\u3040-\u309F\u30A0-\u30FFー]+)\]/g,
+    '<ruby>$1<rt>$2</rt></ruby>'
+  );
+}
+
+const MOODS_PER_PAGE = 20;
 
 function renderMoods() {
   if (viewState.moodId) {
@@ -8500,34 +9016,76 @@ function renderMoods() {
 }
 
 function renderMoodsGrid() {
-  const cardEls = MOOD_TOOLS.map(function (m) {
+  const totalPages = Math.ceil(MOOD_TOOLS.length / MOODS_PER_PAGE);
+  const currentPage = viewState.moodPage || 1;
+  const startIdx = (currentPage - 1) * MOODS_PER_PAGE;
+  const endIdx = Math.min(startIdx + MOODS_PER_PAGE, MOOD_TOOLS.length);
+  const pageItems = MOOD_TOOLS.slice(startIdx, endIdx);
+
+  const cardEls = pageItems.map(function (m) {
     return h("button", {
       class: "mood-card mood-bg-" + m.color,
       onClick: function () {
-        viewState = { moodId: m.id };
+        viewState = { moodId: m.id, moodPageReturn: currentPage };
         render();
       },
     }, [
       h("div", { class: "mood-card-emoji" }, m.emoji),
-      h("div", { class: "mood-card-jp" }, m.jp),
-      h("div", { class: "mood-card-en" }, m.en),
+      h("div", { class: "mood-card-body" }, [
+        h("div", {
+          class: "mood-card-jp jp",
+          html: rubyify(m.jp),
+        }),
+        h("div", { class: "mood-card-en" }, m.en),
+      ]),
+      h("div", { class: "mood-card-cat mono" }, m.category),
     ]);
   });
+
+  // Pagination dots/numbers
+  const pageNav = totalPages > 1 ? h("div", { class: "mood-pagination" }, [
+    h("button", {
+      class: "mood-page-btn" + (currentPage <= 1 ? " disabled" : ""),
+      disabled: currentPage <= 1 ? "" : null,
+      onClick: currentPage <= 1 ? null : function () {
+        viewState = { moodPage: currentPage - 1 };
+        render();
+      },
+    }, "← prev"),
+    h("div", { class: "mood-page-dots" },
+      Array.from({ length: totalPages }, function (_, i) {
+        const pageNum = i + 1;
+        return h("button", {
+          class: "mood-page-dot mono" + (pageNum === currentPage ? " active" : ""),
+          onClick: function () {
+            viewState = { moodPage: pageNum };
+            render();
+          },
+        }, String(pageNum));
+      })
+    ),
+    h("button", {
+      class: "mood-page-btn" + (currentPage >= totalPages ? " disabled" : ""),
+      disabled: currentPage >= totalPages ? "" : null,
+      onClick: currentPage >= totalPages ? null : function () {
+        viewState = { moodPage: currentPage + 1 };
+        render();
+      },
+    }, "next →"),
+  ]) : null;
 
   return shell([
     backRow("← Dashboard", function () {
       viewState = {};
       setView("dashboard");
     }),
-    h("div", { class: "mood-header" }, [
-      h("h1", { class: "mood-title" }, [
-        "Japanese Mood Tools ",
-        h("span", { class: "mood-title-icon" }, "✂"),
-      ]),
-      h("div", { class: "mood-subtitle" }, "Mood Stickers for Natural Japanese"),
-      h("div", { class: "mood-intro" }, "These tools help you sound softer, friendlier, and more natural. Tap each card to explore!"),
-    ]),
+    header("Mood Tools", "ニュアンスと響き"),
+    h("div", { class: "mood-intro-row" },
+      "Particles, hedges, and reactions that make Japanese sound natural. Tap a card to see how each is used in real life."),
+    h("div", { class: "mood-page-meta mono" },
+      "Page " + currentPage + " of " + totalPages + " · " + MOOD_TOOLS.length + " tools total"),
     h("div", { class: "mood-grid" }, cardEls),
+    pageNav,
   ]);
 }
 
@@ -8547,64 +9105,69 @@ function renderMoodDetail(moodId) {
   const idx = MOOD_TOOLS.findIndex(function (mt) { return mt.id === moodId; });
   const prev = idx > 0 ? MOOD_TOOLS[idx - 1] : null;
   const next = idx < MOOD_TOOLS.length - 1 ? MOOD_TOOLS[idx + 1] : null;
+  const returnPage = viewState.moodPageReturn || 1;
 
   return shell([
     backRow("← Mood tools", function () {
-      viewState = {};
+      viewState = { moodPage: returnPage };
       render();
     }),
-    h("div", { class: "mood-detail-wrap mood-bg-" + m.color }, [
-      h("div", { class: "mood-detail-header" }, [
-        h("div", { class: "mood-detail-emoji" }, m.emoji),
-        h("div", { class: "mood-detail-jp" }, m.jp),
-        h("div", { class: "mood-detail-reading" }, m.reading),
+    h("div", { class: "mood-detail-header mood-tint-" + m.color }, [
+      h("div", { class: "mood-detail-emoji" }, m.emoji),
+      h("div", { class: "mood-detail-meta" }, [
+        h("div", { class: "mood-detail-cat mono" }, m.category),
+        h("h1", { class: "mood-detail-jp jp", html: rubyify(m.jp) }),
+        h("div", { class: "mood-detail-reading jp" }, m.reading),
         h("div", { class: "mood-detail-en" }, m.en),
-        h("div", { class: "mood-detail-category" }, m.category),
       ]),
-      h("div", { class: "mood-detail-section" }, [
-        h("div", { class: "mood-section-label" }, "WHAT IT DOES"),
-        h("div", { class: "mood-section-body" }, m.purpose),
-      ]),
-      h("div", { class: "mood-detail-section" }, [
-        h("div", { class: "mood-section-label" }, "TRY IT IN REAL LIFE"),
-        h("div", { class: "mood-examples" }, m.examples.map(function (ex, i) {
-          return h("div", { class: "mood-example" }, [
-            h("div", { class: "mood-example-num" }, String(i + 1)),
-            h("div", { class: "mood-example-content" }, [
-              h("div", { class: "mood-example-scene" }, ex.scene),
-              h("div", { class: "mood-example-jp" }, ex.jp),
-              h("div", { class: "mood-example-en" }, ex.en),
-            ]),
-          ]);
-        })),
-      ]),
-      h("div", { class: "mood-detail-section mood-tip-section" }, [
-        h("div", { class: "mood-section-label" }, "💡 TIP"),
-        h("div", { class: "mood-section-body mood-tip-body" }, m.tip),
-      ]),
+    ]),
+    h("div", { class: "mood-detail-section" }, [
+      h("div", { class: "mood-section-label mono" }, "WHAT IT DOES"),
+      h("div", { class: "mood-section-body" }, m.purpose),
+    ]),
+    h("div", { class: "mood-detail-section" }, [
+      h("div", { class: "mood-section-label mono" }, "TRY IT IN REAL LIFE"),
+      h("div", { class: "mood-examples" }, m.examples.map(function (ex, i) {
+        return h("div", { class: "mood-example mood-bg-" + m.color }, [
+          h("div", { class: "mood-example-scene mono" }, [
+            h("span", { class: "mood-example-num" }, String(i + 1)),
+            h("span", null, ex.scene),
+          ]),
+          h("div", { class: "mood-example-jp jp", html: rubyify(ex.jp) }),
+          h("div", { class: "mood-example-en" }, ex.en),
+        ]);
+      })),
+    ]),
+    h("div", { class: "mood-detail-section mood-tip-section" }, [
+      h("div", { class: "mood-section-label mono" }, "💡 TIP"),
+      h("div", { class: "mood-tip-body" }, m.tip),
     ]),
     h("div", { class: "mood-nav" }, [
       prev ? h("button", {
         class: "mood-nav-btn mood-nav-prev",
         onClick: function () {
-          viewState = { moodId: prev.id };
+          viewState = { moodId: prev.id, moodPageReturn: returnPage };
           render();
         },
       }, [
-        h("span", { class: "mood-nav-arrow" }, "← "),
-        h("span", { class: "mood-nav-emoji" }, prev.emoji),
-        h("span", { class: "mood-nav-jp" }, prev.jp),
+        h("div", { class: "mood-nav-arrow mono" }, "← prev"),
+        h("div", { class: "mood-nav-preview" }, [
+          h("span", { class: "mood-nav-emoji" }, prev.emoji),
+          h("span", { class: "mood-nav-jp jp", html: rubyify(prev.jp) }),
+        ]),
       ]) : h("div", { class: "mood-nav-empty" }),
       next ? h("button", {
         class: "mood-nav-btn mood-nav-next",
         onClick: function () {
-          viewState = { moodId: next.id };
+          viewState = { moodId: next.id, moodPageReturn: returnPage };
           render();
         },
       }, [
-        h("span", { class: "mood-nav-jp" }, next.jp),
-        h("span", { class: "mood-nav-emoji" }, next.emoji),
-        h("span", { class: "mood-nav-arrow" }, " →"),
+        h("div", { class: "mood-nav-arrow mono" }, "next →"),
+        h("div", { class: "mood-nav-preview" }, [
+          h("span", { class: "mood-nav-jp jp", html: rubyify(next.jp) }),
+          h("span", { class: "mood-nav-emoji" }, next.emoji),
+        ]),
       ]) : h("div", { class: "mood-nav-empty" }),
     ]),
   ]);
